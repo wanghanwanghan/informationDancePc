@@ -10,6 +10,9 @@ export function getBasicDetails(data) {
 }
 // 获取股东信息
 export function getShareHolderInfo(data) {
+  if (!data.pageSize) {
+    data.pageSize = 100
+  }
   return request({
     url: '/api/v1/ts/getShareHolderInfo',
     method: 'post',
