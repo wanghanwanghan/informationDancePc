@@ -126,7 +126,12 @@
       </section>
       <section id="tab-contor" class="et-slide" style="min-height:100px;margin-top:50px;">
         <!-- <h1>实际控制人和控制路径</h1> -->
-        <h3 style="margin-left:20px;">实际控制人</h3>
+        <h3 style="margin-left:20px;">
+          实际控制人
+          <span v-if="show">
+            ( 最大股东 : {{this.finalBeneficiary.name}} 持股比例 : {{this.finalBeneficiary.total}} )
+          </span>
+        </h3>
         <div class="box2">
           <div v-if="!show" class="cont1">
             此信息需要付费<el-button type="primary" style="margin-left:20px;" @click="pay">点击查看</el-button>
@@ -413,6 +418,7 @@ import {
   frbg,
   getOperatingExceptionRota
 } from '@/api/EnterpriseBackground'
+import { getCpws } from '@/api/JudicialDecisions'
 // import $ from 'jquery'
 export default {
   data() {
@@ -431,6 +437,10 @@ export default {
         pay: ''
       },
       contor: [],
+      finalBeneficiary : {
+        name: '',
+        total: '',
+      },
       show: false,
       manger: [],
       branch: [],
@@ -474,6 +484,8 @@ export default {
       // console.log(res)
       if (res.data.code === 200) {
         this.contor = res.data.result
+        this.finalBeneficiary.name = res.data.result.Name
+        this.finalBeneficiary.total = res.data.result.TotalStockPercent
         // console.log(typeof (this.list))
         this.show = true
       } else {
@@ -484,6 +496,7 @@ export default {
     getMainManagerInfo(this.query2).then(res => {
       // console.log(res)
       this.manger = res.data.result
+      this.mangerTotal = res.data.paging.total
     })
     // 分支机构
     getBranchInfo(this.query2).then(res => {
@@ -553,6 +566,8 @@ export default {
                 })
               } else {
                 this.contor = res.data.result
+                this.finalBeneficiary.name = res.data.result.Name
+                this.finalBeneficiary.total = res.data.result.TotalStockPercent
                 this.$message({
                   type: 'success',
                   message: '查询成功!'
