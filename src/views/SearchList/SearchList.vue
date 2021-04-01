@@ -24,13 +24,14 @@
           </div>
           <div class="desc">
             <span style="margin-right:30px">法人代表：{{ item.OperName }}</span>
-            <span>成立日期：{{ item.StartDate }}</span>
+            <span style="margin-right:30px">成立日期：{{ item.StartDate }}</span>
+            <span>统一社会信用代码：{{ item.CreditCode }}</span>
           </div>
         </div>
         <div class="right">
           <div v-if="item.supervisor === 0" class="jkong" @click="toMonitor(item.Name)">监控企业</div>
           <div v-if="item.supervisor === 1" class="jkong1">正在监控</div>
-          <div class="sqing" @click="outerVisibles(item.Name)">申请报告</div>
+          <div class="sqing" @click="outerVisibles(item.Name,item.CreditCode)">申请报告</div>
         </div>
       </div>
     </div>
@@ -155,7 +156,7 @@
 
     <!-- 尽调版（需授权，请下载授权书） -->
     <el-dialog
-      title="请上传授权书"
+      title=""
       :visible.sync="ReportSq"
       width="40%"
     >
@@ -180,10 +181,21 @@
           </el-upload>
         </div>
 <!--        <div class="auth-book-wrapper">-->
-<!--          <p style="width: 100%;height: 20px;text-align: center;color: red">授 权 书</p>-->
+<!--          <p style="width: 100%;text-align: center"><strong>授 权 书</strong></p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">为有效保障我公司的合法权益，并使我公司享受贵方后续的高效、专业服务，我公司理解、同意给予贵方如下授权：</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">一、授权事项</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、我公司合法授权贵方及贵方技术合作方北京每日信动科技有限公司（以下称“每日信动公司”）采集我公司的企业信息（包括但不限于基本工商信息、经营信息、发票信息、贷款信息、财务信息、税务信息、司法行政警示信息等）。我公司同意通过安装插件、代为申请纳税人税务数字证书或以贵方或每日信动公司提供的其他方式，对我公司进行企业信息采集。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、贵方或每日信动公司有权依照自行设立的模型、模式、格式、规则、流程等对我公司的企业信息进行保存、整理、分析、加工等处理操作。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、贵方或每日信动公司有权将我公司的企业信息以评估报告或其他形式提供给相关第三方，上述相关第三方包括根据我公司的申请拟向我公司提供服务或已经为我公司提供服务的相关机构等。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">4、贵方或每日信动公司根据本授权，有权对我公司企业信息进行采集、处理，并将该等信息提供给相关第三方；未经我公司另行授权，贵方或每日信动公司不得将采集的信息披露给与本次企业信息采集事项无关联的主体。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">二、其他事项</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、本协议项下授权的起始日期为我公司盖章或安装贵方或每日信动公司提供的插件之日。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、与信息采集有关的事项终止后，本授权书方可终止；若因我公司提前终止本授权书而对申请、使用评估报告的相关第三方产生任何不利影响或损失，由我公司自行承担，贵方或每日信动公司不承担任何责任。</p>-->
+<!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、我公司认可贵方或每日信动公司保留对本授权所有条款及规则的最终解释权。</p>-->
 <!--        </div>-->
       </div>
       <span slot="footer" class="dialog-footer">
+<!--        <el-button type="primary" @click="setAuth">确 定</el-button>-->
         <el-button @click="ReportSq = false">取 消</el-button>
       </span>
     </el-dialog>
@@ -219,7 +231,7 @@ import DndList from '@/components/DndList/index'
 import DndjList from '@/components/DndjList/index'
 import UploadPic from '@/components/UploadPic/UploadPic'
 import IndexWord from '@/components/DndjList/IndexWord'
-import { getEntList, createEasyWord, Supervisor, createVeryEasy, createVeryEasypdf, authBookC, authBook, createDeepEasy } from '@/api/article'
+import { getEntList, createEasyWord, Supervisor, createVeryEasy, createVeryEasypdf, authBookC, authBook, createDeepEasy, getAuthentication } from '@/api/article'
 var token = localStorage.getItem('token')
 export default {
   components: { DndList, DndjList, UploadPic, IndexWord },
@@ -478,10 +490,9 @@ export default {
         }
       })
     },
-    outerVisibles(e) {
-      // console.log(e)
+    outerVisibles(e,code) {
       localStorage.setItem('reportName', e)
-      // this.outerVisible = true
+      localStorage.setItem('CreditCode', code)
       this.Reporttype = true
     },
     innerVisibles(e) {
@@ -543,6 +554,16 @@ export default {
           })
           localStorage.setItem('activeName', 'second')
         // this.dia = true
+        }
+      })
+    },
+    setAuth() {
+      let entName = localStorage.getItem('reportName')
+      let phone = localStorage.getItem('phone')
+      let CreditCode = localStorage.getItem('CreditCode')
+      getAuthentication({entName,phone,"code":CreditCode}).then(res => {
+        if (res.data.code === 200) {
+          window.location.href = res.data.result
         }
       })
     },
@@ -1084,6 +1105,5 @@ export default {
 .auth-book-wrapper {
   width: 100%;
   min-height: 150px;
-  background-color: green;
 }
 </style>
