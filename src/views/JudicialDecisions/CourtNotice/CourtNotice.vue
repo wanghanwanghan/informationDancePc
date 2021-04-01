@@ -460,18 +460,8 @@
                 width="50"
               />
               <el-table-column
-                prop="title"
+                prop="Name"
                 label="标题"
-                width="350"
-              />
-              <el-table-column
-                prop="body"
-                label="内容"
-                width="400"
-              />
-              <el-table-column
-                prop="sortTimeString"
-                label="时间"
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
