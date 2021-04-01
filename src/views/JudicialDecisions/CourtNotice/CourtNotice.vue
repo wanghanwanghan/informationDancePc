@@ -463,7 +463,7 @@
                 prop="Name"
                 label="标题"
               />
-              <el-table-column label="操作">
+              <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
                   <router-link :to="'/JudicialDecisions/sfpmDetail/'+scope.row.Id">
                     <el-button
@@ -471,7 +471,6 @@
                     >查看详情</el-button>
                   </router-link>
                 </template>
-
               </el-table-column>
             </el-table>
           </div>
