@@ -289,7 +289,7 @@ export default {
               type: 'success'
             })
             this.$router.push({
-              path: './login',
+              path: '/login',
               query: {
                 activeName: 'second'
               }
@@ -323,7 +323,7 @@ export default {
             //   type: 'success',
             //   message: '删除成功!'
             // })
-            this.$router.push('./login')
+            this.$router.push('/login')
             localStorage.setItem('activeName', 'third')
           }).catch(() => {
             // this.$message({
@@ -339,7 +339,7 @@ export default {
             type: 'success'
           })
           this.$router.push({
-            path: './login',
+            path: '/login',
             query: {
               activeName: 'second'
             }
