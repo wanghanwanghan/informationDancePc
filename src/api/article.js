@@ -315,3 +315,12 @@ export function getFinanceNotAuth(data) {
     data
   })
 }
+
+// 龙信 近n年财务数据，需授权
+export function getFinanceNeedAuth(data) {
+  return request({
+    url: 'api/v1/lx/getFinanceNeedAuth',
+    method: 'post',
+    data
+  })
+}
