@@ -100,6 +100,8 @@ export default {
       },
       year: [],
       num: [],
+      yearMain2: [],
+      numMain2: [],
       show: false,
       showMin2: false,
       query2: {
@@ -152,11 +154,6 @@ export default {
         // console.log(this.num)
         this.drawLine()
     })
-    const _this = this
-    window.onresize = function() {
-      _this.myChart.resize()
-    }
-
     //财务需授权
     getFinanceNeedAuth(this.query4).then(res => {
       console.log(res.data.result)
@@ -164,8 +161,8 @@ export default {
         this.showMin2 = true
         var obj = res.data.result
         for (const key in obj) {
-          this.year.push(key)
-          this.num.push(obj[key])
+          this.yearMain2.push(key)
+          this.numMain2.push(obj[key])
         }
       }
 
@@ -173,6 +170,11 @@ export default {
       // console.log(this.num)
       this.drawLineMain2()
     })
+
+    const _this = this
+    window.onresize = function() {
+      _this.myChart.resize()
+    }
 
     // getThreeYearsData(this.query).then(res => {
     //   console.log(res.data.result)
@@ -199,9 +201,9 @@ export default {
     },
 
     drawLine() {
-      var chartDom = document.getElementById('main1')
-      var myChart = echarts.init(chartDom)
-      var option
+      let chartDom = document.getElementById('main1')
+      let myChart = echarts.init(chartDom)
+      let option
 
       option = {
         tooltip: {
@@ -275,9 +277,9 @@ export default {
     },
 
     drawLineMain2() {
-      var chartDom = document.getElementById('main2')
-      var myChart = echarts.init(chartDom)
-      var option
+      let chartDom = document.getElementById('main2')
+      let myChart = echarts.init(chartDom)
+      let option
 
       option = {
         tooltip: {
@@ -328,7 +330,17 @@ export default {
             emphasis: {
               focus: 'series'
             },
-            data: [this.num[0].ASSGRO, this.num[0].LIAGRO, this.num[0].VENDINC, this.num[0].MAIBUSINC, this.num[0].PROGRO, this.num[0].NETINC, this.num[0].RATGRO, this.num[0].TOTEQU, this.num[0].SOCNUM]
+            data: [
+              this.numMain2[0].ASSGRO,
+              this.numMain2[0].LIAGRO,
+              this.numMain2[0].VENDINC,
+              this.numMain2[0].MAIBUSINC,
+              this.numMain2[0].PROGRO,
+              this.numMain2[0].NETINC,
+              this.numMain2[0].RATGRO,
+              this.numMain2[0].TOTEQU,
+              this.numMain2[0].SOCNUM
+            ]
           },
           {
             name: this.year[1],
@@ -339,7 +351,17 @@ export default {
             emphasis: {
               focus: 'series'
             },
-            data: [this.num[1].ASSGRO, this.num[1].LIAGRO, this.num[1].VENDINC, this.num[1].MAIBUSINC, this.num[1].PROGRO, this.num[1].NETINC, this.num[1].RATGRO, this.num[1].TOTEQU, this.num[1].SOCNUM]
+            data: [
+              this.numMain2[1].ASSGRO,
+              this.numMain2[1].LIAGRO,
+              this.numMain2[1].VENDINC,
+              this.numMain2[1].MAIBUSINC,
+              this.numMain2[1].PROGRO,
+              this.numMain2[1].NETINC,
+              this.numMain2[1].RATGRO,
+              this.numMain2[1].TOTEQU,
+              this.numMain2[1].SOCNUM
+            ]
           }
         ]
       }
