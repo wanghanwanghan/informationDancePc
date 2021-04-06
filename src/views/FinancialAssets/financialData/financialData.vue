@@ -4,15 +4,15 @@
     <section class="et-hero-tabs">
       <div :class="isFixed?'et-hero-tabs-containerf':'et-hero-tabs-container'">
         <!-- <div class="et-hero-tabs-container"> -->
-        <a class="et-hero-tab" href="#tab-jb">财务数据</a>
-        <a class="et-hero-tab" href="#tab-gd">财务数据（需授权）</a>
+        <a class="et-hero-tab" href="#tab-jb">财务资产同比</a>
+        <a class="et-hero-tab" href="#tab-gd">财务资产数据（需授权）</a>
         <!-- <a class="et-hero-tab" href="#tab-swsj">税务数据（需授权）</a> -->
         <span class="et-hero-tab-slider" />
       </div>
     </section>
     <main class="et-main">
       <section id="tab-jb" class="et-slide" style="min-height:100px;margin-top:50px;">
-        <h3 style="margin-left:20px;">财务数据</h3>
+        <h3 style="margin-left:20px;">财务资产同比</h3>
         <div class="box2">
           <!-- 财务数据 -->
           <div v-show="!show" class="contF">
@@ -28,7 +28,7 @@
       </section>
       <div style="border-bottom:1px solid #DCDFE6" />
       <section id="tab-gd" class="et-slide" style="min-height:100px;margin-top:50px;">
-        <h3 style="margin-left:20px;">财务数据（需取得目标企业授权）</h3>
+        <h3 style="margin-left:20px;">财务资产数据（需取得目标企业授权）</h3>
         <div class="box2">
           <!-- 财务数据（需授权） -->
           <div class="box22">
