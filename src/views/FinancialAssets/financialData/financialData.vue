@@ -139,8 +139,8 @@ export default {
     this.query4.code = localStorage.getItem('CreditCode')
     var myDate = new Date()
     this.query4.year = myDate.getFullYear() - 2
+    this.query4.pay = 0
     getFinanceNotAuth(this.query4).then(res => {
-        console.log(res.data.result)
         if (res.data.code === 200) {
           this.show = true
           var obj = res.data.result
@@ -149,14 +149,10 @@ export default {
             this.num.push(obj[key])
           }
         }
-
-        // console.log(this.year)
-        // console.log(this.num)
         this.drawLine()
     })
     //财务需授权
     getFinanceNeedAuth(this.query4).then(res => {
-      console.log(res.data.result)
       if (res.data.code === 200) {
         this.showMin2 = true
         var obj = res.data.result
@@ -417,7 +413,8 @@ export default {
     },
 
     payM() {
-      getThreeYearsData(this.query).then(res => {
+      this.query4.pay = 0
+      getFinanceNotAuth(this.query4).then(res => {
         // console.log(res)
         if (res.data.code === 210) {
           this.$confirm(res.data.msg, '提示', {
@@ -429,8 +426,8 @@ export default {
             //   type: 'success',
             //   message: '删除成功!'
             // });
-            this.query.pay = 1
-            getThreeYearsData(this.query).then(res => {
+            this.query4.pay = 1
+            getFinanceNotAuth(this.query4).then(res => {
               // console.log(res)
               if (res.data.code === 220) {
                 this.$confirm('余额不足，是否前往充值？', '提示', {
@@ -452,13 +449,15 @@ export default {
                   this.$router.go(0)
                 })
               } else {
-                this.show = true
-                var obj = res.data.result
-                for (const key in obj) {
-                  this.year.push(key)
-                  this.num.push(obj[key])
-                }
-                this.drawLine()
+                  if (res.data.code === 200) {
+                    this.show = true
+                    var obj = res.data.result
+                    for (const key in obj) {
+                      this.year.push(key)
+                      this.num.push(obj[key])
+                    }
+                  }
+                  this.drawLine()
               }
             })
           }).catch(() => {
