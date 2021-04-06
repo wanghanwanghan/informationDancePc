@@ -116,7 +116,7 @@ export default {
         entName: '',
         code: '',
         year: '',
-        dataCount: 2,
+        dataCount: 3,
         phone: '',
         pay: 1
       },
@@ -213,7 +213,11 @@ export default {
           }
         },
         legend: {
-          data: [this.year[0], this.year[1]]
+          data: [
+            this.year[0],
+            this.year[1],
+            this.year[2]
+          ]
         },
         grid: {
           left: '3%',
@@ -255,7 +259,6 @@ export default {
             emphasis: {
               focus: 'series'
             },
-            //data: [this.num[0].ASSGRO_REL, this.num[0].LIAGRO_REL, this.num[0].VENDINC_REL, this.num[0].MAIBUSINC_REL, this.num[0].PROGRO_REL, this.num[0].NETINC_REL, this.num[0].RATGRO_REL, this.num[0].TOTEQU_REL, this.num[0].SOCNUM]
             data: [this.num[0].ASSGRO_yoy, this.num[0].LIAGRO_yoy, this.num[0].VENDINC_yoy, this.num[0].MAIBUSINC_yoy, this.num[0].PROGRO_yoy, this.num[0].NETINC_yoy, this.num[0].RATGRO_yoy, this.num[0].TOTEQU_yoy]
           },
           {
@@ -267,8 +270,27 @@ export default {
             emphasis: {
               focus: 'series'
             },
-            //data: [this.num[1].ASSGRO_REL, this.num[1].LIAGRO_REL, this.num[1].VENDINC_REL, this.num[1].MAIBUSINC_REL, this.num[1].PROGRO_REL, this.num[1].NETINC_REL, this.num[1].RATGRO_REL, this.num[1].TOTEQU_REL, this.num[1].SOCNUM]
             data: [this.num[1].ASSGRO_yoy, this.num[1].LIAGRO_yoy, this.num[1].VENDINC_yoy, this.num[1].MAIBUSINC_yoy, this.num[1].PROGRO_yoy, this.num[1].NETINC_yoy, this.num[1].RATGRO_yoy, this.num[1].TOTEQU_yoy]
+          },
+          {
+            name: this.year[2],
+            type: 'bar',
+            label: {
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: [
+              this.num[2].ASSGRO_yoy,
+              this.num[2].LIAGRO_yoy,
+              this.num[2].VENDINC_yoy,
+              this.num[2].MAIBUSINC_yoy,
+              this.num[2].PROGRO_yoy,
+              this.num[2].NETINC_yoy,
+              this.num[2].RATGRO_yoy,
+              this.num[2].TOTEQU_yoy
+            ]
           }
         ]
       }
@@ -289,7 +311,11 @@ export default {
           }
         },
         legend: {
-          data: [this.year[0], this.year[1]]
+          data: [
+            this.year[0],
+            this.year[1],
+            this.year[2]
+          ]
         },
         grid: {
           left: '3%',
@@ -361,6 +387,27 @@ export default {
               this.numMain2[1].RATGRO,
               this.numMain2[1].TOTEQU,
               this.numMain2[1].SOCNUM
+            ]
+          },
+          {
+            name: this.year[2],
+            type: 'bar',
+            label: {
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: [
+              this.numMain2[2].ASSGRO,
+              this.numMain2[2].LIAGRO,
+              this.numMain2[2].VENDINC,
+              this.numMain2[2].MAIBUSINC,
+              this.numMain2[2].PROGRO,
+              this.numMain2[2].NETINC,
+              this.numMain2[2].RATGRO,
+              this.numMain2[2].TOTEQU,
+              this.numMain2[2].SOCNUM
             ]
           }
         ]
