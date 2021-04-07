@@ -153,6 +153,7 @@ export default {
         this.drawLine()
     })
     //财务需授权
+    this.query4.pay = 1
     getFinanceNeedAuth(this.query4).then(res => {
       if (res.data.code === 200) {
         this.showMin2 = true
