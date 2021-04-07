@@ -489,7 +489,7 @@ export default {
         this.finalBeneficiary.name = res.data.result.Name
         this.finalBeneficiary.total = res.data.result.TotalStockPercent
 
-        if (this.contor.length === 0 || this.contor.length === null) {
+        if (this.contor.length === 0) {
           refundToWallet({
             'phone': localStorage.getItem('phone'),
             'entName': localStorage.getItem('entName'),
