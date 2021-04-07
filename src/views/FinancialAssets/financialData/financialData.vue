@@ -71,6 +71,7 @@ import {
   getFinanceNotAuth,
   getFinanceNeedAuth
 } from '@/api/article'
+import { refundToWallet } from '@/api/EnterpriseBackground'
 
 const echarts = require('echarts/lib/echarts')
 require('echarts/lib/component/tooltip')
@@ -161,9 +162,19 @@ export default {
           this.numMain2.push(obj[key])
         }
       }
-
-      // console.log(this.year)
-      // console.log(this.num)
+      // if (res.data.code === 250) {
+      //   refundToWallet({
+      //     'phone': localStorage.getItem('phone'),
+      //     'entName': localStorage.getItem('entName'),
+      //     'moduleNum': 51
+      //   }).then(res => {
+      //     this.$message({
+      //       type: 'info',
+      //       message: res.data.msg
+      //     })
+      //     console.log(res)
+      //   })
+      // }
       this.drawLineMain2()
     })
 
@@ -456,6 +467,19 @@ export default {
                       this.year.push(key)
                       this.num.push(obj[key])
                     }
+                  }
+                  if (res.data.code === 250) {
+                    refundToWallet({
+                      'phone': localStorage.getItem('phone'),
+                      'entName': localStorage.getItem('entName'),
+                      'moduleNum': 51
+                    }).then(res => {
+                      this.$message({
+                        type: 'info',
+                        message: res.data.msg
+                      })
+                      console.log(res)
+                    })
                   }
                   this.drawLine()
               }
