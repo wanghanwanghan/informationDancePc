@@ -121,6 +121,14 @@ export default {
         phone: '',
         pay: 1
       },
+      query5: {
+        entName: '',
+        code: '',
+        year: '',
+        dataCount: 3,
+        phone: '',
+        pay: 1//需要授权的财务接口
+      },
       Essential: [],
       IncometaxMonthlyDeclaration: [],
       IncometaxAnnualReport: [],
@@ -135,12 +143,17 @@ export default {
     window.addEventListener('scroll', this.initHeight)
     this.query.entName = this.query1.entName = this.query4.entName = this.entName = localStorage.getItem('entName')
     this.query.phone = this.query1.phone = this.query4.phone = this.phone = localStorage.getItem('phone')
+    this.query5.entName = localStorage.getItem('entName')
+    this.query5.phone = localStorage.getItem('phone')
 
     // 龙信 近n年财务数据，不需授权
     this.query4.code = localStorage.getItem('CreditCode')
+    this.query5.code = localStorage.getItem('CreditCode')
     var myDate = new Date()
     this.query4.year = myDate.getFullYear() - 2
+    this.query5.year = myDate.getFullYear() - 2
     this.query4.pay = 0
+    this.query5.pay = 1
     getFinanceNotAuth(this.query4).then(res => {
         if (res.data.code === 200) {
           this.show = true
@@ -153,8 +166,7 @@ export default {
         this.drawLine()
     })
     //财务需授权
-    this.query4.pay = 1
-    getFinanceNeedAuth(this.query4).then(res => {
+    getFinanceNeedAuth(this.query5).then(res => {
       if (res.data.code === 200) {
         this.showMin2 = true
         var obj = res.data.result
