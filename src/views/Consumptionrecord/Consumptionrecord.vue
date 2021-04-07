@@ -34,6 +34,12 @@
               <span>{{ row.created_at | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
             </template>
           </el-table-column>
+
+          <el-table-column align="center" label="备注">
+            <template slot-scope="{row}">
+              <span>{{ row.remark}}</span>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div class="pagination">
