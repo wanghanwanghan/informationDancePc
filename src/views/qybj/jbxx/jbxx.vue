@@ -12,7 +12,7 @@
         <a class="et-hero-tab" href="#tab-change">变更信息</a>
         <a class="et-hero-tab" href="#tab-frbg">法人变更</a>
         <a class="et-hero-tab" href="#tab-errinfo">经营异常</a>
-        <span class="et-hero-tab-slider" />
+        <span class="et-hero-tab-slider"/>
       </div>
     </section>
     <main class="et-main">
@@ -129,12 +129,13 @@
         <h3 style="margin-left:20px;">
           实际控制人
           <span v-if="show">
-            ( 最大股东 : {{this.finalBeneficiary.name}} 持股比例 : {{this.finalBeneficiary.total}} )
+            ( 最大股东 : {{ this.finalBeneficiary.name }} 持股比例 : {{ this.finalBeneficiary.total }} )
           </span>
         </h3>
         <div class="box2">
           <div v-if="!show" class="cont1">
-            此信息需要付费<el-button type="primary" style="margin-left:20px;" @click="pay">点击查看</el-button>
+            此信息需要付费
+            <el-button type="primary" style="margin-left:20px;" @click="pay">点击查看</el-button>
           </div>
           <div v-if="show" class="cont">
             <div v-if="contor.length === 0 || contor === null" class="cont">因穿透股东中有政府部门或国资单位等特殊机构，故不予显示（消耗费用将返还）</div>
@@ -416,7 +417,8 @@ import {
   getBranchInfo,
   getRegisterChangeInfo,
   frbg,
-  getOperatingExceptionRota
+  getOperatingExceptionRota,
+  refundToWallet
 } from '@/api/EnterpriseBackground'
 import { getCpws } from '@/api/JudicialDecisions'
 // import $ from 'jquery'
@@ -437,9 +439,9 @@ export default {
         pay: ''
       },
       contor: [],
-      finalBeneficiary : {
+      finalBeneficiary: {
         name: '',
-        total: '',
+        total: ''
       },
       show: false,
       manger: [],
@@ -486,7 +488,17 @@ export default {
         this.contor = res.data.result
         this.finalBeneficiary.name = res.data.result.Name
         this.finalBeneficiary.total = res.data.result.TotalStockPercent
-        // console.log(typeof (this.list))
+
+        if (this.contor.length === 0 || this.contor.length === null) {
+          refundToWallet({
+            'phone': localStorage.getItem('phone'),
+            'entName': localStorage.getItem('entName'),
+            'moduleNum': 14
+          }).then(res => {
+            console.log(res)
+          })
+        }
+
         this.show = true
       } else {
         this.show = false
@@ -535,7 +547,7 @@ export default {
         // console.log(res)
         if (res.data.code === 200) {
           this.contor = res.data.result
-        // console.log(typeof (this.list))
+          // console.log(typeof (this.list))
         } else {
           this.$confirm((res.data.msg), '提示', {
             confirmButtonText: '确定',
@@ -551,17 +563,17 @@ export default {
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                // this.$message({
-                //   type: 'success',
-                //   message: '删除成功!'
-                // })
+                  // this.$message({
+                  //   type: 'success',
+                  //   message: '删除成功!'
+                  // })
                   this.$router.push('/login')
                   localStorage.setItem('activeName', 'third')
                 }).catch(() => {
-                // this.$message({
-                //   type: 'info',
-                //   message: '已取消删除'
-                // })
+                  // this.$message({
+                  //   type: 'info',
+                  //   message: '已取消删除'
+                  // })
                   this.$router.go(0)
                 })
               } else {
@@ -609,8 +621,8 @@ export default {
 //     }
 //   }
 // }
-.box{
-  .et-hero-tabs{
+.box {
+  .et-hero-tabs {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -622,7 +634,7 @@ export default {
     background: #eee;
     text-align: center;
     // padding: 0 2em;
-    .et-hero-tabs-containerf{
+    .et-hero-tabs-containerf {
       display: flex;
       flex-direction: row;
       /* position: absolute; */
@@ -634,9 +646,11 @@ export default {
       z-index: 10;
       position: fixed;
       top: 0px;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
         display: flex;
         justify-content: center;
@@ -647,11 +661,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -661,6 +677,7 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container {
       display: flex;
       flex-direction: row;
@@ -671,11 +688,13 @@ export default {
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       background: #fff;
       z-index: 10;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
-        width:150px;
+        width: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -685,11 +704,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -699,11 +720,13 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container--top {
       position: fixed;
       top: 0;
     }
-    .et-main{
+
+    .et-main {
       .et-slide {
         display: flex;
         flex-direction: column;
@@ -714,61 +737,72 @@ export default {
         background: #eee;
         text-align: center;
         padding: 0 2em;
-        .cont{
-          width:94%;
+
+        .cont {
+          width: 94%;
           // min-height:500px;
-          margin:40px;
-          border:1px solid #EBEBEB;
+          margin: 40px;
+          border: 1px solid #EBEBEB;
         }
       }
     }
   }
 }
-.box1{
+
+.box1 {
   width: 100%;
-  .cont{
-    width:94%;
-    min-height:200px;
-    margin:40px;
-    border:1px solid #EBEBEB;
-      tr{
-        display: table-row;
-        vertical-align: inherit;
-        border-color: inherit;
-      td{
+
+  .cont {
+    width: 94%;
+    min-height: 200px;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
+
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+
+      td {
         border-bottom: 1px solid #EBEBEB;
         border-right: 1px solid #EBEBEB;
         line-height: 1.5;
         padding: 8px 6px;
       }
-      .type1{
-        width:100px
+
+      .type1 {
+        width: 100px
       }
-      .type2{
-        width:200px
+
+      .type2 {
+        width: 200px
       }
-      .type3{
+
+      .type3 {
         // colspan:'4'
-        border-right:none
+        border-right: none
       }
-      .type4{
+
+      .type4 {
         border-bottom: none;
       }
     }
   }
 
 }
-.box2{
-  .cont{
-    width:94%;
+
+.box2 {
+  .cont {
+    width: 94%;
     // min-height:500px;
-    margin:40px;
-    border:1px solid #EBEBEB;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
   }
 }
-.cont1{
-  padding:40px 0 40px 400px;
-  width:94%;
-  border:1px solid #EBEBEB;
+
+.cont1 {
+  padding: 40px 0 40px 400px;
+  width: 94%;
+  border: 1px solid #EBEBEB;
 }
 </style>

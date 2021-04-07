@@ -75,3 +75,11 @@ export function getFeatures(data) {
     data
   })
 }
+// 退款
+export function refundToWallet(data) {
+  return request({
+    url: '/api/v1/comm/refundToWallet',
+    method: 'post',
+    data
+  })
+}
