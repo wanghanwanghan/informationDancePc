@@ -488,17 +488,6 @@ export default {
         this.contor = res.data.result
         this.finalBeneficiary.name = res.data.result.Name
         this.finalBeneficiary.total = res.data.result.TotalStockPercent
-
-        if (this.contor.length === 0) {
-          refundToWallet({
-            'phone': localStorage.getItem('phone'),
-            'entName': localStorage.getItem('entName'),
-            'moduleNum': 14
-          }).then(res => {
-            console.log(res)
-          })
-        }
-
         this.show = true
       } else {
         this.show = false
@@ -580,6 +569,15 @@ export default {
                 this.contor = res.data.result
                 this.finalBeneficiary.name = res.data.result.Name
                 this.finalBeneficiary.total = res.data.result.TotalStockPercent
+                if (this.contor.length === 0) {
+                  refundToWallet({
+                    'phone': localStorage.getItem('phone'),
+                    'entName': localStorage.getItem('entName'),
+                    'moduleNum': 14
+                  }).then(res => {
+                    console.log(res)
+                  })
+                }
                 this.$message({
                   type: 'success',
                   message: '查询成功!'
