@@ -182,7 +182,7 @@ export default {
       //     'moduleNum': 51
       //   }).then(res => {
       //     this.$message({
-      //       type: 'info',
+      //       type: 'error',
       //       message: res.data.msg
       //     })
       //     console.log(res)
@@ -488,7 +488,7 @@ export default {
                       'moduleNum': 51
                     }).then(res => {
                       this.$message({
-                        type: 'info',
+                        type: 'error',
                         message: res.data.msg
                       })
                       console.log(res)
