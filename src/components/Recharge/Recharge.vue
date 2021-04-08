@@ -35,7 +35,7 @@
         width="30%"
         :before-close="handleC"
       >
-        <div id="qrcode" ref="qrCodeUrl" />
+        <div id="qrcode" ref="qrCodeUrl"/>
       </el-dialog>
     </div>
   </div>
@@ -43,6 +43,7 @@
 <script>
 import { goods, Sando, check } from '@/api/article'
 import QRCode from 'qrcodejs2'
+
 export default {
   name: 'Recharge',
   data() {
@@ -70,13 +71,13 @@ export default {
   created() {
     this.query.phone = this.query1.phone = this.query2.phone = this.phone = localStorage.getItem('phone')
     goods(this.query).then(res => {
-    //   console.log(res)
+      //   console.log(res)
       this.list = res.data.result
     })
   },
   methods: {
     pay(e) {
-    //   console.log(e)
+      //   console.log(e)
       this.query1.type = e
     },
     confirm() {
@@ -87,7 +88,8 @@ export default {
         .then(_ => {
           done()
         })
-        .catch(_ => {})
+        .catch(_ => {
+        })
     },
     Scancode(e) {
       if (e === 1) {
@@ -102,7 +104,7 @@ export default {
           this.title = '请使用微信扫码支付'
           this.query1.payWay = 'wx_scan'
           Sando(this.query1).then(res => {
-          // console.log(res)
+            // console.log(res)
             const text = res.data.result.payObj
             const orderId = res.data.result.orderId
             this.query2.orderId = orderId
@@ -118,7 +120,7 @@ export default {
           var _this = this
           var time = setInterval(function() {
             check(_this.query2).then(res => {
-            // console.log(res)
+              // console.log(res)
               if (res.data.code === 200) {
                 this.dialogVisibl = false
                 clearInterval(time)
@@ -157,7 +159,7 @@ export default {
           var _this1 = this
           var time1 = setInterval(function() {
             check(_this1.query2).then(res => {
-            // console.log(res)
+              // console.log(res)
               if (res.data.code === 200) {
                 this.dialogVisibl = false
                 clearInterval(time1)
@@ -185,71 +187,83 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.cont{
-  width:70%;
-  margin:80px auto;
-      display: flex;
-      flex-wrap: wrap;
-      .cont-t{
-        width: 100%;
-        display: flex;
-          justify-content: space-around;
-          .money{
-          // display: flex;
-          // justify-content: space-around;
-          // margin:20px 82px;
-          .name{
-              font-size: 18px;
-              margin-bottom:10px;
-          }
-          .desc{
-              font-size: 16px;
-          }
-          .descZ{
-            margin-top:20px;
-            font-size:12px;
-          }
-      }
-      }
-      .cont-b{
-        width: 100%;
-        .title{
-          margin-top:35px;
-        }
-        .Zway{
-          width: 100%;
-          display: flex;
-          justify-content: space-around;
-        }
+.cont {
+  width: 70%;
+  margin: 80px auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  .cont-t {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    .money {
+      // display: flex;
+      // justify-content: space-around;
+      // margin:20px 82px;
+      .name {
+        font-size: 18px;
+        margin-bottom: 10px;
       }
 
+      .desc {
+        margin-top: 15px;
+        font-size: 14px;
+      }
+
+      .descZ {
+        margin-top: 20px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .cont-b {
+    width: 100%;
+
+    .title {
+      margin-top: 35px;
+    }
+
+    .Zway {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+
 }
-.com{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin:25px 0;
-    border: 1px solid #D7DAE2;
-    border-radius: 4px
+
+.com {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 25px 0;
+  border: 1px solid #D7DAE2;
+  border-radius: 4px
 }
-.wenzi{
-    font-size: 16px;
-    margin-right: 40px;
+
+.wenzi {
+  font-size: 16px;
+  margin-right: 40px;
 }
-.com:hover{
-    cursor:pointer
+
+.com:hover {
+  cursor: pointer
 }
-#qrcode{
-    display: inline-block;
-    margin-left:80px;
-    margin-bottom: 35px;
-    // img {
-    //     display: block;
-    //     width: 200px;
-    //     height: 200px;
-    //     // background-color: #fff; //设置白色背景色
-    //     // padding: 6px; // 利用padding的特性，挤出白边
-    //     // box-sizing: border-box;
-    // }
+
+#qrcode {
+  display: inline-block;
+  margin-left: 80px;
+  margin-bottom: 35px;
+  // img {
+  //     display: block;
+  //     width: 200px;
+  //     height: 200px;
+  //     // background-color: #fff; //设置白色背景色
+  //     // padding: 6px; // 利用padding的特性，挤出白边
+  //     // box-sizing: border-box;
+  // }
 }
 </style>
