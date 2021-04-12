@@ -10,7 +10,7 @@
       <el-col :span="10">
         <div class="search">
           <el-input v-model="input" placeholder="请输入内容" class="input-with-select" @change="sousuo">
-            <el-button slot="append" icon="el-icon-search" @click="sousuo" />
+            <el-button slot="append" icon="el-icon-search" @click="sousuo"/>
           </el-input>
         </div>
       </el-col>
@@ -49,7 +49,7 @@
       >
         <div>
           <div class="editor-container">
-            <dnd-list :list1="list1" :list2="list2" list1-title="List" list2-title="Article pool" />
+            <dnd-list :list1="list1" :list2="list2" list1-title="List" list2-title="Article pool"/>
           </div>
         </div>
       </el-dialog>
@@ -67,7 +67,7 @@
     >
       <div>
         <div class="editor-container">
-          <dndj-list :list3="list3" :list4="list4" list3-title="List" list4-title="Article pool" />
+          <dndj-list :list3="list3" :list4="list4" list3-title="List" list4-title="Article pool"/>
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -81,7 +81,7 @@
       :visible.sync="reportJword"
       width="50%"
     >
-      <IndexWord />
+      <IndexWord/>
       <span slot="footer" class="dialog-footer">
         <el-button @click="reportJword = false">取 消</el-button>
         <el-button type="primary" @click="reportJW">确 定</el-button>
@@ -107,7 +107,7 @@
       :visible.sync="dia"
       width="50%"
     >
-      <UploadPic />
+      <UploadPic/>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dia = false">取 消</el-button>
         <el-button type="primary" @click="tijiao">确 定</el-button>
@@ -180,19 +180,19 @@
             <el-button style="margin-left: 10px;" size="small" type="info" @click="down">下载授权书模板</el-button>
           </el-upload>
         </div>
-<!--        <div class="auth-book-wrapper">-->
-<!--          <p style="width: 100%;text-align: center"><strong>授 权 书</strong></p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">为有效保障我公司的合法权益，并使我公司享受贵方后续的高效、专业服务，我公司理解、同意给予贵方如下授权：</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">一、授权事项</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、我公司合法授权贵方及贵方技术合作方北京每日信动科技有限公司（以下称“每日信动公司”）采集我公司的企业信息（包括但不限于基本工商信息、经营信息、发票信息、贷款信息、财务信息、税务信息、司法行政警示信息等）。我公司同意通过安装插件、代为申请纳税人税务数字证书或以贵方或每日信动公司提供的其他方式，对我公司进行企业信息采集。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、贵方或每日信动公司有权依照自行设立的模型、模式、格式、规则、流程等对我公司的企业信息进行保存、整理、分析、加工等处理操作。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、贵方或每日信动公司有权将我公司的企业信息以评估报告或其他形式提供给相关第三方，上述相关第三方包括根据我公司的申请拟向我公司提供服务或已经为我公司提供服务的相关机构等。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">4、贵方或每日信动公司根据本授权，有权对我公司企业信息进行采集、处理，并将该等信息提供给相关第三方；未经我公司另行授权，贵方或每日信动公司不得将采集的信息披露给与本次企业信息采集事项无关联的主体。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">二、其他事项</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、本协议项下授权的起始日期为我公司盖章或安装贵方或每日信动公司提供的插件之日。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、与信息采集有关的事项终止后，本授权书方可终止；若因我公司提前终止本授权书而对申请、使用评估报告的相关第三方产生任何不利影响或损失，由我公司自行承担，贵方或每日信动公司不承担任何责任。</p>-->
-<!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、我公司认可贵方或每日信动公司保留对本授权所有条款及规则的最终解释权。</p>-->
-<!--        </div>-->
+        <!--        <div class="auth-book-wrapper">-->
+        <!--          <p style="width: 100%;text-align: center"><strong>授 权 书</strong></p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">为有效保障我公司的合法权益，并使我公司享受贵方后续的高效、专业服务，我公司理解、同意给予贵方如下授权：</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">一、授权事项</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、我公司合法授权贵方及贵方技术合作方北京每日信动科技有限公司（以下称“每日信动公司”）采集我公司的企业信息（包括但不限于基本工商信息、经营信息、发票信息、贷款信息、财务信息、税务信息、司法行政警示信息等）。我公司同意通过安装插件、代为申请纳税人税务数字证书或以贵方或每日信动公司提供的其他方式，对我公司进行企业信息采集。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、贵方或每日信动公司有权依照自行设立的模型、模式、格式、规则、流程等对我公司的企业信息进行保存、整理、分析、加工等处理操作。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、贵方或每日信动公司有权将我公司的企业信息以评估报告或其他形式提供给相关第三方，上述相关第三方包括根据我公司的申请拟向我公司提供服务或已经为我公司提供服务的相关机构等。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">4、贵方或每日信动公司根据本授权，有权对我公司企业信息进行采集、处理，并将该等信息提供给相关第三方；未经我公司另行授权，贵方或每日信动公司不得将采集的信息披露给与本次企业信息采集事项无关联的主体。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">二、其他事项</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">1、本协议项下授权的起始日期为我公司盖章或安装贵方或每日信动公司提供的插件之日。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">2、与信息采集有关的事项终止后，本授权书方可终止；若因我公司提前终止本授权书而对申请、使用评估报告的相关第三方产生任何不利影响或损失，由我公司自行承担，贵方或每日信动公司不承担任何责任。</p>-->
+        <!--          <p style="width: 100%;text-align: left;text-indent: 30px">3、我公司认可贵方或每日信动公司保留对本授权所有条款及规则的最终解释权。</p>-->
+        <!--        </div>-->
       </div>
       <span slot="footer" class="dialog-footer">
 <!--        <el-button type="primary" @click="setAuth">确 定</el-button>-->
@@ -231,7 +231,18 @@ import DndList from '@/components/DndList/index'
 import DndjList from '@/components/DndjList/index'
 import UploadPic from '@/components/UploadPic/UploadPic'
 import IndexWord from '@/components/DndjList/IndexWord'
-import { getEntList, createEasyWord, Supervisor, createVeryEasy, createVeryEasypdf, authBookC, authBook, createDeepEasy, getAuthentication } from '@/api/article'
+import {
+  getEntList,
+  createEasyWord,
+  Supervisor,
+  createVeryEasy,
+  createVeryEasypdf,
+  authBookC,
+  authBook,
+  createDeepEasy,
+  getAuthentication
+} from '@/api/article'
+
 var token = localStorage.getItem('token')
 export default {
   components: { DndList, DndjList, UploadPic, IndexWord },
@@ -490,7 +501,7 @@ export default {
         }
       })
     },
-    outerVisibles(e,code) {
+    outerVisibles(e, code) {
       localStorage.setItem('reportName', e)
       localStorage.setItem('CreditCode', code)
       this.Reporttype = true
@@ -553,7 +564,7 @@ export default {
             }
           })
           localStorage.setItem('activeName', 'second')
-        // this.dia = true
+          // this.dia = true
         }
       })
     },
@@ -561,7 +572,7 @@ export default {
       let entName = localStorage.getItem('reportName')
       let phone = localStorage.getItem('phone')
       let CreditCode = localStorage.getItem('CreditCode')
-      getAuthentication({entName,phone,"code":CreditCode}).then(res => {
+      getAuthentication({ entName, phone, 'code': CreditCode }).then(res => {
         if (res.data.code === 200) {
           window.location.href = res.data.result
         }
@@ -626,17 +637,17 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                   }).then(() => {
-                  // this.$message({
-                  //   type: 'success',
-                  //   message: '删除成功!'
-                  // })
+                    // this.$message({
+                    //   type: 'success',
+                    //   message: '删除成功!'
+                    // })
                     this.$router.push('/login')
                     localStorage.setItem('activeName', 'third')
                   }).catch(() => {
-                  // this.$message({
-                  //   type: 'info',
-                  //   message: '已取消删除'
-                  // })
+                    // this.$message({
+                    //   type: 'info',
+                    //   message: '已取消删除'
+                    // })
                     this.$router.go(0)
                   })
                 } else {
@@ -769,7 +780,7 @@ export default {
         this.query2.email = value
         this.query2.entName = localStorage.getItem('reportName')
         createVeryEasy(this.query2).then(res => {
-        // console.log(res)
+          // console.log(res)
           if (res.data.code === 210) {
             this.msg = res.data.msg
             this.$confirm(res.data.msg, '提示', {
@@ -777,10 +788,10 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-            // this.$message({
-            //   type: 'success',
-            //   message: '删除成功!'
-            // })
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // })
               this.query2.pay = true
               createVeryEasy(this.query2).then(res => {
                 if (res.data.code === 220) {
@@ -789,17 +800,17 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                   }).then(() => {
-                  // this.$message({
-                  //   type: 'success',
-                  //   message: '删除成功!'
-                  // })
+                    // this.$message({
+                    //   type: 'success',
+                    //   message: '删除成功!'
+                    // })
                     this.$router.push('/login')
                     localStorage.setItem('activeName', 'second')
                   }).catch(() => {
-                  // this.$message({
-                  //   type: 'info',
-                  //   message: '已取消删除'
-                  // })
+                    // this.$message({
+                    //   type: 'info',
+                    //   message: '已取消删除'
+                    // })
                     this.$router.go(0)
                   })
                 } else {
@@ -818,10 +829,10 @@ export default {
                 }
               })
             }).catch(() => {
-            // this.$message({
-            //   type: 'info',
-            //   message: '已取消删除'
-            // })
+              // this.$message({
+              //   type: 'info',
+              //   message: '已取消删除'
+              // })
             })
           } else {
             this.$confirm(res.data.msg, '提示', {
@@ -867,7 +878,7 @@ export default {
         // this.query3.reportNum = reportNum
         this.query3.type = 'xd'
         createVeryEasypdf(this.query3).then(res => {
-        // console.log(res)
+          // console.log(res)
           if (res.data.code === 210) {
             this.msg = res.data.msg
             this.$confirm(res.data.msg, '提示', {
@@ -875,10 +886,10 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-            // this.$message({
-            //   type: 'success',
-            //   message: '删除成功!'
-            // })
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // })
               this.query3.pay = true
               createVeryEasypdf(this.query3).then(res => {
                 if (res.data.code === 220) {
@@ -887,17 +898,17 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                   }).then(() => {
-                  // this.$message({
-                  //   type: 'success',
-                  //   message: '删除成功!'
-                  // })
+                    // this.$message({
+                    //   type: 'success',
+                    //   message: '删除成功!'
+                    // })
                     this.$router.push('/login')
                     localStorage.setItem('activeName', 'second')
                   }).catch(() => {
-                  // this.$message({
-                  //   type: 'info',
-                  //   message: '已取消删除'
-                  // })
+                    // this.$message({
+                    //   type: 'info',
+                    //   message: '已取消删除'
+                    // })
                     this.$router.go(0)
                   })
                 } else {
@@ -916,10 +927,10 @@ export default {
                 }
               })
             }).catch(() => {
-            // this.$message({
-            //   type: 'info',
-            //   message: '已取消删除'
-            // })
+              // this.$message({
+              //   type: 'info',
+              //   message: '已取消删除'
+              // })
             })
           } else {
             this.$confirm(res.data.msg, '提示', {
@@ -1015,87 +1026,99 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.nav{
-  height:47px;
+.nav {
+  height: 47px;
   width: 100%;
   margin-top: 20px;
-  .img{
-      display: block;
-      width: 108px;
-      height:47px;
-      margin-left: 60px;
+
+  .img {
+    display: block;
+    width: 108px;
+    height: 47px;
+    margin-left: 60px;
   }
 }
-.cont{
-    width:1200px;
-    // height: 2200px;
-    margin:auto;
-    .cont-list{
-        width: 100%;
-        border-bottom: 1px solid #E3E3E3;
-        padding: 16px 20px 0 20px;
+
+.cont {
+  width: 1200px;
+  // height: 2200px;
+  margin: auto;
+
+  .cont-list {
+    width: 100%;
+    border-bottom: 1px solid #E3E3E3;
+    padding: 16px 20px 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left {
+      .name {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        .left{
-            .name{
-                display: flex;
-                justify-content: start;
-                padding-bottom: 10px;
-                color: #525252;
-                h2{
-                    color: #428bca;
-                    font-weight: 500;
-                    font-size: 18px;
-                    cursor: pointer;
-                }
-            }
-            .desc{
-                padding-bottom: 10px;
-                font-size: 14px;
-                color: #525252;
-            }
+        justify-content: start;
+        padding-bottom: 10px;
+        color: #525252;
+
+        h2 {
+          color: #428bca;
+          font-weight: 500;
+          font-size: 18px;
+          cursor: pointer;
         }
-        .right{
-            display: flex;
-            flex-direction: row;
-            justify-content: start;
-            margin:15px 40px 0 0;
-            .jkong{
-                cursor: pointer;
-                height: 28px;
-                background-color: orange;
-                color: #FFFFFF;
-                padding: 5px 18px;
-                border-radius: 5px;
-                margin-right: 15px;
-            }
-            .jkong1{
-                cursor: pointer;
-                height: 28px;
-                background-color: #64C09B;
-                color: #FFFFFF;
-                padding: 5px 18px;
-                border-radius: 5px;
-                margin-right: 15px;
-            }
-            .sqing{
-                cursor: pointer;
-                height: 28px;
-                background: #3389CA;
-                color: #FFFFFF;
-                padding: 5px 18px;
-                border-radius: 5px;
-            }
-        }
+      }
+
+      .desc {
+        padding-bottom: 10px;
+        font-size: 14px;
+        color: #525252;
+      }
     }
+
+    .right {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      margin: 15px 40px 0 0;
+
+      .jkong {
+        cursor: pointer;
+        height: 28px;
+        background-color: orange;
+        color: #FFFFFF;
+        padding: 5px 18px;
+        border-radius: 5px;
+        margin-right: 15px;
+      }
+
+      .jkong1 {
+        cursor: pointer;
+        height: 28px;
+        background-color: #64C09B;
+        color: #FFFFFF;
+        padding: 5px 18px;
+        border-radius: 5px;
+        margin-right: 15px;
+      }
+
+      .sqing {
+        cursor: pointer;
+        height: 28px;
+        background: #3389CA;
+        color: #FFFFFF;
+        padding: 5px 18px;
+        border-radius: 5px;
+      }
+    }
+  }
 }
-.pagination{
-    width:1200px;
-    margin:auto;
-    margin-top:25px;
+
+.pagination {
+  width: 1200px;
+  margin: auto;
+  margin-top: 25px;
 }
-.reportBox{
+
+.reportBox {
   display: flex;
   flex-direction: column;
   justify-content: center;

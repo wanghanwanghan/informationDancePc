@@ -11,17 +11,15 @@
             :preview-src-list="srcList"
           />
         </div>
-
         <el-button type="primary" @click="open">生成报告</el-button>
         <draggable :set-data="setData" :list="list1" group="article" class="dragArea">
           <div v-for="element in list1" :key="element.id" class="list-complete-item1">
-
             <div class="list-complete-item-handle">
               {{ element.id }} {{ element.title }}
             </div>
             <div style="position:absolute;right:0px;">
-              <span style="float: right ;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
-                <i style="color:#ff4949" class="el-icon-delete" />
+              <span style="float: right;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
+                <i style="color:#ff4949" class="el-icon-delete"/>
               </span>
               <el-upload
                 ref="upload"
@@ -42,22 +40,18 @@
             </div>
           </div>
         </draggable>
-
       </div>
-
       <div :style="{width:width2}" class="dndList-list">
         <h3>选择字段（点击生成到报告中的字段）</h3>
         <draggable :list="list2" group="article" class="dragArea">
           <div v-for="element in list2" :key="element.id" class="list-complete-item">
             <div class="list-complete-item-handle2" @click="pushEle(element)">
-              {{ element.id }}  {{ element.title }}
+              {{ element.id }} {{ element.title }}
             </div>
           </div>
         </draggable>
       </div>
-
     </div>
-
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -612,17 +606,21 @@ export default {
 .dndList {
   background: #fff;
   padding-bottom: 40px;
+
   &:after {
     content: "";
     display: table;
     clear: both;
   }
+
   .dndList-list {
     float: left;
     padding-bottom: 30px;
+
     &:first-of-type {
       margin-right: 2%;
     }
+
     .dragArea {
       margin-top: 15px;
       min-height: 50px;
@@ -633,7 +631,7 @@ export default {
 
 .list-complete-item1 {
   cursor: pointer;
-  width:295px;
+  width: 300px;
   position: relative;
   font-size: 14px;
   padding: 5px 12px;
@@ -641,8 +639,9 @@ export default {
   border: 1px solid #bfcbd9;
   transition: all 1s;
   float: left;
-  margin-bottom:100px;
+  margin-bottom: 100px;
 }
+
 .list-complete-item {
   cursor: pointer;
   position: relative;
@@ -652,10 +651,11 @@ export default {
   border: 1px solid #bfcbd9;
   transition: all 1s;
 }
-.upload-demo{
-    position: absolute;
-    right: -205px;
-    top: -23px;
+
+.upload-demo {
+  position: absolute;
+  right: -205px;
+  top: -23px;
 }
 
 .list-complete-item-handle {

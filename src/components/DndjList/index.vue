@@ -813,7 +813,7 @@ export default {
 
 .list-complete-item1 {
   cursor: pointer;
-  width:295px;
+  width: 300px;
   position: relative;
   font-size: 14px;
   padding: 5px 12px;
