@@ -16,6 +16,9 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="remarks" v-if="!showBtn">
+        备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑
+      </div>
     </div>
   </div>
 </template>
@@ -191,5 +194,10 @@ export default {
   width: 94%;
   margin: 40px;
   border: 1px solid #EBEBEB;
+}
+
+.remarks {
+  margin-left: 40px;
+  margin-bottom: 100px;
 }
 </style>
