@@ -190,26 +190,26 @@ export const constantRoutes = [
       // }
     ]
   },
-  // {
-  //   path: '/Features',
-  //   component: Layout,
-  //   redirect: '/Features/Features',
-  //   name: 'Features',
-  //   meta: {
-  //     title: '二次特征123'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'Features',
-  //       component: () => import('@/views/Features/Features/Features'),
-  //       name: 'Features',
-  //       meta: {
-  //         title: '二次特征',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/Features',
+    component: Layout,
+    redirect: '/Features/Features',
+    name: 'Features',
+    meta: {
+      title: '业务特征'
+    },
+    children: [
+      {
+        path: 'Features',
+        component: () => import('@/views/Features/Features/Features'),
+        name: 'Features',
+        meta: {
+          title: '业务特征',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
   {
     path: '/AssetClues',
     component: Layout,
