@@ -155,15 +155,15 @@ export default {
     this.query4.pay = 0
     this.query5.pay = 1
     getFinanceNotAuth(this.query4).then(res => {
-        if (res.data.code === 200) {
-          this.show = true
-          var obj = res.data.result
-          for (const key in obj) {
-            this.year.push(key)
-            this.num.push(obj[key])
-          }
+      if (res.data.code === 200) {
+        this.show = true
+        var obj = res.data.result
+        for (const key in obj) {
+          this.year.push(key)
+          this.num.push(obj[key])
         }
-        this.drawLine()
+      }
+      this.drawLine()
     })
     //财务需授权
     getFinanceNeedAuth(this.query5).then(res => {
@@ -473,28 +473,28 @@ export default {
                   this.$router.go(0)
                 })
               } else {
-                  if (res.data.code === 200) {
-                    this.show = true
-                    var obj = res.data.result
-                    for (const key in obj) {
-                      this.year.push(key)
-                      this.num.push(obj[key])
-                    }
+                if (res.data.code === 200) {
+                  this.show = true
+                  var obj = res.data.result
+                  for (const key in obj) {
+                    this.year.push(key)
+                    this.num.push(obj[key])
                   }
-                  if (res.data.code === 250) {
-                    refundToWallet({
-                      'phone': localStorage.getItem('phone'),
-                      'entName': localStorage.getItem('entName'),
-                      'moduleNum': 51
-                    }).then(res => {
-                      this.$message({
-                        type: 'error',
-                        message: res.data.msg
-                      })
-                      console.log(res)
+                }
+                if (res.data.code === 250) {
+                  refundToWallet({
+                    'phone': localStorage.getItem('phone'),
+                    'entName': localStorage.getItem('entName'),
+                    'moduleNum': 51
+                  }).then(res => {
+                    this.$message({
+                      type: 'error',
+                      message: res.data.msg
                     })
-                  }
-                  this.drawLine()
+                    console.log(res)
+                  })
+                }
+                this.drawLine()
               }
             })
           }).catch(() => {

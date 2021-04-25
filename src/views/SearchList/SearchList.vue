@@ -511,19 +511,20 @@ export default {
       this.innerVisible = true
     },
     open() {
-      this.$prompt('请输入邮箱', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        this.dia = true
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
-      })
+      // this.$prompt('请输入邮箱', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+      //   inputErrorMessage: '邮箱格式不正确'
+      // }).then(({ value }) => {
+      //   this.dia = true
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消输入'
+      //   })
+      // })
+      this.dia = true
     },
     dialogVisibles() {
       this.dialogVisible = false
@@ -607,90 +608,164 @@ export default {
     },
     // 尽调版word下载
     reportJW() {
-      this.$prompt('请输入邮箱', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        this.query6.email = value
-        this.query6.entName = localStorage.getItem('reportName')
-        this.query6.phone = localStorage.getItem('phone')
-        this.query6.reportNum = localStorage.getItem('reportNum')
-        createDeepEasy(this.query6).then(res => {
-          // console.log(res)
-          if (res.data.code === 210) {
-            this.$confirm(res.data.msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // });
-              this.query6.pay = 1
-              createDeepEasy(this.query6).then(res => {
-                if (res.data.code === 220) {
-                  this.$confirm('余额不足，是否前往充值？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                  }).then(() => {
-                    // this.$message({
-                    //   type: 'success',
-                    //   message: '删除成功!'
-                    // })
-                    this.$router.push('/login')
-                    localStorage.setItem('activeName', 'third')
-                  }).catch(() => {
-                    // this.$message({
-                    //   type: 'info',
-                    //   message: '已取消删除'
-                    // })
-                    this.$router.go(0)
-                  })
-                } else {
-                  this.$notify({
-                    title: '成功',
-                    message: '可在线生成并查看',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/login',
-                    query: {
-                      activeName: 'second'
-                    }
-                  })
-                  localStorage.setItem('activeName', 'second')
-                }
-              })
-            }).catch(() => {
-              // this.$message({
-              //   type: 'info',
-              //   message: '已取消删除'
-              // });
-            })
-          } else {
-            this.$notify({
-              title: '成功',
-              message: '可在线生成并查看',
-              type: 'success'
-            })
-            this.$router.push({
-              path: '/login',
-              query: {
-                activeName: 'second'
+      // this.$prompt('请输入邮箱', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+      //   inputErrorMessage: '邮箱格式不正确'
+      // }).then(({ value }) => {
+      //   this.query6.email = value
+      //   this.query6.entName = localStorage.getItem('reportName')
+      //   this.query6.phone = localStorage.getItem('phone')
+      //   this.query6.reportNum = localStorage.getItem('reportNum')
+      //   createDeepEasy(this.query6).then(res => {
+      //     // console.log(res)
+      //     if (res.data.code === 210) {
+      //       this.$confirm(res.data.msg, '提示', {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning'
+      //       }).then(() => {
+      //         // this.$message({
+      //         //   type: 'success',
+      //         //   message: '删除成功!'
+      //         // });
+      //         this.query6.pay = 1
+      //         createDeepEasy(this.query6).then(res => {
+      //           if (res.data.code === 220) {
+      //             this.$confirm('余额不足，是否前往充值？', '提示', {
+      //               confirmButtonText: '确定',
+      //               cancelButtonText: '取消',
+      //               type: 'warning'
+      //             }).then(() => {
+      //               // this.$message({
+      //               //   type: 'success',
+      //               //   message: '删除成功!'
+      //               // })
+      //               this.$router.push('/login')
+      //               localStorage.setItem('activeName', 'third')
+      //             }).catch(() => {
+      //               // this.$message({
+      //               //   type: 'info',
+      //               //   message: '已取消删除'
+      //               // })
+      //               this.$router.go(0)
+      //             })
+      //           } else {
+      //             this.$notify({
+      //               title: '成功',
+      //               message: '可在线生成并查看',
+      //               type: 'success'
+      //             })
+      //             this.$router.push({
+      //               path: '/login',
+      //               query: {
+      //                 activeName: 'second'
+      //               }
+      //             })
+      //             localStorage.setItem('activeName', 'second')
+      //           }
+      //         })
+      //       }).catch(() => {
+      //         // this.$message({
+      //         //   type: 'info',
+      //         //   message: '已取消删除'
+      //         // });
+      //       })
+      //     } else {
+      //       this.$notify({
+      //         title: '成功',
+      //         message: '可在线生成并查看',
+      //         type: 'success'
+      //       })
+      //       this.$router.push({
+      //         path: '/login',
+      //         query: {
+      //           activeName: 'second'
+      //         }
+      //       })
+      //       localStorage.setItem('activeName', 'second')
+      //     }
+      //   })
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消输入'
+      //   })
+      // })
+
+      this.query6.email = '20210425修改'
+      this.query6.entName = localStorage.getItem('reportName')
+      this.query6.phone = localStorage.getItem('phone')
+      this.query6.reportNum = localStorage.getItem('reportNum')
+      createDeepEasy(this.query6).then(res => {
+        // console.log(res)
+        if (res.data.code === 210) {
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // this.$message({
+            //   type: 'success',
+            //   message: '删除成功!'
+            // });
+            this.query6.pay = 1
+            createDeepEasy(this.query6).then(res => {
+              if (res.data.code === 220) {
+                this.$confirm('余额不足，是否前往充值？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  // this.$message({
+                  //   type: 'success',
+                  //   message: '删除成功!'
+                  // })
+                  this.$router.push('/login')
+                  localStorage.setItem('activeName', 'third')
+                }).catch(() => {
+                  // this.$message({
+                  //   type: 'info',
+                  //   message: '已取消删除'
+                  // })
+                  this.$router.go(0)
+                })
+              } else {
+                this.$notify({
+                  title: '成功',
+                  message: '可在线生成并查看',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/login',
+                  query: {
+                    activeName: 'second'
+                  }
+                })
+                localStorage.setItem('activeName', 'second')
               }
             })
-            localStorage.setItem('activeName', 'second')
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
+          }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // });
+          })
+        } else {
+          this.$notify({
+            title: '成功',
+            message: '可在线生成并查看',
+            type: 'success'
+          })
+          this.$router.push({
+            path: '/login',
+            query: {
+              activeName: 'second'
+            }
+          })
+          localStorage.setItem('activeName', 'second')
+        }
       })
     },
     // 监控企业
@@ -771,190 +846,352 @@ export default {
       this.ReportQyslb = true
     },
     toQyslbw() {
-      this.$prompt('请输入邮箱', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        this.query2.email = value
-        this.query2.entName = localStorage.getItem('reportName')
-        createVeryEasy(this.query2).then(res => {
-          // console.log(res)
-          if (res.data.code === 210) {
-            this.msg = res.data.msg
-            this.$confirm(res.data.msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // })
-              this.query2.pay = true
-              createVeryEasy(this.query2).then(res => {
-                if (res.data.code === 220) {
-                  this.$confirm('余额不足，是否前往充值？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                  }).then(() => {
-                    // this.$message({
-                    //   type: 'success',
-                    //   message: '删除成功!'
-                    // })
-                    this.$router.push('/login')
-                    localStorage.setItem('activeName', 'second')
-                  }).catch(() => {
-                    // this.$message({
-                    //   type: 'info',
-                    //   message: '已取消删除'
-                    // })
-                    this.$router.go(0)
-                  })
-                } else {
-                  this.$notify({
-                    title: '成功',
-                    message: '可在线生成并查看',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/login',
-                    query: {
-                      activeName: 'second'
-                    }
-                  })
+      // this.$prompt('请输入邮箱', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+      //   inputErrorMessage: '邮箱格式不正确'
+      // }).then(({ value }) => {
+      //   this.query2.email = value
+      //   this.query2.entName = localStorage.getItem('reportName')
+      //   createVeryEasy(this.query2).then(res => {
+      //     // console.log(res)
+      //     if (res.data.code === 210) {
+      //       this.msg = res.data.msg
+      //       this.$confirm(res.data.msg, '提示', {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning'
+      //       }).then(() => {
+      //         // this.$message({
+      //         //   type: 'success',
+      //         //   message: '删除成功!'
+      //         // })
+      //         this.query2.pay = true
+      //         createVeryEasy(this.query2).then(res => {
+      //           if (res.data.code === 220) {
+      //             this.$confirm('余额不足，是否前往充值？', '提示', {
+      //               confirmButtonText: '确定',
+      //               cancelButtonText: '取消',
+      //               type: 'warning'
+      //             }).then(() => {
+      //               // this.$message({
+      //               //   type: 'success',
+      //               //   message: '删除成功!'
+      //               // })
+      //               this.$router.push('/login')
+      //               localStorage.setItem('activeName', 'second')
+      //             }).catch(() => {
+      //               // this.$message({
+      //               //   type: 'info',
+      //               //   message: '已取消删除'
+      //               // })
+      //               this.$router.go(0)
+      //             })
+      //           } else {
+      //             this.$notify({
+      //               title: '成功',
+      //               message: '可在线生成并查看',
+      //               type: 'success'
+      //             })
+      //             this.$router.push({
+      //               path: '/login',
+      //               query: {
+      //                 activeName: 'second'
+      //               }
+      //             })
+      //             localStorage.setItem('activeName', 'second')
+      //           }
+      //         })
+      //       }).catch(() => {
+      //         // this.$message({
+      //         //   type: 'info',
+      //         //   message: '已取消删除'
+      //         // })
+      //       })
+      //     } else {
+      //       this.$confirm(res.data.msg, '提示', {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning'
+      //       }).then(() => {
+      //         // this.$message({
+      //         //   type: 'success',
+      //         //   message: '删除成功!'
+      //         // });
+      //       }).catch(() => {
+      //         // this.$message({
+      //         //   type: 'info',
+      //         //   message: '已取消删除'
+      //         // });
+      //       })
+      //     }
+      //   })
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消输入'
+      //   })
+      // })
+
+      this.query2.email = '20210425修改'
+      this.query2.entName = localStorage.getItem('reportName')
+      createVeryEasy(this.query2).then(res => {
+        // console.log(res)
+        if (res.data.code === 210) {
+          this.msg = res.data.msg
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // this.$message({
+            //   type: 'success',
+            //   message: '删除成功!'
+            // })
+            this.query2.pay = true
+            createVeryEasy(this.query2).then(res => {
+              if (res.data.code === 220) {
+                this.$confirm('余额不足，是否前往充值？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  // this.$message({
+                  //   type: 'success',
+                  //   message: '删除成功!'
+                  // })
+                  this.$router.push('/login')
                   localStorage.setItem('activeName', 'second')
-                }
-              })
-            }).catch(() => {
-              // this.$message({
-              //   type: 'info',
-              //   message: '已取消删除'
-              // })
+                }).catch(() => {
+                  // this.$message({
+                  //   type: 'info',
+                  //   message: '已取消删除'
+                  // })
+                  this.$router.go(0)
+                })
+              } else {
+                this.$notify({
+                  title: '成功',
+                  message: '可在线生成并查看',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/login',
+                  query: {
+                    activeName: 'second'
+                  }
+                })
+                localStorage.setItem('activeName', 'second')
+              }
             })
-          } else {
-            this.$confirm(res.data.msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // });
-            }).catch(() => {
-              // this.$message({
-              //   type: 'info',
-              //   message: '已取消删除'
-              // });
-            })
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
+          }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // })
+          })
+        } else {
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // this.$message({
+            //   type: 'success',
+            //   message: '删除成功!'
+            // });
+          }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // });
+          })
+        }
       })
     },
     toQyslbp() {
-      this.$prompt('请输入邮箱', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        const arr = ['0-0', '0-5', '3-0', '5-0', '5-1', '7-0', '7-1', '11-2', '11-3', '11-4']
-        // var rand = ''
-        // for (var i = 0; i < 8; i++) {
-        //   rand += Math.floor(Math.random() * 10)
-        // }
-        // const reportNum = Date.now() + rand
-        this.query3.email = value
-        this.query3.entName = localStorage.getItem('reportName')
-        this.query3.dataKey = arr.toString()
-        // this.query3.reportNum = reportNum
-        this.query3.type = 'xd'
-        createVeryEasypdf(this.query3).then(res => {
-          // console.log(res)
-          if (res.data.code === 210) {
-            this.msg = res.data.msg
-            this.$confirm(res.data.msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // })
-              this.query3.pay = true
-              createVeryEasypdf(this.query3).then(res => {
-                if (res.data.code === 220) {
-                  this.$confirm('余额不足，是否前往充值？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                  }).then(() => {
-                    // this.$message({
-                    //   type: 'success',
-                    //   message: '删除成功!'
-                    // })
-                    this.$router.push('/login')
-                    localStorage.setItem('activeName', 'second')
-                  }).catch(() => {
-                    // this.$message({
-                    //   type: 'info',
-                    //   message: '已取消删除'
-                    // })
-                    this.$router.go(0)
-                  })
-                } else {
-                  this.$notify({
-                    title: '成功',
-                    message: '可在线生成并查看',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/login',
-                    query: {
-                      activeName: 'second'
-                    }
-                  })
+      // this.$prompt('请输入邮箱', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+      //   inputErrorMessage: '邮箱格式不正确'
+      // }).then(({ value }) => {
+      //   const arr = ['0-0', '0-5', '3-0', '5-0', '5-1', '7-0', '7-1', '11-2', '11-3', '11-4']
+      //   // var rand = ''
+      //   // for (var i = 0; i < 8; i++) {
+      //   //   rand += Math.floor(Math.random() * 10)
+      //   // }
+      //   // const reportNum = Date.now() + rand
+      //   this.query3.email = value
+      //   this.query3.entName = localStorage.getItem('reportName')
+      //   this.query3.dataKey = arr.toString()
+      //   // this.query3.reportNum = reportNum
+      //   this.query3.type = 'xd'
+      //   createVeryEasypdf(this.query3).then(res => {
+      //     // console.log(res)
+      //     if (res.data.code === 210) {
+      //       this.msg = res.data.msg
+      //       this.$confirm(res.data.msg, '提示', {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning'
+      //       }).then(() => {
+      //         // this.$message({
+      //         //   type: 'success',
+      //         //   message: '删除成功!'
+      //         // })
+      //         this.query3.pay = true
+      //         createVeryEasypdf(this.query3).then(res => {
+      //           if (res.data.code === 220) {
+      //             this.$confirm('余额不足，是否前往充值？', '提示', {
+      //               confirmButtonText: '确定',
+      //               cancelButtonText: '取消',
+      //               type: 'warning'
+      //             }).then(() => {
+      //               // this.$message({
+      //               //   type: 'success',
+      //               //   message: '删除成功!'
+      //               // })
+      //               this.$router.push('/login')
+      //               localStorage.setItem('activeName', 'second')
+      //             }).catch(() => {
+      //               // this.$message({
+      //               //   type: 'info',
+      //               //   message: '已取消删除'
+      //               // })
+      //               this.$router.go(0)
+      //             })
+      //           } else {
+      //             this.$notify({
+      //               title: '成功',
+      //               message: '可在线生成并查看',
+      //               type: 'success'
+      //             })
+      //             this.$router.push({
+      //               path: '/login',
+      //               query: {
+      //                 activeName: 'second'
+      //               }
+      //             })
+      //             localStorage.setItem('activeName', 'second')
+      //           }
+      //         })
+      //       }).catch(() => {
+      //         // this.$message({
+      //         //   type: 'info',
+      //         //   message: '已取消删除'
+      //         // })
+      //       })
+      //     } else {
+      //       this.$confirm(res.data.msg, '提示', {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning'
+      //       }).then(() => {
+      //         // this.$message({
+      //         //   type: 'success',
+      //         //   message: '删除成功!'
+      //         // });
+      //       }).catch(() => {
+      //         // this.$message({
+      //         //   type: 'info',
+      //         //   message: '已取消删除'
+      //         // });
+      //       })
+      //     }
+      //   })
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消输入'
+      //   })
+      // })
+
+
+      const arr = ['0-0', '0-5', '3-0', '5-0', '5-1', '7-0', '7-1', '11-2', '11-3', '11-4']
+      // var rand = ''
+      // for (var i = 0; i < 8; i++) {
+      //   rand += Math.floor(Math.random() * 10)
+      // }
+      // const reportNum = Date.now() + rand
+      this.query3.email = '20210425修改'
+      this.query3.entName = localStorage.getItem('reportName')
+      this.query3.dataKey = arr.toString()
+      // this.query3.reportNum = reportNum
+      this.query3.type = 'xd'
+      createVeryEasypdf(this.query3).then(res => {
+        // console.log(res)
+        if (res.data.code === 210) {
+          this.msg = res.data.msg
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // this.$message({
+            //   type: 'success',
+            //   message: '删除成功!'
+            // })
+            this.query3.pay = true
+            createVeryEasypdf(this.query3).then(res => {
+              if (res.data.code === 220) {
+                this.$confirm('余额不足，是否前往充值？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  // this.$message({
+                  //   type: 'success',
+                  //   message: '删除成功!'
+                  // })
+                  this.$router.push('/login')
                   localStorage.setItem('activeName', 'second')
-                }
-              })
-            }).catch(() => {
-              // this.$message({
-              //   type: 'info',
-              //   message: '已取消删除'
-              // })
+                }).catch(() => {
+                  // this.$message({
+                  //   type: 'info',
+                  //   message: '已取消删除'
+                  // })
+                  this.$router.go(0)
+                })
+              } else {
+                this.$notify({
+                  title: '成功',
+                  message: '可在线生成并查看',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/login',
+                  query: {
+                    activeName: 'second'
+                  }
+                })
+                localStorage.setItem('activeName', 'second')
+              }
             })
-          } else {
-            this.$confirm(res.data.msg, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // });
-            }).catch(() => {
-              // this.$message({
-              //   type: 'info',
-              //   message: '已取消删除'
-              // });
-            })
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
+          }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // })
+          })
+        } else {
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // this.$message({
+            //   type: 'success',
+            //   message: '删除成功!'
+            // });
+          }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // });
+          })
+        }
       })
     },
 
