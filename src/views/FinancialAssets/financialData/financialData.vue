@@ -22,7 +22,14 @@
             </div>
           </div>
           <div v-show="show" class="cont">
-            <div id="main1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="ASSGRO_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="LIAGRO_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="VENDINC_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="MAIBUSINC_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="PROGRO_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="NETINC_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="RATGRO_yoy1" :style="{width: '1000px', height: '600px'}"/>
+            <div ref="TOTEQU_yoy1" :style="{width: '1000px', height: '600px'}"/>
           </div>
         </div>
       </section>
@@ -55,33 +62,47 @@
               </el-upload>
             </div>
             <div v-show="showMin2" class="cont">
-              <div id="main2" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="ASSGRO1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="LIAGRO1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="VENDINC1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="MAIBUSINC1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="PROGRO1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="NETINC1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="RATGRO1" :style="{width: '1000px', height: '600px'}"/>
+              <div ref="TOTEQU1" :style="{width: '1000px', height: '600px'}"/>
             </div>
           </div>
         </div>
       </section>
-
     </main>
   </div>
 </template>
 <script>
 import {
-  getThreeYearsData,
   authBook,
   getFinanceNotAuth,
-  getFinanceNeedAuth
+  getFinanceNeedAuth,
+  getFinanceNotAuthNew,
+  getFinanceNeedAuthNew
 } from '@/api/article'
 import { refundToWallet } from '@/api/EnterpriseBackground'
+import * as ec from 'echarts'
 
-const echarts = require('echarts/lib/echarts')
-require('echarts/lib/component/tooltip')
-require('echarts/lib/component/grid')
-require('echarts/lib/component/legend')
-require('echarts/lib/chart/bar')
 var token = localStorage.getItem('token')
 export default {
   data() {
     return {
+      colorList: [
+        '#5470c6',
+        '#91cc75',
+        '#ee6666',
+        '#73c0de',
+        '#3ba272',
+        '#fc8452',
+        '#9a60b4',
+        '#ea7ccc',
+        '#fac858'
+      ],
       fileList: [],
       myHeaders: { Authorization: token },
       arr: [],
@@ -136,7 +157,15 @@ export default {
       FinanceIncomeStatement: [],
       FinanceBalanceSheetAnnual: [],
       FinanceBalanceSheet: [],
-      VatReturn: []
+      VatReturn: [],
+      queryString: {
+        entName: localStorage.getItem('entName'),
+        code: '',
+        year: 2019,
+        dataCount: 3,
+        phone: localStorage.getItem('phone'),
+        pay: 0
+      }
     }
   },
   mounted() {
@@ -154,26 +183,20 @@ export default {
     this.query5.year = myDate.getFullYear() - 2
     this.query4.pay = 0
     this.query5.pay = 1
-    getFinanceNotAuth(this.query4).then(res => {
+
+    this.queryString.year = myDate.getFullYear() - 2
+
+    getFinanceNotAuthNew(this.queryString).then(res => {
       if (res.data.code === 200) {
         this.show = true
-        var obj = res.data.result
-        for (const key in obj) {
-          this.year.push(key)
-          this.num.push(obj[key])
-        }
+        this.drawLineNewByMe(res.data.result, 'not auth')
       }
-      this.drawLine()
     })
-    //财务需授权
-    getFinanceNeedAuth(this.query5).then(res => {
+
+    getFinanceNeedAuthNew(this.queryString).then(res => {
       if (res.data.code === 200) {
         this.showMin2 = true
-        var obj = res.data.result
-        for (const key in obj) {
-          this.yearMain2.push(key)
-          this.numMain2.push(obj[key])
-        }
+        this.drawLineNewByMe(res.data.result, 'need auth')
       }
       // if (res.data.code === 250) {
       //   refundToWallet({
@@ -185,32 +208,14 @@ export default {
       //       type: 'error',
       //       message: res.data.msg
       //     })
-      //     console.log(res)
       //   })
       // }
-      this.drawLineMain2()
     })
 
     const _this = this
     window.onresize = function() {
       _this.myChart.resize()
     }
-
-    // getThreeYearsData(this.query).then(res => {
-    //   console.log(res.data.result)
-    //   if (res.data.code === 200) {
-    //     this.show = true
-    //     var obj = res.data.result
-    //     for (const key in obj) {
-    //       this.year.push(key)
-    //       this.num.push(obj[key])
-    //     }
-    //   }
-    //
-    //   console.log(this.year)
-    //   console.log(this.num)
-    //   this.drawLine()
-    // })
   },
   methods: {
     // 吸顶效果
@@ -218,6 +223,1086 @@ export default {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // console.log(scrollTop)
       this.isFixed = scrollTop > this.scrollHeight
+    },
+
+    drawLineNewByMe(data, type) {
+      if (type === 'not auth') {
+        this.handleASSGRO_yoy(data)
+        this.handleLIAGRO_yoy(data)
+        this.handleVENDINC_yoy(data)
+        this.handleMAIBUSINC_yoy(data)
+        this.handlePROGRO_yoy(data)
+        this.handleNETINC_yoy(data)
+        this.handleRATGRO_yoy(data)
+        this.handleTOTEQU_yoy(data)
+      } else {
+        this.handleASSGRO(data)
+        this.handleLIAGRO(data)
+        this.handleVENDINC(data)
+        this.handleMAIBUSINC(data)
+        this.handlePROGRO(data)
+        this.handleNETINC(data)
+        this.handleRATGRO(data)
+        this.handleTOTEQU(data)
+      }
+    },
+
+    handleASSGRO(data) {
+      let arrKey = 'ASSGRO'
+      let picName = '资产总额'
+      let dom = this.$refs.ASSGRO1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleLIAGRO(data) {
+      let arrKey = 'LIAGRO'
+      let picName = '负债总额'
+      let dom = this.$refs.LIAGRO1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleVENDINC(data) {
+      let arrKey = 'VENDINC'
+      let picName = '营业总收入'
+      let dom = this.$refs.VENDINC1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleMAIBUSINC(data) {
+      let arrKey = 'MAIBUSINC'
+      let picName = '主营业务收入'
+      let dom = this.$refs.MAIBUSINC1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handlePROGRO(data) {
+      let arrKey = 'PROGRO'
+      let picName = '利润总额'
+      let dom = this.$refs.PROGRO1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleNETINC(data) {
+      let arrKey = 'NETINC'
+      let picName = '净利润'
+      let dom = this.$refs.NETINC1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleRATGRO(data) {
+      let arrKey = 'RATGRO'
+      let picName = '纳税总额'
+      let dom = this.$refs.RATGRO1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+    handleTOTEQU(data) {
+      let arrKey = 'TOTEQU'
+      let picName = '所有者权益'
+      let dom = this.$refs.TOTEQU1
+      let myec = ec.init(dom)
+      let opt = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            //dataView: {show: true, readOnly: false},
+            //magicType: {show: true, type: ['line', 'bar']},
+            //restore: {show: true},
+            //saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data: []//
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [2017, 2018, 2019],//
+            axisPointer: {
+              type: 'shadow'
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          },
+          {
+            type: 'value',
+            name: '',//
+            min: null,
+            max: null,
+            interval: null,
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: []
+      }
+      let legend = []
+      let series = []
+      for (let key in data) {
+        legend.push(picName)
+        legend.push('同比')
+        let yearData = []
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearData.push(data[key][i][arrKey])
+          yearDataYoy.push(data[key][i][arrKey + '_yoy'])
+        }
+        let objData = {
+          name: picName,
+          type: 'bar',
+          data: yearData,
+          barWidth: 60
+        }
+        let objYoy = {
+          name: '同比',
+          type: 'line',
+          yAxisIndex: 1,
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objData)
+        series.push(objYoy)
+      }
+      opt.legend.data = legend
+      opt.yAxis.name = picName
+      opt.series = series
+      myec.setOption(opt, true)
+    },
+
+    handleASSGRO_yoy(data) {
+      let arrKey = 'ASSGRO_yoy'
+      let dom = this.$refs.ASSGRO_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '资产总额同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleLIAGRO_yoy(data) {
+      let arrKey = 'LIAGRO_yoy'
+      let dom = this.$refs.LIAGRO_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '负债总额同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleVENDINC_yoy(data) {
+      let arrKey = 'VENDINC_yoy'
+      let dom = this.$refs.VENDINC_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '营业总收入同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleMAIBUSINC_yoy(data) {
+      let arrKey = 'MAIBUSINC_yoy'
+      let dom = this.$refs.MAIBUSINC_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '主营业务收入同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handlePROGRO_yoy(data) {
+      let arrKey = 'PROGRO_yoy'
+      let dom = this.$refs.PROGRO_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '利润总额同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleNETINC_yoy(data) {
+      let arrKey = 'NETINC_yoy'
+      let dom = this.$refs.NETINC_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '净利润同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleRATGRO_yoy(data) {
+      let arrKey = 'RATGRO_yoy'
+      let dom = this.$refs.RATGRO_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '纳税总额同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
+    },
+    handleTOTEQU_yoy(data) {
+      let arrKey = 'TOTEQU_yoy'
+      let dom = this.$refs.TOTEQU_yoy1
+      let myec = ec.init(dom)
+      let option = {
+        title: {
+          text: '',
+          subtext: '',
+          left: 'center'
+        },
+        legend: {
+          data: [2017, 2018, 2019]
+        },
+        xAxis: {
+          type: 'category',
+          data: [2017, 2018, 2019]
+        },
+        yAxis: {
+          type: 'value',
+          name: '%'
+        },
+        series: []
+      }
+      let series = []
+      for (let key in data) {
+        let yearDataYoy = []
+        for (let i = 2017; i <= 2019; i++) {
+          yearDataYoy.push(data[key][i][arrKey])
+        }
+        let objYoy = {
+          type: 'line',
+          data: yearDataYoy,
+          smooth: true
+        }
+        series.push(objYoy)
+      }
+      option.title.text = '所有者权益同比'
+      option.title.subtext = ''
+      option.series = series
+      myec.setOption(option, true)
     },
 
     drawLine() {
@@ -437,49 +1522,31 @@ export default {
     },
 
     payM() {
-      this.query4.pay = 0
-      getFinanceNotAuth(this.query4).then(res => {
-        // console.log(res)
+      this.queryString.pay = 0
+      getFinanceNotAuthNew(this.queryString).then(res => {
         if (res.data.code === 210) {
           this.$confirm(res.data.msg, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            // this.$message({
-            //   type: 'success',
-            //   message: '删除成功!'
-            // });
-            this.query4.pay = 1
-            getFinanceNotAuth(this.query4).then(res => {
-              // console.log(res)
+            this.queryString.pay = 1
+            getFinanceNotAuthNew(this.queryString).then(res => {
               if (res.data.code === 220) {
                 this.$confirm('余额不足，是否前往充值？', '提示', {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  // this.$message({
-                  //   type: 'success',
-                  //   message: '删除成功!'
-                  // })
                   this.$router.push('/login')
                   localStorage.setItem('activeName', 'third')
                 }).catch(() => {
-                  // this.$message({
-                  //   type: 'info',
-                  //   message: '已取消删除'
-                  // })
                   this.$router.go(0)
                 })
               } else {
                 if (res.data.code === 200) {
                   this.show = true
-                  var obj = res.data.result
-                  for (const key in obj) {
-                    this.year.push(key)
-                    this.num.push(obj[key])
-                  }
+                  //画图
                 }
                 if (res.data.code === 250) {
                   refundToWallet({
@@ -491,17 +1558,13 @@ export default {
                       type: 'error',
                       message: res.data.msg
                     })
-                    console.log(res)
                   })
                 }
-                this.drawLine()
+                this.drawLineNewByMe(res.data.result, 'not auth')
               }
             })
           }).catch(() => {
-            // this.$message({
-            //   type: 'info',
-            //   message: '已取消删除'
-            // });
+
           })
         }
       })
