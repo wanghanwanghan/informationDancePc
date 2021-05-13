@@ -96,7 +96,7 @@
             <Recharge />
           </el-tab-pane>
           <el-tab-pane label="风险监控" name="fourth">
-            <RiskMonitoring />
+            <RiskMonitoringList></RiskMonitoringList>
           </el-tab-pane>
           <el-tab-pane label="我的" name="fifth">
             <My />
@@ -110,6 +110,7 @@
 import HomeCont from '@/components/HomeCont/HomeCont'
 import DownLoad from '@/components/download/DownLoad'
 import RiskMonitoring from '@/components/RiskMonitoring/RiskMonitoring'
+import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
 import { getCodes, Login, Zreg } from '@/api/article'
@@ -119,6 +120,7 @@ export default {
     HomeCont,
     DownLoad,
     RiskMonitoring,
+    RiskMonitoringList,
     My,
     Recharge
   },

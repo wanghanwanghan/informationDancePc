@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: '信动智调',
-      logo: 'http://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg'
+      logo: 'https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg'
       // logo: 'http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png'
     }
   }

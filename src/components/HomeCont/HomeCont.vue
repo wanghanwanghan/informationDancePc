@@ -2,7 +2,7 @@
   <div>
     <div class="cont">
       <div class="img">
-        <img src="http://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+        <img src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
         <!-- <img src="http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt=""> -->
       </div>
       <div class="search">
