@@ -24,7 +24,7 @@
         </div>
         <!-- 监控分类 -->
         <div class="leftFL">
-          <el-button type="primary" plain class="title" size="mini">监控分类</el-button>
+          <el-button type="primary" plain class="title" size="mini">监控类型</el-button>
           <div
             v-for="(item,index) in fxfl"
             :key="item.index"
@@ -219,16 +219,13 @@ import { parseTime } from '@/utils/index'
 
 export default {
   name: 'RiskMonitoring',
-  props: {
-    entName: {
-      type: String,
-      default: ''
-    }
-  },
+  props: {},
   filters: {
     parseTime: parseTime
   },
   mounted() {
+    this.sType = this.$route.params.sType
+    this.entName = this.$route.params.entName
     this.value = this.entName
     this.query.phone = localStorage.getItem('phone')
     this.query1.phone = localStorage.getItem('phone')
@@ -236,9 +233,21 @@ export default {
     this.query.entName = this.entName
     this.query1.entName = this.entName
     this.query2.entName = this.entName
+    if (this.sType === '争议') {
+      this.sType = 1
+    }
+    if (this.sType === '合作') {
+      this.sType = 2
+    }
+    if (this.sType === '全部') {
+      this.sType = 3
+    }
+    this.query.supervisorType = this.sType
     supervisor(this.query).then(res => {
-      this.list = res.data.result.detail
+      this.list = [];
+      this.totalsupervisor = 0
       this.totalsupervisor = res.data.paging.total
+      this.list = res.data.result.detail
       this.options = res.data.result.entList
     })
   },
@@ -247,7 +256,7 @@ export default {
       options: [],
       value: '',
 
-      fxfl: ['全部', '争议方动态', '合作方动态'],//title
+      fxfl: ['全部', '争议方', '合作/投资对象'],//title
       index_fxfl: 0,
 
       fxdj: ['全部', '高风险', '风险', '警示', '提示', '利好'],//level
@@ -306,6 +315,7 @@ export default {
         title: '',
         level: '',
         type: '',
+        supervisorType: '',
         typeDetail: '',
         timeRange: '',
         page: 1,
@@ -340,7 +350,21 @@ export default {
       this.query.title = item
       this.query.level = ''
       this.query.page = 1
+
+      if (item === '争议方') {
+        this.sType = 1
+      }
+      if (item === '合作/投资对象') {
+        this.sType = 2
+      }
+      if (item === '全部') {
+        this.sType = 3
+      }
+      this.query.supervisorType = this.sType
+
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -350,20 +374,20 @@ export default {
       this.show_gsfx = false
       this.show_glfx = false
       this.show_jyfx = false
-      if (item === '争议方动态') {
+      if (item === '争议方') {
         this.show_zyfdt = true
         this.show_fxlx = false
         this.show_sffx = false
         this.show_gsfx = false
         this.show_glfx = false
         this.show_jyfx = false
-        this.query.type = '争议方动态'
+        this.query.type = '争议方'
         this.query.typeDetail = '全部'
       }
-      if (item === '合作方动态') {
+      if (item === '合作/投资对象') {
         this.show_zyfdt = false
         this.show_fxlx = true
-        this.query.type = '合作方动态'
+        this.query.type = '合作/投资对象'
         this.query.typeDetail = '全部'
       }
     },
@@ -373,6 +397,8 @@ export default {
       this.query.level = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -383,6 +409,8 @@ export default {
       this.query.type = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -414,11 +442,13 @@ export default {
     // 争议动态
     changezydt(index, item) {
       this.index_zyfdt = index
-      this.query.title = '争议方动态'
-      this.query.type = '争议方动态'
+      this.query.title = '争议方'
+      this.query.type = '争议方'
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -429,6 +459,8 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -439,6 +471,8 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -449,6 +483,8 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -459,6 +495,8 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })
@@ -470,6 +508,8 @@ export default {
       if (item === '近7天') {
         this.query.timeRange = 7
         supervisor(this.query).then(res => {
+          this.list = [];
+          this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
         })
@@ -477,6 +517,8 @@ export default {
       if (item === '近30天') {
         this.query.timeRange = 30
         supervisor(this.query).then(res => {
+          this.list = [];
+          this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
         })
@@ -484,6 +526,8 @@ export default {
       if (item === '今年') {
         this.query.timeRange = 365
         supervisor(this.query).then(res => {
+          this.list = [];
+          this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
         })
@@ -495,6 +539,8 @@ export default {
       this.query1.entName = e
       this.query2.entName = e
       supervisor(this.query).then(res => {
+        this.list = [];
+        this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
       })

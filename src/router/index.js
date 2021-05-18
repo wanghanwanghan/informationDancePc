@@ -32,7 +32,7 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/RiskMonitoringDetail/:entName',
+    path: '/RiskMonitoringDetail/:sType/:entName/',
     component: () => import('@/views/RiskMonitoring/Detail'),
     hidden: true
   },

@@ -1,5 +1,18 @@
 <template>
   <div>
+    <el-dialog
+      title="提示"
+      :visible.sync="supervisor_dialog"
+      width="26%"
+      :style="{'text-align': 'center'}">
+      <span style="color: red;font-size: 15px;">请选择要监控的风险分类</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="supervisor_dialog = false">取消</el-button>
+    <el-button type="primary" @click="doMonitor('争议方')">争议方</el-button>
+    <el-button type="primary" @click="doMonitor('合作方')">合作方</el-button>
+    <el-button type="primary" @click="doMonitor('全部')">全部</el-button>
+  </span>
+    </el-dialog>
     <div class="nav">
       <el-col :span="4">
         <div class="logo" @click="toIndex">
@@ -248,6 +261,7 @@ export default {
   components: { DndList, DndjList, UploadPic, IndexWord },
   data() {
     return {
+      supervisor_dialog: false,
       list1: [],
       list2: [
         { id: '0-0', title: '基本信息', index: 0 },
@@ -771,10 +785,18 @@ export default {
     },
     // 监控企业
     toMonitor(e) {
-      // console.log(e)
+      this.supervisor_dialog = true
       this.query2.entName = e
+    },
+    doMonitor(val) {
+      if (val === '争议方') {
+        this.query2.type = 1
+      } else if (val === '合作方') {
+        this.query2.type = 2
+      } else {
+        this.query2.type = 3
+      }
       Supervisor(this.query2).then(res => {
-        // console.log(res)
         if (res.data.code === 210) {
           this.$confirm(res.data.msg, '提示', {
             confirmButtonText: '确定',
@@ -783,7 +805,6 @@ export default {
           }).then(() => {
             this.query2.pay = 1
             Supervisor(this.query2).then(res => {
-              // console.log(res)
               if (res.data.code === 200) {
                 this.$message({
                   message: '添加成功',
@@ -805,26 +826,14 @@ export default {
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  // this.$message({
-                  //   type: 'success',
-                  //   message: '删除成功!'
-                  // })
                   this.$router.push('/login')
                   localStorage.setItem('activeName', 'third')
                 }).catch(() => {
-                  // this.$message({
-                  //   type: 'info',
-                  //   message: '已取消删除'
-                  // })
                   this.$router.go(0)
                 })
               }
             })
           }).catch(() => {
-            // this.$message({
-            //   type: 'info',
-            //   message: '已取消删除'
-            // })
           })
         } else {
           this.$router.push({
@@ -1109,7 +1118,6 @@ export default {
       //   })
       // })
 
-
       const arr = ['0-0', '0-5', '3-0', '5-0', '5-1', '7-0', '7-1', '11-2', '11-3', '11-4']
       // var rand = ''
       // for (var i = 0; i < 8; i++) {
@@ -1367,4 +1375,5 @@ export default {
   width: 100%;
   min-height: 150px;
 }
+
 </style>

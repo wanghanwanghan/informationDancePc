@@ -19,6 +19,7 @@ export function Login(data) {
     data
   })
 }
+
 // 注册
 export function Zreg(data) {
   return request({
@@ -27,6 +28,7 @@ export function Zreg(data) {
     data
   })
 }
+
 // 搜索获取公司列表
 export function getEntList(data) {
   return request({
@@ -35,6 +37,7 @@ export function getEntList(data) {
     data
   })
 }
+
 // 报告深度word
 export function createDeepEasy(data) {
   return request({
@@ -43,6 +46,7 @@ export function createDeepEasy(data) {
     data
   })
 }
+
 // 报告深度pdf
 export function createDeepEasyp(data) {
   return request({
@@ -51,6 +55,7 @@ export function createDeepEasyp(data) {
     data
   })
 }
+
 // 报告企业速览版word
 export function createVeryEasy(data) {
   return request({
@@ -59,6 +64,7 @@ export function createVeryEasy(data) {
     data
   })
 }
+
 // 报告企业速览版pdf
 export function createVeryEasypdf(data) {
   return request({
@@ -67,6 +73,7 @@ export function createVeryEasypdf(data) {
     data
   })
 }
+
 // 报告 生成简版报告 pdf版
 export function createEasy(data) {
   return request({
@@ -75,6 +82,7 @@ export function createEasy(data) {
     data
   })
 }
+
 // 报告 生成简版报告 word版
 export function createEasyWord(data) {
   return request({
@@ -83,6 +91,7 @@ export function createEasyWord(data) {
     data
   })
 }
+
 // 下载列表
 export function reportlist(data) {
   return request({
@@ -91,6 +100,7 @@ export function reportlist(data) {
     data
   })
 }
+
 // 智能监控
 export function supervisor(data) {
   return request({
@@ -99,6 +109,15 @@ export function supervisor(data) {
     data
   })
 }
+
+export function supervisorExportExcel(data) {
+  return request({
+    url: '/api/v1/user/get/supervisorListByExcel',
+    method: 'post',
+    data
+  })
+}
+
 // 阈值获取
 export function supervisorLimit(data) {
   return request({
@@ -107,6 +126,7 @@ export function supervisorLimit(data) {
     data
   })
 }
+
 // 提交阈值
 export function supervisorLimitT(data) {
   return request({
@@ -115,6 +135,7 @@ export function supervisorLimitT(data) {
     data
   })
 }
+
 // 图片识别
 export function queue(data) {
   return request({
@@ -123,6 +144,7 @@ export function queue(data) {
     data
   })
 }
+
 // 监控企业
 export function Supervisor(data) {
   return request({
@@ -131,6 +153,7 @@ export function Supervisor(data) {
     data
   })
 }
+
 // 主营产品
 export function getProductStandard(data) {
   return request({
@@ -139,6 +162,7 @@ export function getProductStandard(data) {
     data
   })
 }
+
 // 土地资产线索
 export function getAssetLeads(data) {
   return request({
@@ -147,6 +171,7 @@ export function getAssetLeads(data) {
     data
   })
 }
+
 // 财务资产
 export function getThreeYearsData(data) {
   return request({
@@ -155,6 +180,7 @@ export function getThreeYearsData(data) {
     data
   })
 }
+
 // 我的
 export function list(data) {
   return request({
@@ -163,6 +189,7 @@ export function list(data) {
     data
   })
 }
+
 // 充值金额
 export function goods(data) {
   return request({
@@ -171,6 +198,7 @@ export function goods(data) {
     data
   })
 }
+
 // 生成充值二维码
 export function Sando(data) {
   return request({
@@ -179,6 +207,7 @@ export function Sando(data) {
     data
   })
 }
+
 // 消费记录
 export function Xlist(data) {
   return request({
@@ -187,6 +216,7 @@ export function Xlist(data) {
     data
   })
 }
+
 // 财务数据授权书上传
 export function authBook(data) {
   return request({
@@ -195,6 +225,7 @@ export function authBook(data) {
     data
   })
 }
+
 // 审核进度
 export function authBookD(data) {
   return request({
@@ -203,6 +234,7 @@ export function authBookD(data) {
     data
   })
 }
+
 // 检查用户上没上传过企业授权书
 export function authBookC(data) {
   return request({
@@ -211,6 +243,7 @@ export function authBookC(data) {
     data
   })
 }
+
 // 通过orderId查询充值状态
 export function check(data) {
   return request({
@@ -219,6 +252,7 @@ export function check(data) {
     data
   })
 }
+
 // 企业授权认证
 export function getAuthentication(data) {
   return request({
@@ -227,6 +261,7 @@ export function getAuthentication(data) {
     data
   })
 }
+
 // 企业税务基本信息查询
 export function getEssential(data) {
   return request({
@@ -235,6 +270,7 @@ export function getEssential(data) {
     data
   })
 }
+
 // 企业所得税-月（季）度申报表查询
 export function getIncometaxMonthlyDeclaration(data) {
   return request({
@@ -243,6 +279,7 @@ export function getIncometaxMonthlyDeclaration(data) {
     data
   })
 }
+
 // 企业所得税-年报查询
 export function getIncometaxAnnualReport(data) {
   return request({
@@ -251,6 +288,7 @@ export function getIncometaxAnnualReport(data) {
     data
   })
 }
+
 // 利润表 --年报查询
 export function getFinanceIncomeStatementAnnualReport(data) {
   return request({
@@ -259,6 +297,7 @@ export function getFinanceIncomeStatementAnnualReport(data) {
     data
   })
 }
+
 // 利润表查询
 export function getFinanceIncomeStatement(data) {
   return request({
@@ -267,6 +306,7 @@ export function getFinanceIncomeStatement(data) {
     data
   })
 }
+
 // 资产负债表-年度查询
 export function getFinanceBalanceSheetAnnual(data) {
   return request({
@@ -275,6 +315,7 @@ export function getFinanceBalanceSheetAnnual(data) {
     data
   })
 }
+
 // 资产负债表查询
 export function getFinanceBalanceSheet(data) {
   return request({
@@ -283,6 +324,7 @@ export function getFinanceBalanceSheet(data) {
     data
   })
 }
+
 // 增值税申报表查询
 export function getVatReturn(data) {
   return request({
@@ -291,6 +333,7 @@ export function getVatReturn(data) {
     data
   })
 }
+
 //
 export function getPersonSifa(data) {
   return request({
@@ -299,6 +342,7 @@ export function getPersonSifa(data) {
     data
   })
 }
+
 //
 export function getPersonSifaDetail(data) {
   return request({
@@ -307,6 +351,7 @@ export function getPersonSifaDetail(data) {
     data
   })
 }
+
 // 龙信 近n年财务数据，不需授权
 export function getFinanceNotAuth(data) {
   return request({
