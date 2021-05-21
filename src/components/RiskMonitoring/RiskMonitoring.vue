@@ -12,7 +12,7 @@
         <!-- 公司列表 -->
         <div class="leftQ">
           <el-button type="primary" plain class="title" size="mini">监控企业</el-button>
-          <el-select v-model="value" placeholder="请选择" style="width:240px" @change="choose">
+          <el-select v-model="value" filterable placeholder="请选择" style="width:240px" @change="choose">
             <el-option
               v-for="item in options"
               :key="item.value"
