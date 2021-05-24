@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header" v-if="showBtn === true">
-      <el-button type="primary" @click="btnGetFeatures">付费查看企业 < 二次特征 > 分析结果列表</el-button>
+      <el-button type="primary" @click="btnGetFeatures">付费查看企业 < 业务特征 > 分析结果列表</el-button>
     </div>
     <div class="box">
       <div class="cont">

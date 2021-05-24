@@ -67,7 +67,7 @@ export function getOperatingExceptionRota(data) {
     data
   })
 }
-// 二次特征
+// 业务特征
 export function getFeatures(data) {
   return request({
     url: '/api/v1/xd/getFeatures',
