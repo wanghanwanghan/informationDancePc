@@ -188,7 +188,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="200" align="center" label="更新时间">
+        <el-table-column width="200" align="center" label="监控时间">
           <template slot-scope="{row}">
             <span>{{ row.updated_at | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>

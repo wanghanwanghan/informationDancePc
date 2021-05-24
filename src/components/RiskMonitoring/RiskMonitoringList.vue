@@ -252,19 +252,19 @@ export default {
       return ''
     },
     addCellStyle({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 3 && row.currentNum.zyf > 0) {
+      if (columnIndex === 4 && row.currentNum.zyf > 0) {
         return 'word-red'
       }
-      if (columnIndex === 4 && row.currentNum.hzf.sf > 0) {
+      if (columnIndex === 5 && row.currentNum.hzf.sf > 0) {
         return 'word-red'
       }
-      if (columnIndex === 5 && row.currentNum.hzf.gs > 0) {
+      if (columnIndex === 6 && row.currentNum.hzf.gs > 0) {
         return 'word-red'
       }
-      if (columnIndex === 6 && row.currentNum.hzf.gl > 0) {
+      if (columnIndex === 7 && row.currentNum.hzf.gl > 0) {
         return 'word-red'
       }
-      if (columnIndex === 7 && row.currentNum.hzf.jy > 0) {
+      if (columnIndex === 8 && row.currentNum.hzf.jy > 0) {
         return 'word-red'
       }
     }

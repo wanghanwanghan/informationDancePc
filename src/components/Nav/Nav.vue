@@ -9,14 +9,18 @@
         <!-- 登录 -->
         <el-dialog :visible.sync="dialogFormVisible">
           <div class="title">登录</div>
-          <el-form ref="ruleForm" :model="ruleForm" label-position="left" :rules="rules" label-width="100px" style="width: 400px; margin-left:50px;">
+          <el-form ref="ruleForm" :model="ruleForm" label-position="left" :rules="rules" label-width="100px"
+                   style="width: 400px; margin-left:50px;">
             <el-form-item label="账号" prop="name">
-              <el-input v-model="ruleForm.name" />
+              <el-input v-model="ruleForm.name"/>
+            </el-form-item>
+            <el-form-item label="密码" prop="user_password">
+              <el-input v-model="ruleForm.user_password" show-password/>
             </el-form-item>
             <el-form-item label="验证码" prop="password">
               <div class="pas">
                 <div>
-                  <el-input v-model="ruleForm.password" />
+                  <el-input v-model="ruleForm.password"/>
                 </div>
                 <div class="pas-r">
                   <el-button v-show="show" type="primary" @click="getCode">获取验证码</el-button>
@@ -42,20 +46,24 @@
               （如已在信动智调小程序注册可直接登录）
             </div>
           </div>
-          <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+          <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px"
+                   style="width: 400px; margin-left:50px;">
             <el-form-item label="手机号" prop="zphone">
-              <el-input v-model="ruleFormR.zphone" />
+              <el-input v-model="ruleFormR.zphone"/>
             </el-form-item>
             <el-form-item label="姓名" prop="namez">
-              <el-input v-model="ruleFormR.namez" />
+              <el-input v-model="ruleFormR.namez"/>
             </el-form-item>
             <el-form-item label="单位名称" prop="danz">
-              <el-input v-model="ruleFormR.danz" />
+              <el-input v-model="ruleFormR.danz"/>
+            </el-form-item>
+            <el-form-item label="密码" prop="user_password">
+              <el-input v-model="ruleFormR.user_password"/>
             </el-form-item>
             <el-form-item label="验证码" prop="zpassword">
               <div class="pas">
                 <div>
-                  <el-input v-model="ruleFormR.zpassword" />
+                  <el-input v-model="ruleFormR.zpassword"/>
                 </div>
                 <div class="pas-r">
                   <el-button v-show="showz" type="primary" @click="getCodez">获取验证码</el-button>
@@ -80,26 +88,26 @@
           </div>
         </el-dialog>
       </div>
-      <HomeCont />
+      <HomeCont/>
     </div>
     <div v-if="showNav2">
       <div class="navL">
         <!-- {{ activeName }} -->
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="handleClick">
           <el-tab-pane label="首页" name="first">
-            <HomeCont />
+            <HomeCont/>
           </el-tab-pane>
           <el-tab-pane label="我的下载" name="second">
-            <DownLoad />
+            <DownLoad/>
           </el-tab-pane>
           <el-tab-pane label="充值" name="third">
-            <Recharge />
+            <Recharge/>
           </el-tab-pane>
           <el-tab-pane label="风险监控" name="fourth">
             <RiskMonitoringList></RiskMonitoringList>
           </el-tab-pane>
           <el-tab-pane label="我的" name="fifth">
-            <My />
+            <My/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -114,6 +122,7 @@ import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
 import { getCodes, Login, Zreg } from '@/api/article'
+
 export default {
   name: 'Nav',
   components: {
@@ -181,13 +190,15 @@ export default {
       checked: false,
       ruleForm: {
         name: '',
-        password: ''
+        password: '',
+        user_password: ''
       },
       ruleFormR: {
         zphone: '',
         namez: '',
         danz: '',
-        zpassword: ''
+        zpassword: '',
+        user_password: ''
       },
       showNav1: true,
       showNav2: true,
@@ -227,10 +238,10 @@ export default {
       rules: {
         name: [
           { required: true, validator: checkname, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, validator: checkpassword, trigger: 'blur' }
         ]
+        //password: [
+        //  { required: true, validator: checkpassword, trigger: 'blur' }
+        //]
       },
       rulesR: {
         zphone: [
@@ -339,23 +350,24 @@ export default {
             this.query3.phone = this.ruleFormR.zphone
             this.query3.company = this.ruleFormR.danz
             this.query3.vCode = this.ruleFormR.zpassword
+            this.query3.password = this.ruleFormR.user_password
             Zreg(this.query3).then(res => {
-            // console.log(res)
+              // console.log(res)
               if (res.data.code !== 200) {
                 this.$confirm(res.data.msg, '提示', {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                // this.$message({
-                //   type: 'success',
-                //   message: '删除成功!'
-                // });
+                  // this.$message({
+                  //   type: 'success',
+                  //   message: '删除成功!'
+                  // });
                 }).catch(() => {
-                // this.$message({
-                //   type: 'info',
-                //   message: '已取消删除'
-                // });
+                  // this.$message({
+                  //   type: 'info',
+                  //   message: '已取消删除'
+                  // });
                 })
               } else {
                 this.$notify({
@@ -373,7 +385,7 @@ export default {
               }
             })
           } else {
-          // console.log('error submit!!')
+            // console.log('error submit!!')
             return false
           }
         })
@@ -390,6 +402,7 @@ export default {
           if (local === null) {
             this.query1.phone = this.ruleForm.name
             this.query1.vCode = this.ruleForm.password
+            this.query1.password = this.ruleForm.user_password
             Login(this.query1).then(res => {
               if (res.data.code === 200) {
                 this.$notify({
@@ -415,8 +428,9 @@ export default {
           } else {
             this.query1.phone = this.ruleForm.name
             this.query1.vCode = this.ruleForm.password
+            this.query1.password = this.ruleForm.user_password
             Login(this.query1).then(res => {
-            // console.log(res)
+              // console.log(res)
               if (res.data.result.newToken !== res.data.result.token) {
                 this.$notify({
                   title: '成功',
@@ -457,39 +471,45 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.nav{
-  height:37px;
+.nav {
+  height: 37px;
   width: 100%;
   margin-top: 20px;
-  display:flex;
+  display: flex;
   flex-direction: row;
-  justify-content:flex-end;
+  justify-content: flex-end;
   text-align: center;
   line-height: 37px;
-  span{
+
+  span {
     margin-right: 20px;
   }
-  .title{
+
+  .title {
     color: #242424;
     text-align: center;
     font-size: 16px;
     padding: 24px 0;
   }
-  .pas{
+
+  .pas {
     display: flex;
     flex-direction: row;
     justify-content: start;
   }
-  .pas-r{
+
+  .pas-r {
     margin-left: 10px;
   }
 }
-.navL{
-    height:37px;
-    width: 100%;
-    margin-top: 20px;
+
+.navL {
+  height: 37px;
+  width: 100%;
+  margin-top: 20px;
 }
-.yhxy:hover{
+
+.yhxy:hover {
   cursor: pointer;
 }
 </style>
