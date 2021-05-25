@@ -36,7 +36,7 @@
                 <td>注册资本（万元）</td>
                 <td>{{ list.RegistCapi }}</td>
                 <td>成立日期</td>
-                <td class="type3">{{ list.TermStart }}</td>
+                <td class="type3">{{ list.TermStart.slice(0, 10) }}</td>
               </tr>
               <tr>
                 <td>营业期限</td>
@@ -44,7 +44,7 @@
                 <td>登记机关</td>
                 <td>{{ list.BelongOrg }}</td>
                 <td>核准日期</td>
-                <td class="type3">{{ list.CheckDate }}</td>
+                <td class="type3">{{ list.CheckDate.slice(0, 10) }}</td>
               </tr>
               <tr>
                 <td>注册地址</td>
