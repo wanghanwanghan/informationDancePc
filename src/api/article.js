@@ -388,3 +388,15 @@ export function getFinanceNeedAuthNew(data) {
   })
 }
 
+// 修改密码
+export function setUserPassword(data) {
+  return request({
+    url: 'api/v1/user/setLoginPassword',
+    method: 'post',
+    data
+  })
+}
+
+
+
+

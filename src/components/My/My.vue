@@ -26,13 +26,32 @@
         <div class="list" style="display: flex;justify-content:space-between;">
           <span>客服</span><span style="color:#409EFF;margin-right:30px">400 068 7266</span>
         </div>
+        <div class="list" @click="modify_user_password">
+          <span>修改密码</span>
+        </div>
         <el-button type="primary" style="width:100%" @click="out">退出登录</el-button>
       </div>
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="modify_user_password_dialog"
+      width="30%">
+      <div style="width: 80%;margin-left: 40px;">
+        <el-input :style="{margin:'10px'}" v-model="pwd_moto" placeholder="原密码" show-password></el-input>
+        <el-input :style="{margin:'10px'}" v-model="pwd_saki" placeholder="新密码" show-password></el-input>
+        <el-input :style="{margin:'10px'}" v-model="pwd_saki_confirm" placeholder="确认新密码" show-password></el-input>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="modify_user_password_dialog = false">取 消</el-button>
+        <el-button type="primary" @click="doModify">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { list } from '@/api/article'
+import { setUserPassword } from '@/api/article'
+
 export default {
   name: 'My',
   data() {
@@ -41,17 +60,45 @@ export default {
         phone: ''
       },
       phone: '',
-      result: ''
+      result: '',
+      modify_user_password_dialog: false,
+      pwd_moto: '',
+      pwd_saki: '',
+      pwd_saki_confirm: ''
     }
   },
   created() {
     this.query.phone = this.phone = localStorage.getItem('phone')
     list(this.query).then(res => {
-    //   console.log(res)
       this.result = res.data.result.userInfo
     })
   },
   methods: {
+    modify_user_password() {
+      this.modify_user_password_dialog = !this.modify_user_password_dialog
+    },
+    doModify() {
+      if (this.pwd_saki.length > 0 && this.pwd_saki_confirm.length > 0 && this.pwd_moto.length > 0) {
+        setUserPassword({
+          phone: localStorage.getItem('phone'),
+          pwd_moto: this.pwd_moto,
+          pwd_saki: this.pwd_saki,
+          pwd_saki_confirm: this.pwd_saki_confirm
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.modify_user_password_dialog = false
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            })
+          } else {
+            console.log(res.data)
+          }
+        })
+      } else {
+        alert('密码格式错误')
+      }
+    },
     out() {
       this.$confirm('是否退出登陆状态?', '提示', {
         confirmButtonText: '确定',
@@ -75,22 +122,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.cont{
-  width:60%;
-  margin:30px auto;
-  .contt{
-      margin-left:30px;
-      .list{
-        width: 100%;
-        height: 50px;
-        line-height: 50px;
-        margin: 20px 0;
-        padding-left:30px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-      }
-      .list:hover{
-        cursor:pointer
-      }
+.cont {
+  width: 60%;
+  margin: 30px auto;
+
+  .contt {
+    margin-left: 30px;
+
+    .list {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      margin: 20px 0;
+      padding-left: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+    }
+
+    .list:hover {
+      cursor: pointer
+    }
   }
 }
 </style>
