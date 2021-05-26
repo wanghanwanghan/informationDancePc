@@ -300,6 +300,8 @@ export default {
               'pay': 1
             }, this.token).then(res_s => {
               if (res_s.data.code === 200) {
+                this.fData = res.data.result
+                this.showBtn = !this.showBtn
                 this.handlerPData(res_s.data.result)
                 this.handlerAData(res_s.data.result)
                 this.handlerVData(res_s.data.result)
@@ -674,10 +676,6 @@ export default {
       })
     },
     drowPic() {
-      if (this.lookCount <= 0) {
-        this.$message.error('没有查询次数了')
-        return
-      }
       if (this.diffList.length > 5) {
         this.$message.error('最多选5家企业')
         return
