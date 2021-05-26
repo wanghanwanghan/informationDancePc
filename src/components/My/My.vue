@@ -37,7 +37,6 @@
       :visible.sync="modify_user_password_dialog"
       width="30%">
       <div style="width: 80%;margin-left: 40px;">
-        <el-input :style="{margin:'10px'}" v-model="pwd_moto" placeholder="原密码" show-password></el-input>
         <el-input :style="{margin:'10px'}" v-model="pwd_saki" placeholder="新密码" show-password></el-input>
         <el-input :style="{margin:'10px'}" v-model="pwd_saki_confirm" placeholder="确认新密码" show-password></el-input>
       </div>
@@ -62,7 +61,6 @@ export default {
       phone: '',
       result: '',
       modify_user_password_dialog: false,
-      pwd_moto: '',
       pwd_saki: '',
       pwd_saki_confirm: ''
     }
@@ -78,10 +76,9 @@ export default {
       this.modify_user_password_dialog = !this.modify_user_password_dialog
     },
     doModify() {
-      if (this.pwd_saki.length > 0 && this.pwd_saki_confirm.length > 0 && this.pwd_moto.length > 0) {
+      if (this.pwd_saki.length > 0 && this.pwd_saki_confirm.length > 0) {
         setUserPassword({
           phone: localStorage.getItem('phone'),
-          pwd_moto: this.pwd_moto,
           pwd_saki: this.pwd_saki,
           pwd_saki_confirm: this.pwd_saki_confirm
         }).then(res => {
