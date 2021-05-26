@@ -20,7 +20,7 @@
               :value="item.entName"
             />
           </el-select>
-          <span class="set" @click="showM">设置风险提示阈值</span>
+          <span class="set" @click="showM">设置每周扫描的短信提示风险阈值</span>
         </div>
         <!-- 监控分类 -->
         <div class="leftFL">
@@ -56,7 +56,7 @@
           </div>
         </div>
         <el-dialog
-          title="设置短信提示风险阈值"
+          title="设置每周扫描的短信提示风险阈值"
           :visible.sync="dialogVisible"
           width="50%"
         >
@@ -244,7 +244,7 @@ export default {
     }
     this.query.supervisorType = this.sType
     supervisor(this.query).then(res => {
-      this.list = [];
+      this.list = []
       this.totalsupervisor = 0
       this.totalsupervisor = res.data.paging.total
       this.list = res.data.result.detail
@@ -363,7 +363,7 @@ export default {
       this.query.supervisorType = this.sType
 
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -397,7 +397,7 @@ export default {
       this.query.level = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -409,7 +409,7 @@ export default {
       this.query.type = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -447,7 +447,7 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -459,7 +459,7 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -471,7 +471,7 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -483,7 +483,7 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -495,7 +495,7 @@ export default {
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
@@ -508,7 +508,7 @@ export default {
       if (item === '近7天') {
         this.query.timeRange = 7
         supervisor(this.query).then(res => {
-          this.list = [];
+          this.list = []
           this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
@@ -517,7 +517,7 @@ export default {
       if (item === '近30天') {
         this.query.timeRange = 30
         supervisor(this.query).then(res => {
-          this.list = [];
+          this.list = []
           this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
@@ -526,7 +526,7 @@ export default {
       if (item === '今年') {
         this.query.timeRange = 365
         supervisor(this.query).then(res => {
-          this.list = [];
+          this.list = []
           this.totalsupervisor = 0
           this.list = res.data.result.detail
           this.totalsupervisor = res.data.paging.total
@@ -539,7 +539,7 @@ export default {
       this.query1.entName = e
       this.query2.entName = e
       supervisor(this.query).then(res => {
-        this.list = [];
+        this.list = []
         this.totalsupervisor = 0
         this.list = res.data.result.detail
         this.totalsupervisor = res.data.paging.total
