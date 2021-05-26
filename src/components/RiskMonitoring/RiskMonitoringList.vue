@@ -69,11 +69,14 @@
       </el-table-column>
       <el-table-column
         align="center"
-        prop="updated_at"
-        label="时间"
-        width="110">
+        prop="expireTime"
+        label="监控过期时间"
+        width="120">
         <template slot-scope="{row}">
-          <span>{{ row.updated_at | parseTime('{y}-{m}-{d}') }}</span>
+          <i class="el-icon-warning" style="color: red;cursor: pointer;" v-if="row.isExpire === 1"
+             @click="toMonitor(row.entName)"></i>
+          <i class="el-icon-umbrella" style="color: green" v-if="row.isExpire === 0"></i>
+          <span style="margin-left: 10px">{{ row.expireTime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -90,16 +93,30 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+      title="提示"
+      :visible.sync="supervisor_dialog"
+      width="26%"
+      :style="{'text-align': 'center'}">
+      <span style="color: red;font-size: 15px;">请选择要监控的风险分类</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="supervisor_dialog = false">取消</el-button>
+    <el-button type="primary" @click="doMonitor('争议方')">争议方</el-button>
+    <el-button type="primary" @click="doMonitor('合作方')">合作方</el-button>
+    <el-button type="primary" @click="doMonitor('全部')">全部</el-button>
+  </span>
+    </el-dialog>
     <div class="my-divider"></div>
     <el-button type="primary" @click="exportExcel">导出列表为excel</el-button>
   </div>
 </template>
 <script>
-import { supervisor, supervisorExportExcel } from '@/api/article'
+import { Supervisor, supervisor, supervisorExportExcel } from '@/api/article'
 import { parseTime } from '@/utils/index'
 
 export default {
   name: 'RiskMonitoringList',
+  inject: ['reload'],
   components: {},
   filters: {
     parseTime: parseTime
@@ -110,6 +127,14 @@ export default {
   // },
   data() {
     return {
+      query2: {
+        phone: '',
+        entName: '',
+        type: 3,
+        email: '',
+        pay: 0
+      },
+      supervisor_dialog: false,
       multipleSelection: [],
       getSupervisorListQuery: {
         phone: '',
@@ -181,6 +206,65 @@ export default {
   // deactivated() {
   // },
   methods: {
+    toMonitor(e) {
+      this.supervisor_dialog = true
+      this.query2.phone = localStorage.getItem('phone')
+      this.query2.entName = e
+    },
+    doMonitor(val) {
+      if (val === '争议方') {
+        this.query2.type = 1
+      } else if (val === '合作方') {
+        this.query2.type = 2
+      } else {
+        this.query2.type = 3
+      }
+      Supervisor(this.query2).then(res => {
+        if (res.data.code === 210) {
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.query2.pay = 1
+            Supervisor(this.query2).then(res => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: '添加成功',
+                  type: 'success'
+                })
+                this.supervisor_dialog = false
+              } else {
+                this.$message.error('添加失败')
+              }
+              if (res.data.code === 220) {
+                this.$confirm('余额不足，是否前往充值？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.$router.push('/login')
+                  localStorage.setItem('activeName', 'third')
+                }).catch(() => {
+                  this.$router.go(0)
+                })
+              }
+            })
+          }).catch(() => {
+          })
+        } else {
+          this.reload()
+          //this.supervisor_dialog = false
+          // this.$router.push({
+          //   path: '/login',
+          //   query: {
+          //     activeName: 'fourth'
+          //   }
+          // })
+          // localStorage.setItem('activeName', 'fourth')
+        }
+      })
+    },
     exportExcel() {
       if (this.multipleSelection.length > 0) {
         let entNameList = ''

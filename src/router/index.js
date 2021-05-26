@@ -216,6 +216,26 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/FinancialPerformance',
+    component: Layout,
+    redirect: '/FinancialPerformance/FinancialPerformance',
+    name: 'FinancialPerformance',
+    meta: {
+      title: '财务表现'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
+        name: 'FinancialPerformance',
+        meta: {
+          title: '财务表现',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
     path: '/AssetClues',
     component: Layout,
     redirect: '/AssetClues/LandAssets',
