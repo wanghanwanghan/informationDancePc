@@ -279,6 +279,11 @@ export default {
             window.location.href = 'https://api.meirixindong.com/' + res.data.result
           }
         })
+      } else {
+        this.$message({
+          type: 'info',
+          message: '请选择要导出的企业'
+        })
       }
     },
     toggleSelection(rows) {
