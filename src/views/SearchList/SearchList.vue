@@ -3,7 +3,7 @@
     <el-dialog
       title="提示"
       :visible.sync="supervisor_dialog"
-      width="30%"
+      width="32%"
       :style="{'text-align': 'center'}">
       <span style="color: red;font-size: 15px;">请选择要监控的风险分类</span>
       <span slot="footer" class="dialog-footer">
