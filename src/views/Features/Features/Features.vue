@@ -3,6 +3,12 @@
     <div class="header" v-if="showBtn === true">
       <el-button type="primary" @click="btnGetFeatures">付费查看企业 < 业务特征 > 分析结果列表</el-button>
     </div>
+    <div class="example-img" v-if="showBtn === true">
+      <div>
+        <span style="font-size: 30px;color: red;font-weight: 800;text-align: center">数据样例</span>
+      </div>
+      <img class="example-img" :src="require('../../../assets/features.png')"/>
+    </div>
     <div class="box">
       <div class="cont">
         <el-table :data="list" border style="width: 100%">
@@ -188,6 +194,15 @@ export default {
 .header {
   width: 94%;
   margin: 40px;
+}
+
+.example-img {
+  width: 90%;
+  margin-left: 15px;
+
+  span {
+    margin-left: 20px;
+  }
 }
 
 .cont {

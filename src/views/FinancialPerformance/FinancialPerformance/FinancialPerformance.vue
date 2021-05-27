@@ -308,9 +308,9 @@ export default {
                 this.scoreDataForVENDINC = res_s.data.ext.VENDINC
                 this.scoreDataForPROGRO = res_s.data.ext.PROGRO
                 this.scoreDataForASSGRO = res_s.data.ext.ASSGRO
-                this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者'
-                this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者'
-                this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者'
+                this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+                this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+                this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
               }
             })
           }).catch(() => {
@@ -326,9 +326,9 @@ export default {
           this.scoreDataForVENDINC = res.data.ext.VENDINC
           this.scoreDataForPROGRO = res.data.ext.PROGRO
           this.scoreDataForASSGRO = res.data.ext.ASSGRO
-          this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者'
-          this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者'
-          this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者'
+          this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+          this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+          this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
         }
       }).catch(err => {
         this.$message.error('查询失败')
@@ -707,9 +707,9 @@ export default {
                 this.scoreDataForVENDINC = res_s.data.ext.VENDINC
                 this.scoreDataForPROGRO = res_s.data.ext.PROGRO
                 this.scoreDataForASSGRO = res_s.data.ext.ASSGRO
-                this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者'
-                this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者'
-                this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者'
+                this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+                this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+                this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res_s.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
               }
             })
           }).catch(() => {
@@ -723,9 +723,9 @@ export default {
           this.scoreDataForVENDINC = res.data.ext.VENDINC
           this.scoreDataForPROGRO = res.data.ext.PROGRO
           this.scoreDataForASSGRO = res.data.ext.ASSGRO
-          this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者'
-          this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者'
-          this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者'
+          this.bestEntForVENDINC = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.VENDINC[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+          this.bestEntForPROGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.PROGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
+          this.bestEntForASSGRO = '基于对同类企业对应行为信息的智能算法评估分析，< ' + res.data.ext.ASSGRO[0].entName + ' > 为目前对比群体中的较优者(点击查看评估依据)'
         }
       }).catch(err => {
         this.$message.error('查询失败')
