@@ -8,7 +8,7 @@
       <span style="color: red;font-size: 15px;">请选择要监控的风险分类</span>
       <span slot="footer" class="dialog-footer">
     <el-button @click="supervisor_dialog = false">取消</el-button>
-    <el-button type="primary" @click="doMonitor('争议方')">争议方</el-button>
+    <el-button type="primary" @click="doMonitor('重点对象')">重点对象</el-button>
     <el-button type="primary" @click="doMonitor('合作方')">合作方</el-button>
     <el-button type="primary" @click="doMonitor('全部')">全部</el-button>
   </span>
@@ -790,7 +790,7 @@ export default {
       this.query2.entName = e
     },
     doMonitor(val) {
-      if (val === '争议方') {
+      if (val === '重点对象') {
         this.query2.type = 1
       } else if (val === '合作方') {
         this.query2.type = 2

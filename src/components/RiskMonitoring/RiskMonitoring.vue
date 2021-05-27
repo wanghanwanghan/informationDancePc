@@ -81,9 +81,9 @@
             <el-button type="primary" @click="tijiaoY">确 定</el-button>
           </span>
         </el-dialog>
-        <!-- 争议动态 -->
+        <!-- 重点对象 -->
         <div v-if="show_zyfdt" class="leftZ">
-          <el-button type="primary" plain class="title" size="mini">争议动态</el-button>
+          <el-button type="primary" plain class="title" size="mini">重点对象</el-button>
           <div
             v-for="(item,index) in zyfdt"
             :key="item.index"
@@ -233,7 +233,7 @@ export default {
     this.query.entName = this.entName
     this.query1.entName = this.entName
     this.query2.entName = this.entName
-    if (this.sType === '争议') {
+    if (this.sType === '重点对象') {
       this.sType = 1
     }
     if (this.sType === '合作') {
@@ -256,7 +256,7 @@ export default {
       options: [],
       value: '',
 
-      fxfl: ['全部', '争议方', '合作/投资对象'],//title
+      fxfl: ['全部', '重点对象', '合作/投资对象'],//title
       index_fxfl: 0,
 
       fxdj: ['全部', '高风险', '风险', '警示', '提示', '利好'],//level
@@ -351,7 +351,7 @@ export default {
       this.query.level = ''
       this.query.page = 1
 
-      if (item === '争议方') {
+      if (item === '重点对象') {
         this.sType = 1
       }
       if (item === '合作/投资对象') {
@@ -374,14 +374,14 @@ export default {
       this.show_gsfx = false
       this.show_glfx = false
       this.show_jyfx = false
-      if (item === '争议方') {
+      if (item === '重点对象') {
         this.show_zyfdt = true
         this.show_fxlx = false
         this.show_sffx = false
         this.show_gsfx = false
         this.show_glfx = false
         this.show_jyfx = false
-        this.query.type = '争议方'
+        this.query.type = '重点对象'
         this.query.typeDetail = '全部'
       }
       if (item === '合作/投资对象') {
@@ -439,11 +439,11 @@ export default {
         this.show_jyfx = true
       }
     },
-    // 争议动态
+    // 重点对象
     changezydt(index, item) {
       this.index_zyfdt = index
-      this.query.title = '争议方'
-      this.query.type = '争议方'
+      this.query.title = '重点对象'
+      this.query.type = '重点对象'
       this.query.typeDetail = item
       this.query.page = 1
       supervisor(this.query).then(res => {
