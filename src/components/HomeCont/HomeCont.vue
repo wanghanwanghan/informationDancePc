@@ -1,5 +1,8 @@
 <template>
   <div class="body-wrapper">
+    <div class="logo-wrapper">
+      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg">
+    </div>
     <div class="header-wrapper">
       <div class="one-row">
         <el-input placeholder="全局搜索，查询条件空格相隔" @keyup.enter.native="search" v-model="cond.keyword" clearable
@@ -298,6 +301,14 @@ export default {
   font-size: 14px;
   margin: 0 auto;
   width: 1300px;
+
+  .logo-wrapper {
+    margin: 0 auto;
+    text-align: center;
+    .logo {
+      width: 600px;
+    }
+  }
 
   .header-wrapper {
     .one-row {
