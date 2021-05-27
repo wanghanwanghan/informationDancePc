@@ -629,7 +629,7 @@ export default {
 
         .set {
           display: block;
-          width: 125px;
+          width: 200px;
           height: 40px;
           font-size: 12px;
           color: #fff;
