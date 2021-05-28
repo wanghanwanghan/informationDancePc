@@ -306,7 +306,8 @@ export default {
     margin: 0 auto;
     text-align: center;
     .logo {
-      width: 600px;
+      width: 310px;
+      height: 130px;
     }
   }
 
