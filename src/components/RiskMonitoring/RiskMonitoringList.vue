@@ -1,13 +1,17 @@
 <template>
   <div>
-    <el-select v-model="value" filterable placeholder="请选择监控类别" @change="selectChange">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
-    </el-select>
+    <el-form>
+      <el-form-item label="请选择监控类别 : ">
+        <el-select v-model="value" filterable placeholder="全部" @change="selectChange">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
     <div class="my-divider"></div>
     <el-table
       ref="multipleTable"

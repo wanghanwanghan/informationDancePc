@@ -753,7 +753,7 @@ export default {
 
   .header-wrapper {
     width: 100%;
-    height: 100px;
+    height: 60px;
   }
 
   .content-wrapper {
