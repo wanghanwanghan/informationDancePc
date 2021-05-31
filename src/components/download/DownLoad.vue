@@ -17,7 +17,7 @@
             width="50"
           />
 
-          <el-table-column width="260" align="center" label="公司名称">
+          <el-table-column width="350" align="center" label="公司名称">
             <template slot-scope="{row}">
               <span>{{ row.entName }}</span>
             </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="body-wrapper">
     <div class="logo-wrapper">
-      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg">
+      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>
     </div>
     <div class="header-wrapper">
       <div class="one-row">
@@ -232,16 +232,16 @@ export default {
           this.cond.total = res.data.paging.total
         }
         this.tableData = this.handleTableData(res.data.result)
-        // this.$message({
-        //   message: '查询成功',
-        //   type: 'success'
-        // })
       }).catch(err => {
         this.$message.error('查询失败')
         this.tableData = []
       })
     },
     handleTableData(data) {
+      if (data === null) {
+        this.$message.warning('查询无记录')
+        return []
+      }
       for (let i = 0; i < data.length; i++) {
         if (data[i].financing_process !== undefined && data[i].financing_process.length > 0) {
           data[i].financing_process = data[i].financing_process.reverse()
@@ -305,6 +305,7 @@ export default {
   .logo-wrapper {
     margin: 0 auto;
     text-align: center;
+
     .logo {
       width: 310px;
       height: 130px;

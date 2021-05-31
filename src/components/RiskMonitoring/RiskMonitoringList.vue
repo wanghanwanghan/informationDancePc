@@ -98,7 +98,7 @@
       </el-table-column>
     </el-table>
     <el-dialog
-      title="提示"
+      title="续费"
       :visible.sync="supervisor_dialog"
       width="32%"
       :style="{'text-align': 'center'}">

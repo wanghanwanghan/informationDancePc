@@ -44,7 +44,7 @@
         <div class="right">
           <div v-if="item.supervisor === 0" class="jkong" @click="toMonitor(item.Name)">监控企业</div>
           <div v-if="item.supervisor === 1" class="jkong1">正在监控</div>
-          <div v-if="item.supervisor === 2" class="jkong2" @click="toMonitor(item.Name)">监控到期</div>
+          <div v-if="item.supervisor === 2" class="jkong2" @click="toMonitor(item.Name)">点击续费</div>
           <div class="sqing" @click="outerVisibles(item.Name,item.CreditCode)">申请报告</div>
         </div>
       </div>
