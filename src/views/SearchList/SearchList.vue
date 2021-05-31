@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body-wrapper">
     <el-dialog
       title="提示"
       :visible.sync="supervisor_dialog"
@@ -1273,118 +1273,123 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.nav {
-  height: 47px;
-  width: 100%;
-  margin-top: 20px;
 
-  .img {
-    display: block;
-    width: 108px;
-    height: 47px;
-    margin-left: 60px;
-  }
-}
-
-.cont {
+.body-wrapper {
   width: 1200px;
-  // height: 2200px;
   margin: auto;
-
-  .cont-list {
+  .nav {
+    height: 47px;
     width: 100%;
-    border-bottom: 1px solid #E3E3E3;
-    padding: 16px 20px 0 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    margin-top: 20px;
 
-    .left {
-      .name {
-        display: flex;
-        justify-content: start;
-        padding-bottom: 10px;
-        color: #525252;
+    .img {
+      display: block;
+      width: 108px;
+      height: 47px;
+      margin-left: 60px;
+    }
+  }
 
-        h2 {
-          color: #428bca;
-          font-weight: 500;
-          font-size: 18px;
-          cursor: pointer;
+  .cont {
+    width: 1200px;
+    // height: 2200px;
+    margin: auto;
+
+    .cont-list {
+      width: 100%;
+      border-bottom: 1px solid #E3E3E3;
+      padding: 16px 20px 0 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .left {
+        .name {
+          display: flex;
+          justify-content: start;
+          padding-bottom: 10px;
+          color: #525252;
+
+          h2 {
+            color: #428bca;
+            font-weight: 500;
+            font-size: 18px;
+            cursor: pointer;
+          }
+        }
+
+        .desc {
+          padding-bottom: 10px;
+          font-size: 14px;
+          color: #525252;
         }
       }
 
-      .desc {
-        padding-bottom: 10px;
-        font-size: 14px;
-        color: #525252;
-      }
-    }
+      .right {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        margin: 15px 40px 0 0;
 
-    .right {
-      display: flex;
-      flex-direction: row;
-      justify-content: start;
-      margin: 15px 40px 0 0;
+        .jkong {
+          cursor: pointer;
+          height: 28px;
+          background-color: orange;
+          color: #FFFFFF;
+          padding: 5px 18px;
+          border-radius: 5px;
+          margin-right: 15px;
+        }
 
-      .jkong {
-        cursor: pointer;
-        height: 28px;
-        background-color: orange;
-        color: #FFFFFF;
-        padding: 5px 18px;
-        border-radius: 5px;
-        margin-right: 15px;
-      }
+        .jkong1 {
+          cursor: pointer;
+          height: 28px;
+          background-color: #64C09B;
+          color: #FFFFFF;
+          padding: 5px 18px;
+          border-radius: 5px;
+          margin-right: 15px;
+        }
 
-      .jkong1 {
-        cursor: pointer;
-        height: 28px;
-        background-color: #64C09B;
-        color: #FFFFFF;
-        padding: 5px 18px;
-        border-radius: 5px;
-        margin-right: 15px;
-      }
+        .jkong2 {
+          cursor: pointer;
+          height: 28px;
+          background-color: gray;
+          color: #FFFFFF;
+          padding: 5px 18px;
+          border-radius: 5px;
+          margin-right: 15px;
+        }
 
-      .jkong2 {
-        cursor: pointer;
-        height: 28px;
-        background-color: gray;
-        color: #FFFFFF;
-        padding: 5px 18px;
-        border-radius: 5px;
-        margin-right: 15px;
-      }
-
-      .sqing {
-        cursor: pointer;
-        height: 28px;
-        background: #3389CA;
-        color: #FFFFFF;
-        padding: 5px 18px;
-        border-radius: 5px;
+        .sqing {
+          cursor: pointer;
+          height: 28px;
+          background: #3389CA;
+          color: #FFFFFF;
+          padding: 5px 18px;
+          border-radius: 5px;
+        }
       }
     }
   }
-}
 
-.pagination {
-  width: 1200px;
-  margin: auto;
-  margin-top: 25px;
-}
+  .pagination {
+    width: 1200px;
+    margin: auto;
+    margin-top: 25px;
+  }
 
-.reportBox {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  .reportBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.auth-book-wrapper {
-  width: 100%;
-  min-height: 150px;
+  .auth-book-wrapper {
+    width: 100%;
+    min-height: 150px;
+  }
 }
 
 </style>
