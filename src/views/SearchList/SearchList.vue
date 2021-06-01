@@ -508,14 +508,23 @@ export default {
       // console.log(e,111)
       const entName = e
       localStorage.setItem('entName', e)
-      this.$router.push({
-        // name: 'entName',
-        // path: '/dashboard',
+
+      let routeUrl = this.$router.resolve({
         path: '/qybj',
-        params: {
+        query: {
           entName: entName
         }
       })
+      window.open(routeUrl.href, '_blank')
+
+      //this.$router.push({
+      //  // name: 'entName',
+      //  // path: '/dashboard',
+      //  path: '/qybj',
+      //  params: {
+      //    entName: entName
+      //  }
+      //})
     },
     outerVisibles(e, code) {
       localStorage.setItem('reportName', e)
@@ -1277,6 +1286,7 @@ export default {
 .body-wrapper {
   width: 1200px;
   margin: auto;
+
   .nav {
     height: 47px;
     width: 100%;

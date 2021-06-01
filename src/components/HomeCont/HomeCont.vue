@@ -5,9 +5,13 @@
     </div>
     <div class="header-wrapper">
       <div class="one-row">
-        <el-input placeholder="全局搜索，查询条件空格相隔" @keyup.enter.native="search" v-model="cond.keyword" clearable
+        <el-input placeholder="查产品，查标签" @keyup.enter.native="search" v-model="cond.keyword" clearable
                   class="input-with-select keyword-input">
           <el-button class="keyword-btn" slot="append" @click="search">搜索</el-button>
+        </el-input>
+        <el-input placeholder="查公司" @keyup.enter.native="searchEnt" v-model="cond.keywordSearchEnt" clearable
+                  class="input-with-select keyword-input">
+          <el-button class="keyword-btn" slot="append" @click="searchEnt">搜索</el-button>
         </el-input>
       </div>
       <div class="one-row">
@@ -150,6 +154,7 @@ export default {
     return {
       labelInput: '',
       cond: {
+        keywordSearchEnt: '',
         keyword: '',
         tag: '不限',
         financing: '不限',
@@ -258,12 +263,28 @@ export default {
     rowClick(row, column, event) {
       let token = localStorage.getItem('token')
       if (token != null) {
-        this.$router.push({
+        let routeUrl = this.$router.resolve({
           path: './SearchList',
           query: {
             entName: row.company_name
           }
         })
+        window.open(routeUrl.href, '_blank')
+      } else {
+        this.$message.error('登录过期，请重新登录')
+        localStorage.clear()
+      }
+    },
+    searchEnt() {
+      let token = localStorage.getItem('token')
+      if (token != null) {
+        let routeUrl = this.$router.resolve({
+          path: './SearchList',
+          query: {
+            entName: this.cond.keywordSearchEnt
+          }
+        })
+        window.open(routeUrl.href, '_blank')
       } else {
         this.$message.error('登录过期，请重新登录')
         localStorage.clear()
@@ -319,7 +340,7 @@ export default {
       margin-bottom: 25px;
 
       .keyword-input {
-        width: 50%;
+        width: 42%;
         margin: 0 auto;
       }
 

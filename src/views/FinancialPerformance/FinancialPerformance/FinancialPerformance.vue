@@ -20,7 +20,7 @@
           <el-col :span="12">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>对比列表</span>
+                <span style="margin-right: 20px">对比列表</span>
                 <el-button type="primary" @click="drowPic">生成财务图</el-button>
               </div>
               <div v-for="(item,index) of diffList" :key="index" class="text item ent-list-wrapper">
@@ -33,6 +33,7 @@
       </div>
       <div class="finance-btn" v-show="showBtn">
         <el-button type="warning" round @click="getData">点击查看企业财务表现</el-button>
+        <div style="color: red;font-size: 14px;margin-top: 20px">还有 {{ lookCount }} 次免费机会</div>
       </div>
       <div v-show="showBtn">
         <div class="block">
@@ -271,17 +272,36 @@ export default {
   },
   computed: {},
   mounted() {
-    this.lookCount = localStorage.getItem('lookCount')
-    if (this.lookCount === null || this.lookCount === '') {
-      localStorage.setItem('lookCount', 5)
-      this.lookCount = 5
-    }
     this.phone = localStorage.getItem('phone')
     this.token = localStorage.getItem('token')
     this.entName = localStorage.getItem('entName')
     this.diffList.push(this.entName)
+    this.getLookCount()
   },
   methods: {
+    getLookCount() {
+      req.post('api/v1/lx/getFinanceTemp', {
+        'phone': this.phone,
+        'getLookCount': '123'
+      }, this.token).then(res => {
+        if (5 - res.data.result > 0) {
+          this.lookCount = 5 - res.data.result
+        } else {
+          this.lookCount = 0
+          let show51info = localStorage.getItem('show51info')
+          if (show51info !== 'yes') {
+            localStorage.setItem('show51info', 'yes')
+            this.$confirm('直接充5万', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+            }).catch(() => {
+            })
+          }
+        }
+      })
+    },
     getData() {
       req.post('api/v1/lx/getFinanceTemp', {
         'entName': this.diffList.join(),
@@ -760,6 +780,11 @@ export default {
     .search-wrapper {
       .el-btn {
         width: 30%;
+      }
+
+      .finance-btn {
+        display: flex;
+        flex-direction: column;
       }
 
       .ent-list-wrapper {
