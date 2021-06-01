@@ -286,19 +286,6 @@ export default {
       }, this.token).then(res => {
         if (5 - res.data.result > 0) {
           this.lookCount = 5 - res.data.result
-        } else {
-          this.lookCount = 0
-          let show51info = localStorage.getItem('show51info')
-          if (show51info !== 'yes') {
-            localStorage.setItem('show51info', 'yes')
-            this.$confirm('直接充5万', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-            }).catch(() => {
-            })
-          }
         }
       })
     },
