@@ -282,7 +282,8 @@ export default {
     getLookCount() {
       req.post('api/v1/lx/getFinanceTemp', {
         'phone': this.phone,
-        'getLookCount': '123'
+        'getLookCount': '123',
+        'mergeData': 1
       }, this.token).then(res => {
         if (5 - res.data.result > 0) {
           this.lookCount = 5 - res.data.result
@@ -293,6 +294,7 @@ export default {
       req.post('api/v1/lx/getFinanceTemp', {
         'entName': this.diffList.join(),
         'phone': this.phone,
+        'mergeData': 1,
         'pay': 0
       }, this.token).then(res => {
         if (res.data.code === 210) {
@@ -304,6 +306,7 @@ export default {
             req.post('api/v1/lx/getFinanceTemp', {
               'entName': this.diffList.join(),
               'phone': this.phone,
+              'mergeData': 1,
               'pay': 1
             }, this.token).then(res_s => {
               if (res_s.data.code === 200) {
@@ -694,6 +697,7 @@ export default {
       req.post('api/v1/lx/getFinanceTemp', {
         'entName': this.diffList.join(),
         'phone': this.phone,
+        'mergeData': 1,
         'pay': 0
       }, this.token).then(res => {
         if (res.data.code === 210) {
@@ -705,6 +709,7 @@ export default {
             req.post('api/v1/lx/getFinanceTemp', {
               'entName': this.diffList.join(),
               'phone': this.phone,
+              'mergeData': 1,
               'pay': 1
             }, this.token).then(res_s => {
               if (res_s.data.code === 200) {
