@@ -235,26 +235,26 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/FinancialPerformanceMergeData',
-    component: Layout,
-    redirect: '/FinancialPerformance/FinancialPerformanceMergeData',
-    name: 'FinancialPerformance',
-    meta: {
-      title: '财务表现（含并表）'
-    },
-    children: [
-      {
-        path: 'FinancialPerformance',
-        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformanceMergeData'),
-        name: 'FinancialPerformanceMergeData',
-        meta: {
-          title: '财务表现（含并表）',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/FinancialPerformanceMergeData',
+  //   component: Layout,
+  //   redirect: '/FinancialPerformance/FinancialPerformanceMergeData',
+  //   name: 'FinancialPerformance',
+  //   meta: {
+  //     title: '财务表现（含并表）'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'FinancialPerformance',
+  //       component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformanceMergeData'),
+  //       name: 'FinancialPerformanceMergeData',
+  //       meta: {
+  //         title: '财务表现（含并表）',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/AssetClues',
     component: Layout,
