@@ -1,8 +1,7 @@
 <template>
   <!-- style="HEIGHT: 140;OVERFLOW: scroll; scrollbar-3dlight-color:#595959; scrollbar-arrow-color:#FFFFFF; scrollbar-base-color:#CFCFCF; scrollbar-darkshadow-color:#FFFFFF; scrollbar-face-color:#CFCFCF; scrollbar-highlight-color:#FFFFFF; scrollbar-shadow-color:#595959" -->
   <div class="app-container">
-    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg"
-         alt="">
+    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
     <div class="panel-heading">
       <div class="panel-title"><h3>风险动态</h3></div>
       <div><span style="font-size: 12px">基于公开信息分析生成，仅供参考，并不代表任何明示，暗示之观点或保证</span></div>
