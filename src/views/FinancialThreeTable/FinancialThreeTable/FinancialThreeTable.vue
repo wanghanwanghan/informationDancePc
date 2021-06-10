@@ -464,6 +464,7 @@ export default {
   .cont {
     width: 94%;
     margin: 40px;
+    overflow: hidden;
 
     .data-index-div {
       cursor: pointer;
