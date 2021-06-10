@@ -37,8 +37,8 @@
         <el-table :data="zc_el_table_data" border>
           <el-table-column property="projectName" label="项目名称" width="400"></el-table-column>
           <el-table-column property="columnSequence" label="栏次"></el-table-column>
-          <el-table-column property="initialBalance" label="本年累计金额"></el-table-column>
-          <el-table-column property="endingBalance" label="本月金额"></el-table-column>
+          <el-table-column property="endingBalance" label="期末余额"></el-table-column>
+          <el-table-column property="initialBalance" label="上年年末余额"></el-table-column>
         </el-table>
       </el-dialog>
       <section class="et-hero-tabs">
