@@ -5,6 +5,7 @@
       <el-button type="primary" @click.prevent="getAuth">开始授权</el-button>
     </div>
     <div class="auth-page-wrapper" v-show="auth_page_show">
+      <div>授权流程完成10分钟左右后刷新页面查看数据</div>
       <iframe id="myframe" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"
               scrolling="no" allowtransparency="yes"></iframe>
     </div>
@@ -22,7 +23,7 @@
           <el-table-column property="projectName" label="项目名称" width="400"></el-table-column>
           <el-table-column property="sequence" label="栏次"></el-table-column>
           <el-table-column property="currentYearAccumulativeAmount" label="本年累计金额"></el-table-column>
-          <el-table-column property="currentMonthAmount" label="本月金额"></el-table-column>
+          <el-table-column property="currentMonthAmount" label="本期金额"></el-table-column>
         </el-table>
       </el-dialog>
       <el-dialog :title="zc_table_title" :visible.sync="zc_year_table_show" width="75%">
