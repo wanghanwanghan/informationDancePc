@@ -235,26 +235,26 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/FinancialThreeTable',
-    component: Layout,
-    redirect: '/FinancialThreeTable/FinancialThreeTable',
-    name: 'FinancialThreeTable',
-    meta: {
-      title: '财务两表'
-    },
-    children: [
-      {
-        path: 'FinancialPerformance',
-        component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
-        name: 'FinancialThreeTable',
-        meta: {
-          title: '财务两表',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/FinancialThreeTable',
+  //   component: Layout,
+  //   redirect: '/FinancialThreeTable/FinancialThreeTable',
+  //   name: 'FinancialThreeTable',
+  //   meta: {
+  //     title: '财务两表'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'FinancialPerformance',
+  //       component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
+  //       name: 'FinancialThreeTable',
+  //       meta: {
+  //         title: '财务两表',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/FinancialPerformanceMergeData',
   //   component: Layout,
