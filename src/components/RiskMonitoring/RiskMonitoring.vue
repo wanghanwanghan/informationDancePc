@@ -1,7 +1,8 @@
 <template>
   <!-- style="HEIGHT: 140;OVERFLOW: scroll; scrollbar-3dlight-color:#595959; scrollbar-arrow-color:#FFFFFF; scrollbar-base-color:#CFCFCF; scrollbar-darkshadow-color:#FFFFFF; scrollbar-face-color:#CFCFCF; scrollbar-highlight-color:#FFFFFF; scrollbar-shadow-color:#595959" -->
   <div class="app-container">
-    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg"
+         alt="">
     <div class="panel-heading">
       <div class="panel-title"><h3>风险动态</h3></div>
       <div><span style="font-size: 12px">基于公开信息分析生成，仅供参考，并不代表任何明示，暗示之观点或保证</span></div>
@@ -277,7 +278,7 @@ export default {
       index_gsfx: 0,
       show_gsfx: false,
 
-      glfx: ['全部', '严重违法', '环保处罚', '税收违法', '欠税公告', '海关处罚', '一行两会'],//typeDetail
+      glfx: ['全部', '严重违法', '环保处罚', '税收违法', '欠税公告', '海关处罚', '一行两会', '环保监测', '环保监控', '环评公示'],//typeDetail
       index_glfx: 0,
       show_glfx: false,
 
@@ -616,7 +617,7 @@ export default {
     padding: 15px;
 
     .left {
-      width: 70%;
+      width: 90%;
       min-height: 350px;
       display: flex;
       flex-direction: column;
