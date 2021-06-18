@@ -1,5 +1,4 @@
 <template>
-  <!-- style="HEIGHT: 140;OVERFLOW: scroll; scrollbar-3dlight-color:#595959; scrollbar-arrow-color:#FFFFFF; scrollbar-base-color:#CFCFCF; scrollbar-darkshadow-color:#FFFFFF; scrollbar-face-color:#CFCFCF; scrollbar-highlight-color:#FFFFFF; scrollbar-shadow-color:#595959" -->
   <div class="app-container">
     <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg"
          alt="">
