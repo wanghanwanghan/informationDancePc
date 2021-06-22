@@ -16,7 +16,7 @@
     <div class="nav">
       <el-col :span="4">
         <div class="logo" @click="toIndex">
-          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">
           <!-- <img class="img" src="http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt=""> -->
         </div>
       </el-col>
@@ -956,6 +956,7 @@ export default {
 
       this.query2.email = '20210425修改'
       this.query2.entName = localStorage.getItem('reportName')
+      this.query2.type = 'xd'
       createVeryEasy(this.query2).then(res => {
         // console.log(res)
         if (res.data.code === 210) {
@@ -1294,9 +1295,9 @@ export default {
 
     .img {
       display: block;
-      width: 108px;
+      width: 170px;
       height: 47px;
-      margin-left: 60px;
+      margin-left: 10px;
     }
   }
 

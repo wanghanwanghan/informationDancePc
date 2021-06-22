@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: '信动智调',
-      logo: 'https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg'
+      title: '中企链创',
+      logo: 'https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg'
       // logo: 'http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png'
     }
   }
@@ -57,7 +57,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 110px;
+      width: 170px;
       height: 51px;
       vertical-align: middle;
       margin-right: 12px;

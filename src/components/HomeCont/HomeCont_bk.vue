@@ -2,7 +2,7 @@
   <div>
     <div class="cont">
       <div class="img">
-        <img src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+        <img src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">
       </div>
       <div class="search">
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" @change="sousuo">

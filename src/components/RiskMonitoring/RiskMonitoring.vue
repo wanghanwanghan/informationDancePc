@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg"
+    <img @click="jumpBack" class="panel-image" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg"
          alt="">
     <div class="panel-heading">
       <div class="panel-title"><h3>风险动态</h3></div>
