@@ -1,7 +1,8 @@
 <template>
   <div class="body-wrapper">
     <div class="logo-wrapper">
-      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt=""/>
+      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>
+<!--      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt=""/>-->
     </div>
     <div class="header-wrapper">
       <div class="one-row">

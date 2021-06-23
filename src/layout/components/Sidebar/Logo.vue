@@ -24,8 +24,9 @@ export default {
   },
   data() {
     return {
-      title: '中企链创',
-      logo: 'https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg'
+      title: '信动智调',
+      logo: 'https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg'
+      // logo: 'https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg'
       // logo: 'http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png'
     }
   }
