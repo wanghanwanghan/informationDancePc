@@ -100,9 +100,9 @@
           <el-tab-pane label="我的下载" name="second">
             <DownLoad/>
           </el-tab-pane>
-          <el-tab-pane label="充值" name="third">
-            <Recharge/>
-          </el-tab-pane>
+<!--          <el-tab-pane label="充值" name="third">-->
+<!--            <Recharge/>-->
+<!--          </el-tab-pane>-->
           <el-tab-pane label="风险监控" name="fourth">
             <RiskMonitoringList></RiskMonitoringList>
           </el-tab-pane>
