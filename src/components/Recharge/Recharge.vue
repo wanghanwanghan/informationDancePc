@@ -76,13 +76,13 @@ export default {
     })
   },
   mounted() {
-    this.$confirm('您可联系官方客服开通不限企业量的年度专业版账号 400 068 7266', '推荐提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }).then(() => {
-    }).catch(() => {
-    })
+    // this.$confirm('您可联系官方客服开通不限企业量的年度专业版账号 400 068 7266', '推荐提示', {
+    //   confirmButtonText: '确定',
+    //   cancelButtonText: '取消',
+    //   type: 'warning'
+    // }).then(() => {
+    // }).catch(() => {
+    // })
   },
   methods: {
     pay(e) {

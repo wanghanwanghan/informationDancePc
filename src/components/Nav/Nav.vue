@@ -43,7 +43,7 @@
         <el-dialog :visible.sync="dialogFormVisibl">
           <div class="title">注册
             <div style="color:#ccc">
-              （如已在 信动智调 小程序注册可直接登录）
+              （如已在 中企链创 小程序注册可直接登录）
             </div>
           </div>
           <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px"
