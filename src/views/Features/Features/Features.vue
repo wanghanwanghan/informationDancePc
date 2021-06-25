@@ -128,6 +128,7 @@ export default {
       for (let key in data) {
         let row = data[key]
         let desc = 'desc'
+        if (row.field === 'TBR_new') continue
         switch (row.field) {
           case 'ASSGROPROFIT_REL':
             desc = '<p>1.按0分到100分划分，评分越高，企业营运能力越强</p><p>2.通过分析企业的各项资产利用效率以及产生利润行为的效率，评估企业营运能力。反映企业的竞争实力和发展能力</p>'
