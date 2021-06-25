@@ -16,9 +16,9 @@
     <div class="nav">
       <el-col :span="4">
         <div class="logo" @click="toIndex">
-<!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">-->
-          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">
-<!--          <img class="img" src="http://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
+          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+<!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
+<!--          <img class="img" src="https://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
         </div>
       </el-col>
       <el-col :span="10">

@@ -43,7 +43,7 @@
         <el-dialog :visible.sync="dialogFormVisibl">
           <div class="title">注册
             <div style="color:#ccc">
-              （如已在 中企链创 小程序注册可直接登录）
+              （如已在 信动智调 小程序注册可直接登录）
             </div>
           </div>
           <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px"
@@ -100,9 +100,9 @@
           <el-tab-pane label="我的下载" name="second">
             <DownLoad/>
           </el-tab-pane>
-<!--          <el-tab-pane label="充值" name="third">-->
-<!--            <Recharge/>-->
-<!--          </el-tab-pane>-->
+          <el-tab-pane label="充值" name="third">
+            <Recharge/>
+          </el-tab-pane>
           <el-tab-pane label="风险监控" name="fourth">
             <RiskMonitoringList></RiskMonitoringList>
           </el-tab-pane>
