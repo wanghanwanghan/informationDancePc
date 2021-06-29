@@ -136,6 +136,10 @@
         <div class="search-res-wrapper">
           <el-table
             :data="search_res"
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
             min-height="100"
             max-height="600"
             style="width: 100%">
@@ -237,12 +241,12 @@ export default {
   props: {},
   data() {
     return {
+      loading: true,
       nicid: nicid,
       enttype: enttype,
       address: address,
       regcap: regcap,
       sonum: sonum,
-
       search_res: [],
       search_cond: {
         page: 1,
@@ -282,11 +286,13 @@ export default {
       this.search(index)
     },
     search(page) {
+      this.loading = true
       this.search_cond.page = page
       req.post('api/v1/lx/superSearch', this.search_cond, localStorage.getItem('token')).then(res => {
         if (res.data.code === 200) {
           this.paginate = res.data.paging
           this.search_res = res.data.result
+          this.loading = false
         }
       })
     },
