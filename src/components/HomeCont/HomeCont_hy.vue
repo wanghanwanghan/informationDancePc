@@ -149,7 +149,7 @@
 import req from '@/utils/req'
 
 export default {
-  name: 'HomeCont',
+  name: 'HomeCont_hy',
   components: {},
   data() {
     return {

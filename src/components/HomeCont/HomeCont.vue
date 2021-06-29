@@ -101,6 +101,7 @@
           <tr class="search-table-tr">
             <td class="search-table-td">员工社保人数</td>
             <td class="search-table-td">企业所属地区</td>
+            <td class="search-table-td"></td>
           </tr>
           <tr>
             <td class="search-table-td">
@@ -125,6 +126,9 @@
                 clearable
                 @change="getCheckedNodes"
               ></el-cascader>
+            </td>
+            <td class="search-table-td">
+              <el-button @click="jumpHY">搜索产品页</el-button>
             </td>
           </tr>
         </table>
@@ -273,6 +277,9 @@ export default {
     this.search(1)
   },
   methods: {
+    jumpHY() {
+      this.$router.push({ path: '/HomeCont_hy' })
+    },
     handleEdit(index, row) {
       let routeUrl = this.$router.resolve({
         path: './SearchList',

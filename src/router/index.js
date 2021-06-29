@@ -32,6 +32,11 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/HomeCont_hy',
+    component: () => import('@/components/HomeCont/HomeCont_hy'),
+    hidden: true
+  },
+  {
     path: '/RiskMonitoringDetail/:sType/:entName/',
     component: () => import('@/views/RiskMonitoring/Detail'),
     hidden: true
