@@ -293,6 +293,8 @@ export default {
           this.paginate = res.data.paging
           this.search_res = res.data.result
           this.loading = false
+        } else {
+          this.loading = false
         }
       })
     },
