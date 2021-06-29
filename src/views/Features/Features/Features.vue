@@ -127,8 +127,7 @@ export default {
       let tmpList = []
       for (let key in data) {
         let row = data[key]
-        let desc = 'desc'
-        if (row.field === 'TBR_new') continue
+        let desc = '--'
         switch (row.field) {
           case 'ASSGROPROFIT_REL':
             desc = '<p>1.按0分到100分划分，评分越高，企业营运能力越强</p><p>2.通过分析企业的各项资产利用效率以及产生利润行为的效率，评估企业营运能力。反映企业的竞争实力和发展能力</p>'
@@ -178,6 +177,8 @@ export default {
           case 'GuaranteeAbility':
             desc = '<p>1.按0分到100分划分，评分越高，企业的对外担保能力越强</p><p>2.通过分析企业抵质押 出质及企业类型等经营行为后的结果。主要反映企业在外部担保合作的能力，供判断担保合作可行性</p>'
             break
+          default:
+            continue
         }
         tmpList.push({
           name: row.name,
