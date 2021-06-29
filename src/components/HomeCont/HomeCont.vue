@@ -51,7 +51,7 @@
           </tr>
           <tr class="search-table-tr">
             <td class="search-table-td">企业行业</td>
-            <td class="search-table-td">开业日期</td>
+            <td class="search-table-td">成立日期</td>
             <td class="search-table-td">企业类型</td>
             <td class="search-table-td">统一信用代码</td>
           </tr>
@@ -203,7 +203,7 @@
               width="180"
               align="center">
             </el-table-column>
-            <el-table-column label="操作" align="center" width="150">
+            <el-table-column label="详情" align="center" width="150">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -216,9 +216,9 @@
       </div>
     </div>
     <div class="footer-wrapper">
-      <div class="total-count">共 {{ paginate.total }} 条</div>
       <el-pagination
-        layout="prev, pager, next"
+        background
+        layout="total, prev, pager, next"
         :total="paginate.total"
         :page-size="20"
         @current-change="pageChange">
@@ -395,13 +395,8 @@ export default {
   }
 
   .footer-wrapper {
+    margin-top: 15px;
     text-align: right;
-
-    .total-count {
-      margin-top: 8px;
-      margin-right: 16px;
-      margin-bottom: 3px;
-    }
   }
 }
 </style>
