@@ -420,7 +420,7 @@ export default {
               } else {
                 this.$notify.error({
                   title: '错误',
-                  message: '登陆失败'
+                  message: '登录失败'
                 })
                 this.dialogFormVisible = false
               }
@@ -447,7 +447,7 @@ export default {
               } else {
                 this.$notify.error({
                   title: '错误',
-                  message: '登陆失败'
+                  message: '登录失败'
                 })
                 this.dialogFormVisible = false
               }

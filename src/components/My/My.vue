@@ -97,7 +97,7 @@ export default {
       }
     },
     out() {
-      this.$confirm('是否退出登陆状态?', '提示', {
+      this.$confirm('是否退出登录状态?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
