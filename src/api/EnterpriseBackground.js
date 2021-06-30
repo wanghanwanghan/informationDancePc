@@ -1,6 +1,15 @@
 import request from '@/utils/request'
 
 // 获取基本信息
+export function getRegisterInfo(data) {
+  return request({
+    url: '/api/v1/ts/getRegisterInfo',
+    method: 'post',
+    data
+  })
+}
+
+// 获取基本信息
 export function getBasicDetails(data) {
   return request({
     url: '/api/v1/qcc/getBasicDetailsByEntName',

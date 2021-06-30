@@ -7,10 +7,10 @@
       <div>
         <table class="search-table" cellspacing="15">
           <tr>
-            <td class="search-table-td">企业名称</td>
-            <td class="search-table-td">企业人名</td>
-            <td class="search-table-td">企业地址</td>
-            <td class="search-table-td">企业注册资金</td>
+            <td class="search-table-td bg-color">企业名称</td>
+            <td class="search-table-td bg-color">企业人名</td>
+            <td class="search-table-td bg-color">企业地址</td>
+            <td class="search-table-td bg-color">企业注册资金</td>
           </tr>
           <tr>
             <td class="search-table-td">
@@ -50,10 +50,10 @@
             </td>
           </tr>
           <tr class="search-table-tr">
-            <td class="search-table-td">企业行业</td>
-            <td class="search-table-td">成立日期</td>
-            <td class="search-table-td">企业类型</td>
-            <td class="search-table-td">统一信用代码</td>
+            <td class="search-table-td bg-color">企业行业</td>
+            <td class="search-table-td bg-color">成立日期</td>
+            <td class="search-table-td bg-color">企业类型</td>
+            <td class="search-table-td bg-color">统一信用代码</td>
           </tr>
           <tr>
             <td class="search-table-td">
@@ -99,8 +99,8 @@
             </td>
           </tr>
           <tr class="search-table-tr">
-            <td class="search-table-td">员工社保人数</td>
-            <td class="search-table-td">企业所属地区</td>
+            <td class="search-table-td bg-color">员工社保人数</td>
+            <td class="search-table-td bg-color">企业所属地区</td>
             <td class="search-table-td"></td>
           </tr>
           <tr>
@@ -128,7 +128,7 @@
               ></el-cascader>
             </td>
             <td class="search-table-td">
-              <el-button @click="jumpHY">搜索产品页</el-button>
+              <el-button @click="jumpHY">创投企业搜产品</el-button>
             </td>
           </tr>
         </table>
@@ -385,6 +385,11 @@ export default {
   .content-wrapper {
     .search-table {
       width: 100%;
+
+      .bg-color {
+        font-weight: 700;
+        color: #409EFF !important;
+      }
 
       .search-table-td {
         width: 24%;

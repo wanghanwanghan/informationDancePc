@@ -40,7 +40,7 @@
               </tr>
               <tr>
                 <td>营业期限</td>
-                <td>{{ list.TermStart }}至{{ list.TeamEnd }}</td>
+                <td>{{ list.TermStart }}至{{ list.TeamEnd === '--' ? '无固定期限' : list.TeamEnd }}</td>
                 <td>登记机关</td>
                 <td>{{ list.BelongOrg }}</td>
                 <td>核准日期</td>
@@ -48,7 +48,9 @@
               </tr>
               <tr>
                 <td>注册地址</td>
-                <td colspan="5" class="type3">{{ list.Address }}</td>
+                <td colspan="3" class="type3">{{ list.Address }}</td>
+                <td>行业</td>
+                <td>{{ INDUSTRY }}</td>
               </tr>
               <tr>
                 <td class="type4">经营范围</td>
@@ -410,6 +412,7 @@
 </template>
 <script>
 import {
+  getRegisterInfo,
   getBasicDetails,
   getShareHolderInfo,
   getBeneficiary,
@@ -466,8 +469,11 @@ export default {
     this.query2.entName = localStorage.getItem('entName')
     this.query2.phone = localStorage.getItem('phone')
     // 基本信息
+    getRegisterInfo(this.query).then(res => {
+      this.INDUSTRY = res.data.result[0].INDUSTRY
+    })
+    // 基本信息
     getBasicDetails(this.query).then(res => {
-      // console.log(res.data.result)
       this.list = res.data.result[0]
       for (const key in this.list) {
         if (key === 'CreditCode') {
