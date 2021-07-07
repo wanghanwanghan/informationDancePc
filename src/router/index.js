@@ -281,6 +281,26 @@ export const constantRoutes = [
   //   ]
   // },
   {
+    path: '/IndustryTop',
+    component: Layout,
+    redirect: '/IndustryTop/IndustryTop',
+    name: 'IndustryTop',
+    meta: {
+      title: '行业Top'
+    },
+    children: [
+      {
+        path: 'IndustryTop',
+        component: () => import('@/views/IndustryTop/IndustryTop'),
+        name: 'IndustryTop',
+        meta: {
+          title: '行业Top',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
     path: '/AssetClues',
     component: Layout,
     redirect: '/AssetClues/LandAssets',

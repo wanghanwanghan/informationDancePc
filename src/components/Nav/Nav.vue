@@ -2,7 +2,7 @@
   <div>
     <div v-if="showNav1">
       <div class="nav">
-        <!--        <span>客服电话：400 068 7266</span>-->
+                <span>客服电话：400 068 7266</span>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open">登录</el-button>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>
 
@@ -100,9 +100,9 @@
           <el-tab-pane label="我的下载" name="second">
             <DownLoad/>
           </el-tab-pane>
-<!--          <el-tab-pane label="充值" name="third">-->
-<!--            <Recharge/>-->
-<!--          </el-tab-pane>-->
+          <el-tab-pane label="充值" name="third">
+            <Recharge/>
+          </el-tab-pane>
           <el-tab-pane label="风险监控" name="fourth">
             <RiskMonitoringList></RiskMonitoringList>
           </el-tab-pane>
