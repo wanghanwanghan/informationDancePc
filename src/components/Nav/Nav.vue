@@ -2,7 +2,7 @@
   <div>
     <div v-if="showNav1">
       <div class="nav">
-                <span>客服电话：400 068 7266</span>
+        <span>客服电话：400 068 7266</span>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open">登录</el-button>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>
 
@@ -122,6 +122,7 @@ import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
 import { getCodes, Login, Zreg } from '@/api/article'
+import { getBeneficiary } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'Nav',
@@ -274,6 +275,11 @@ export default {
       this.showNav1 = false
       this.showNav2 = true
     } else {
+      this.$confirm('请先登录后再查询', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
       this.showNav1 = true
       this.showNav2 = false
     }
