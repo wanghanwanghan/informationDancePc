@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="auth-btn-wrapper" v-show="auth_btn_show">
-      <div style="color: red;margin: 30px auto">您还没有完成 {{entName}} 取数授权操作</div>
+      <div style="color: red;margin: 30px auto">您还没有完成 {{ entName }} 取数授权操作</div>
       <el-button type="primary" @click.prevent="getAuth">开始授权</el-button>
     </div>
     <div class="auth-page-wrapper" v-show="auth_page_show">
@@ -264,9 +264,23 @@ export default {
         'entName': this.entName
       }, this.token).then(res => {
         if (res.data.result !== null) {
-          this.auth_btn_show = false
-          this.auth_page_show = false
-          this.show_box = true
+          let check = localStorage.getItem(this.entName + 'threeTable')
+          if (check) {
+            this.auth_btn_show = false
+            this.auth_page_show = false
+            this.show_box = true
+          } else {
+            this.$confirm('此信息需消耗 200 元，有效期 7 天', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              localStorage.setItem(this.entName + 'threeTable', Date.now() + '')
+              this.auth_btn_show = false
+              this.auth_page_show = false
+              this.show_box = true
+            })
+          }
         } else {
           this.auth_btn_show = true
           this.auth_page_show = true
