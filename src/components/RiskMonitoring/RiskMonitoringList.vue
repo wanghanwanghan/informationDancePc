@@ -86,14 +86,13 @@
       <el-table-column
         align="center"
         label="操作"
-        width="105">
+        width="115">
         <template slot-scope="scope">
           <router-link :to="'/RiskMonitoringDetail/'+scope.row.type+'/'+scope.row.entName">
-            <el-button
-              size="mini"
-            >查看详情
-            </el-button>
+            <el-button size="mini">查看详情</el-button>
           </router-link>
+          <el-button style="margin-top: 5px" type="danger" size="mini" @click="cancelSuper(scope.row.entName)">取消监控
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -117,6 +116,7 @@
 <script>
 import { Supervisor, supervisor, supervisorExportExcel } from '@/api/article'
 import { parseTime } from '@/utils/index'
+import req from '@/utils/req'
 
 export default {
   name: 'RiskMonitoringList',
@@ -174,6 +174,8 @@ export default {
   // watch: {},
   mounted() {
     this.getSupervisorListQuery.phone = localStorage.getItem('phone')
+    this.token = localStorage.getItem('token')
+    this.phone = localStorage.getItem('phone')
     supervisor(this.getSupervisorListQuery).then(res => {
       this.listData = res.data.result.entList
       this.listData.forEach(row => {
@@ -360,6 +362,20 @@ export default {
       if (columnIndex === 8 && row.currentNum.hzf.jy > 0) {
         return 'word-red'
       }
+    },
+    cancelSuper(cancelEntName) {
+      this.$confirm('确认要取消监控吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        req.post('api/v1/user/del/supervisor', {
+          'phone': this.phone,
+          'entName': cancelEntName
+        }, this.token).then(res => {
+          this.reload()
+        })
+      })
     }
   }
 }
