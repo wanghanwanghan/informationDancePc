@@ -190,7 +190,8 @@ export default {
     getData_lr_year() {
       req.post('api/v1/zw/getFinanceIncomeStatementAnnualReport', {
         'phone': this.phone,
-        'code': this.CreditCode
+        'code': this.CreditCode,
+        'pay': 1
       }, this.token).then(res => {
         for (let key in res.data.result) {
           this.ly_year_table_index.push(key)
@@ -201,7 +202,8 @@ export default {
     getData_lr_month() {
       req.post('api/v1/zw/getFinanceIncomeStatement', {
         'phone': this.phone,
-        'code': this.CreditCode
+        'code': this.CreditCode,
+        'pay': 1
       }, this.token).then(res => {
         for (let key in res.data.result) {
           this.ly_month_table_index.push(key)
@@ -225,7 +227,8 @@ export default {
     getData_zc_year() {
       req.post('api/v1/zw/getFinanceBalanceSheetAnnual', {
         'phone': this.phone,
-        'code': this.CreditCode
+        'code': this.CreditCode,
+        'pay': 1
       }, this.token).then(res => {
         for (let key in res.data.result) {
           this.zc_year_table_index.push(key)
@@ -236,7 +239,8 @@ export default {
     getData_zc_month() {
       req.post('api/v1/zw/getFinanceBalanceSheet', {
         'phone': this.phone,
-        'code': this.CreditCode
+        'code': this.CreditCode,
+        'pay': 1
       }, this.token).then(res => {
         for (let key in res.data.result) {
           this.zc_month_table_index.push(key)
