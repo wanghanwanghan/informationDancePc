@@ -102,7 +102,8 @@
           <tr class="search-table-tr">
             <td class="search-table-td bg-color">员工社保人数</td>
             <td class="search-table-td bg-color">企业所属地区</td>
-            <td class="search-table-td"></td>
+            <td class="search-table-td bg-color">融资轮次</td>
+            <td class="search-table-td bg-color">经营范围</td>
           </tr>
           <tr>
             <td class="search-table-td">
@@ -129,13 +130,31 @@
               ></el-cascader>
             </td>
             <td class="search-table-td">
-              <el-button type="primary" @click="jumpHY">创投企业搜产品</el-button>
+              <el-cascader
+                class="search-table-input"
+                ref="vc_round_ref"
+                :options="vc_round"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                collapse-tags
+                clearable
+                @change="getCheckedNodes"
+              ></el-cascader>
+            </td>
+            <td class="search-table-td">
+              <el-input
+                class="search-table-input"
+                placeholder="支持模糊搜索 空格分割"
+                v-model="search_cond.basic_opscope"
+                clearable>
+              </el-input>
             </td>
           </tr>
         </table>
       </div>
       <div style="text-align: center;line-height: 100px">
         <el-button style="width: 200px;" type="primary" @click="search(1)">搜索</el-button>
+        <el-button style="width: 200px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>
       </div>
       <div>
         <div class="search-res-wrapper">
@@ -239,6 +258,7 @@ import { enttype } from '@/data/enttype'
 import { address } from '@/data/address'
 import { regcap } from '@/data/regcap'
 import { sonum } from '@/data/sonum'
+import { vc_round } from '@/data/vs_round'
 
 export default {
   name: 'HomeCont',
@@ -252,6 +272,7 @@ export default {
       address: address,
       regcap: regcap,
       sonum: sonum,
+      vc_round: vc_round,
       search_res: [],
       search_cond: {
         page: 1,
@@ -265,7 +286,9 @@ export default {
         basic_enttype: '',
         basic_uniscid: '',
         basic_ygrs: '',
-        basic_regionid: ''
+        basic_regionid: '',
+        jingying_vc_round: '',
+        basic_opscope: ''
       },
       paginate: {
         total: 0
@@ -321,6 +344,18 @@ export default {
         nicid = ''
       }
       this.search_cond.basic_nicid = nicid
+
+      let vc_id = this.$refs.vc_round_ref.getCheckedNodes(true)
+      if (vc_id[0]) {
+        let vc_id_str = ''
+        vc_id.forEach(item => {
+          vc_id_str += item.value + ','
+        })
+        vc_id = vc_id_str.trim()
+      } else {
+        vc_id = ''
+      }
+      this.search_cond.jingying_vc_round = vc_id
 
       let enttype = this.$refs.enttype_ref.getCheckedNodes(true)
       if (enttype[0]) {
