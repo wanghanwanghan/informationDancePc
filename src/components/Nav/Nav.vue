@@ -4,7 +4,7 @@
       <div class="nav">
         <span>客服电话：400 068 7266</span>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open">登录</el-button>
-        <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>
+        <!--        <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>-->
 
         <!-- 登录 -->
         <el-dialog :visible.sync="dialogFormVisible">
@@ -14,20 +14,26 @@
             <el-form-item label="账号" prop="name">
               <el-input v-model="ruleForm.name"/>
             </el-form-item>
-            <el-form-item label="密码" prop="user_password">
-              <el-input v-model="ruleForm.user_password" show-password/>
-            </el-form-item>
-            <el-form-item label="验证码" prop="password">
-              <div class="pas">
-                <div>
-                  <el-input v-model="ruleForm.password"/>
-                </div>
-                <div class="pas-r">
-                  <el-button v-show="show" type="primary" @click="getCode">获取验证码</el-button>
-                  <el-button v-show="!show" type="primary" disabled class="count">{{ count }} s</el-button>
-                </div>
-              </div>
-            </el-form-item>
+            <el-tabs v-model="loginActive">
+              <el-tab-pane label="密码登录" name="first">
+                <el-form-item label="密码" prop="user_password">
+                  <el-input v-model="ruleForm.user_password" show-password/>
+                </el-form-item>
+              </el-tab-pane>
+              <el-tab-pane label="手机验证码登录" name="second">
+                <el-form-item label="验证码" prop="password">
+                  <div class="pas">
+                    <div>
+                      <el-input v-model="ruleForm.password"/>
+                    </div>
+                    <div class="pas-r">
+                      <el-button v-show="show" type="primary" @click="getCode">获取验证码</el-button>
+                      <el-button v-show="!show" type="primary" disabled class="count">{{ count }} s</el-button>
+                    </div>
+                  </div>
+                </el-form-item>
+              </el-tab-pane>
+            </el-tabs>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">
@@ -188,6 +194,7 @@ export default {
       callback()
     }
     return {
+      loginActive: 'first',
       checked: false,
       ruleForm: {
         name: '',
