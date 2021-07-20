@@ -4,7 +4,7 @@
       <div class="nav">
         <span>客服电话：400 068 7266</span>
         <el-button style="margin-right:25px" type="primary" size="medium" @click="open">登录</el-button>
-        <!--        <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>-->
+        <el-button style="margin-right:25px" type="primary" size="medium" @click="open1">注册</el-button>
 
         <!-- 登录 -->
         <el-dialog :visible.sync="dialogFormVisible">
