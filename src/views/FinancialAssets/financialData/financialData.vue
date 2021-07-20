@@ -276,7 +276,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -313,7 +313,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -367,7 +367,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -404,7 +404,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -458,7 +458,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -495,7 +495,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -549,7 +549,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -586,7 +586,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -640,7 +640,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -677,7 +677,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -731,7 +731,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -768,7 +768,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -822,7 +822,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -859,7 +859,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -913,7 +913,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [2017, 2018, 2019],//
+            data: [2018, 2019, 2020],//
             axisPointer: {
               type: 'shadow'
             }
@@ -950,7 +950,7 @@ export default {
         legend.push('同比')
         let yearData = []
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearData.push(data[key][i][arrKey])
           yearDataYoy.push(data[key][i][arrKey + '_yoy'])
         }
@@ -987,11 +987,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1002,7 +1002,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1028,11 +1028,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1043,7 +1043,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1069,11 +1069,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1084,7 +1084,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1110,11 +1110,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1125,7 +1125,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1151,11 +1151,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1166,7 +1166,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1192,11 +1192,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1207,7 +1207,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1233,11 +1233,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1248,7 +1248,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
@@ -1274,11 +1274,11 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         xAxis: {
           type: 'category',
-          data: [2017, 2018, 2019]
+          data: [2018, 2019, 2020]
         },
         yAxis: {
           type: 'value',
@@ -1289,7 +1289,7 @@ export default {
       let series = []
       for (let key in data) {
         let yearDataYoy = []
-        for (let i = 2017; i <= 2019; i++) {
+        for (let i = 2018; i <= 2020; i++) {
           yearDataYoy.push(data[key][i][arrKey])
         }
         let objYoy = {
