@@ -439,6 +439,7 @@ export default {
       query1: {
         entName: '',
         phone: '',
+        mode: 2,
         pay: ''
       },
       contor: [],
