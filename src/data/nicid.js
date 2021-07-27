@@ -65,7 +65,7 @@ export const nicid = [{
         'value': 'A0169',
         'label': '茶及其他饮料作物种植'
       }]
-    }]
+    }, { 'id': 'A0170', 'value': 'A0170', 'label': '中药材种植' }, { 'id': 'A0190', 'value': 'A0190', 'label': '其他农业' }]
   }, {
     'id': 'A02',
     'value': 'A02',
@@ -97,7 +97,7 @@ export const nicid = [{
         'value': 'A0252',
         'label': '非木竹材林产品采集'
       }]
-    }]
+    }, { 'id': 'A0220', 'value': 'A0220', 'label': '造林和更新' }, { 'id': 'A0230', 'value': 'A0230', 'label': '森林经营和管护' }]
   }, {
     'id': 'A03',
     'value': 'A03',
@@ -124,7 +124,7 @@ export const nicid = [{
         'value': 'A0322',
         'label': '鸭的饲养'
       }, { 'id': 'A0323', 'value': 'A0323', 'label': '鹅的饲养' }, { 'id': 'A0329', 'value': 'A0329', 'label': '其他家禽饲养' }]
-    }]
+    }, { 'id': 'A0330', 'value': 'A0330', 'label': '狩猎和捕捉动物' }, { 'id': 'A0390', 'value': 'A0390', 'label': '其他畜牧业' }]
   }, {
     'id': 'A04',
     'value': 'A04',
@@ -178,17 +178,40 @@ export const nicid = [{
         'value': 'A0529',
         'label': '其他林业服务'
       }]
-    }]
+    }, { 'id': 'A0530', 'value': 'A0530', 'label': '畜牧服务业' }, { 'id': 'A0540', 'value': 'A0540', 'label': '渔业服务业' }]
   }]
 }, {
   'id': 'B',
   'value': 'B',
   'label': '采矿业',
-  'children': [{ 'id': 'B06', 'value': 'B06', 'label': '煤炭开采和洗选业' }, {
+  'children': [{
+    'id': 'B06',
+    'value': 'B06',
+    'label': '煤炭开采和洗选业',
+    'children': [{ 'id': 'B0610', 'value': 'B0610', 'label': '烟煤和无烟煤开采洗选' }, {
+      'id': 'B0620',
+      'value': 'B0620',
+      'label': '褐煤开采洗选'
+    }, { 'id': 'B0690', 'value': 'B0690', 'label': '其他煤炭采选' }]
+  }, {
     'id': 'B07',
     'value': 'B07',
-    'label': '石油和天然气开采业'
-  }, { 'id': 'B08', 'value': 'B08', 'label': '黑色金属矿采选业' }, {
+    'label': '石油和天然气开采业',
+    'children': [{ 'id': 'B0710', 'value': 'B0710', 'label': '石油开采' }, {
+      'id': 'B0720',
+      'value': 'B0720',
+      'label': '天然气开采'
+    }]
+  }, {
+    'id': 'B08',
+    'value': 'B08',
+    'label': '黑色金属矿采选业',
+    'children': [{ 'id': 'B0810', 'value': 'B0810', 'label': '铁矿采选' }, {
+      'id': 'B0820',
+      'value': 'B0820',
+      'label': '锰矿、铬矿采选'
+    }, { 'id': 'B0890', 'value': 'B0890', 'label': '其他黑色金属矿采选' }]
+  }, {
     'id': 'B09',
     'value': 'B09',
     'label': '有色金属矿采选业',
@@ -266,8 +289,22 @@ export const nicid = [{
         'value': 'B1099',
         'label': '其他未列明非金属矿采选'
       }]
-    }]
-  }, { 'id': 'B11', 'value': 'B11', 'label': '开采辅助活动' }, { 'id': 'B12', 'value': 'B12', 'label': '其他采矿业' }]
+    }, { 'id': 'B1020', 'value': 'B1020', 'label': '化学矿开采' }, { 'id': 'B1030', 'value': 'B1030', 'label': '采盐' }]
+  }, {
+    'id': 'B11',
+    'value': 'B11',
+    'label': '开采辅助活动',
+    'children': [{ 'id': 'B1110', 'value': 'B1110', 'label': '煤炭开采和洗选辅助活动' }, {
+      'id': 'B1120',
+      'value': 'B1120',
+      'label': '石油和天然气开采辅助活动'
+    }, { 'id': 'B1190', 'value': 'B1190', 'label': '其他开采辅助活动' }]
+  }, {
+    'id': 'B12',
+    'value': 'B12',
+    'label': '其他采矿业',
+    'children': [{ 'id': 'B1200', 'value': 'B1200', 'label': '其他采矿业' }]
+  }]
 }, {
   'id': 'C', 'value': 'C', 'label': '制造业', 'children': [{
     'id': 'C13',
@@ -326,7 +363,11 @@ export const nicid = [{
         'value': 'C1399',
         'label': '其他未列明农副食品加工'
       }]
-    }]
+    }, { 'id': 'C1310', 'value': 'C1310', 'label': '谷物磨制' }, {
+      'id': 'C1320',
+      'value': 'C1320',
+      'label': '饲料加工'
+    }, { 'id': 'C1340', 'value': 'C1340', 'label': '制糖业' }]
   }, {
     'id': 'C14',
     'value': 'C14',
@@ -397,7 +438,7 @@ export const nicid = [{
         'value': 'C1499',
         'label': '其他未列明食品制造'
       }]
-    }]
+    }, { 'id': 'C1440', 'value': 'C1440', 'label': '乳制品制造' }]
   }, {
     'id': 'C15',
     'value': 'C15',
@@ -432,8 +473,17 @@ export const nicid = [{
         'value': 'C1529',
         'label': '茶饮料及其他饮料制造'
       }]
-    }]
-  }, { 'id': 'C16', 'value': 'C16', 'label': '烟草制品业' }, {
+    }, { 'id': 'C1530', 'value': 'C1530', 'label': '精制茶加工' }]
+  }, {
+    'id': 'C16',
+    'value': 'C16',
+    'label': '烟草制品业',
+    'children': [{ 'id': 'C1610', 'value': 'C1610', 'label': '烟叶复烤' }, {
+      'id': 'C1620',
+      'value': 'C1620',
+      'label': '卷烟制造'
+    }, { 'id': 'C1690', 'value': 'C1690', 'label': '其他烟草制品制造' }]
+  }, {
     'id': 'C17',
     'value': 'C17',
     'label': '纺织业',
@@ -518,7 +568,16 @@ export const nicid = [{
         'label': '篷、帆布制造'
       }, { 'id': 'C1789', 'value': 'C1789', 'label': '其他非家用纺织制成品制造' }]
     }]
-  }, { 'id': 'C18', 'value': 'C18', 'label': '纺织服装、服饰业' }, {
+  }, {
+    'id': 'C18',
+    'value': 'C18',
+    'label': '纺织服装、服饰业',
+    'children': [{ 'id': 'C1810', 'value': 'C1810', 'label': '机织服装制造' }, {
+      'id': 'C1820',
+      'value': 'C1820',
+      'label': '针织或钩针编织服装制造'
+    }, { 'id': 'C1830', 'value': 'C1830', 'label': '服饰制造' }]
+  }, {
     'id': 'C19',
     'value': 'C19',
     'label': '皮革、毛皮、羽毛及其制品和制鞋业',
@@ -566,7 +625,7 @@ export const nicid = [{
         'value': 'C1954',
         'label': '橡胶鞋制造'
       }, { 'id': 'C1959', 'value': 'C1959', 'label': '其他制鞋业' }]
-    }]
+    }, { 'id': 'C1910', 'value': 'C1910', 'label': '皮革鞣制加工' }]
   }, {
     'id': 'C20',
     'value': 'C20',
@@ -616,7 +675,20 @@ export const nicid = [{
         'label': '草及其他制品制造'
       }]
     }]
-  }, { 'id': 'C21', 'value': 'C21', 'label': '家具制造业' }, {
+  }, {
+    'id': 'C21',
+    'value': 'C21',
+    'label': '家具制造业',
+    'children': [{ 'id': 'C2110', 'value': 'C2110', 'label': '木质家具制造' }, {
+      'id': 'C2120',
+      'value': 'C2120',
+      'label': '竹、藤家具制造'
+    }, { 'id': 'C2130', 'value': 'C2130', 'label': '金属家具制造' }, {
+      'id': 'C2140',
+      'value': 'C2140',
+      'label': '塑料家具制造'
+    }, { 'id': 'C2190', 'value': 'C2190', 'label': '其他家具制造' }]
+  }, {
     'id': 'C22',
     'value': 'C22',
     'label': '造纸和纸制品业',
@@ -661,6 +733,10 @@ export const nicid = [{
         'value': 'C2312',
         'label': '本册印制'
       }, { 'id': 'C2319', 'value': 'C2319', 'label': '包装装潢及其他印刷' }]
+    }, { 'id': 'C2320', 'value': 'C2320', 'label': '装订及印刷相关服务' }, {
+      'id': 'C2330',
+      'value': 'C2330',
+      'label': '记录媒介复制'
     }]
   }, {
     'id': 'C24',
@@ -735,7 +811,7 @@ export const nicid = [{
         'value': 'C2462',
         'label': '游艺用品及室内游艺器材制造'
       }, { 'id': 'C2469', 'value': 'C2469', 'label': '其他娱乐用品制造' }]
-    }]
+    }, { 'id': 'C2450', 'value': 'C2450', 'label': '玩具制造' }]
   }, {
     'id': 'C25',
     'value': 'C25',
@@ -749,7 +825,7 @@ export const nicid = [{
         'value': 'C2512',
         'label': '人造原油制造'
       }]
-    }]
+    }, { 'id': 'C2520', 'value': 'C2520', 'label': '炼焦' }, { 'id': 'C2530', 'value': 'C2530', 'label': '核燃料加工' }]
   }, {
     'id': 'C26',
     'value': 'C26',
@@ -859,7 +935,24 @@ export const nicid = [{
         'label': '香料、香精制造'
       }, { 'id': 'C2689', 'value': 'C2689', 'label': '其他日用化学产品制造' }]
     }]
-  }, { 'id': 'C27', 'value': 'C27', 'label': '医药制造业' }, {
+  }, {
+    'id': 'C27',
+    'value': 'C27',
+    'label': '医药制造业',
+    'children': [{ 'id': 'C2710', 'value': 'C2710', 'label': '化学药品原料药制造' }, {
+      'id': 'C2720',
+      'value': 'C2720',
+      'label': '化学药品制剂制造'
+    }, { 'id': 'C2730', 'value': 'C2730', 'label': '中药饮片加工' }, {
+      'id': 'C2740',
+      'value': 'C2740',
+      'label': '中成药生产'
+    }, { 'id': 'C2750', 'value': 'C2750', 'label': '兽用药品制造' }, {
+      'id': 'C2760',
+      'value': 'C2760',
+      'label': '生物药品制造'
+    }, { 'id': 'C2770', 'value': 'C2770', 'label': '卫生材料及医药用品制造' }]
+  }, {
     'id': 'C28',
     'value': 'C28',
     'label': '化学纤维制造业',
@@ -1047,7 +1140,20 @@ export const nicid = [{
         'label': '其他非金属矿物制品制造'
       }]
     }]
-  }, { 'id': 'C31', 'value': 'C31', 'label': '黑色金属冶炼和压延加工业' }, {
+  }, {
+    'id': 'C31',
+    'value': 'C31',
+    'label': '黑色金属冶炼和压延加工业',
+    'children': [{ 'id': 'C3110', 'value': 'C3110', 'label': '炼铁' }, {
+      'id': 'C3120',
+      'value': 'C3120',
+      'label': '炼钢'
+    }, { 'id': 'C3130', 'value': 'C3130', 'label': '黑色金属铸造' }, {
+      'id': 'C3140',
+      'value': 'C3140',
+      'label': '钢压延加工'
+    }, { 'id': 'C3150', 'value': 'C3150', 'label': '铁合金冶炼' }]
+  }, {
     'id': 'C32',
     'value': 'C32',
     'label': '有色金属冶炼和压延加工业',
@@ -1103,7 +1209,7 @@ export const nicid = [{
         'value': 'C3264',
         'label': '稀有稀土金属压延加工'
       }, { 'id': 'C3269', 'value': 'C3269', 'label': '其他有色金属压延加工' }]
-    }]
+    }, { 'id': 'C3240', 'value': 'C3240', 'label': '有色金属合金制造' }, { 'id': 'C3250', 'value': 'C3250', 'label': '有色金属铸造' }]
   }, {
     'id': 'C33',
     'value': 'C33',
@@ -1187,6 +1293,10 @@ export const nicid = [{
         'value': 'C3392',
         'label': '交通及公共管理用金属标牌制造'
       }, { 'id': 'C3399', 'value': 'C3399', 'label': '其他未列明金属制品制造' }]
+    }, { 'id': 'C3340', 'value': 'C3340', 'label': '金属丝绳及其制品制造' }, {
+      'id': 'C3360',
+      'value': 'C3360',
+      'label': '金属表面处理及热处理加工'
     }]
   }, {
     'id': 'C34',
@@ -1312,7 +1422,7 @@ export const nicid = [{
         'value': 'C3484',
         'label': '机械零部件加工'
       }, { 'id': 'C3489', 'value': 'C3489', 'label': '其他通用零部件制造' }]
-    }]
+    }, { 'id': 'C3490', 'value': 'C3490', 'label': '其他通用设备制造业' }]
   }, {
     'id': 'C35',
     'value': 'C35',
@@ -1459,7 +1569,24 @@ export const nicid = [{
         'label': '其他专用设备制造'
       }]
     }]
-  }, { 'id': 'C36', 'value': 'C36', 'label': '汽车制造业' }, {
+  }, {
+    'id': 'C36',
+    'value': 'C36',
+    'label': '汽车制造业',
+    'children': [{ 'id': 'C3610', 'value': 'C3610', 'label': '汽车整车制造' }, {
+      'id': 'C3620',
+      'value': 'C3620',
+      'label': '改装汽车制造'
+    }, { 'id': 'C3630', 'value': 'C3630', 'label': '低速载货汽车制造' }, {
+      'id': 'C3640',
+      'value': 'C3640',
+      'label': '电车制造'
+    }, { 'id': 'C3650', 'value': 'C3650', 'label': '汽车车身、挂车制造' }, {
+      'id': 'C3660',
+      'value': 'C3660',
+      'label': '汽车零部件及配件制造'
+    }]
+  }, {
     'id': 'C37',
     'value': 'C37',
     'label': '铁路、船舶、航空航天和其他运输设备制造业',
@@ -1533,6 +1660,10 @@ export const nicid = [{
         'value': 'C3799',
         'label': '其他未列明运输设备制造'
       }]
+    }, { 'id': 'C3720', 'value': 'C3720', 'label': '城市轨道交通设备制造' }, {
+      'id': 'C3770',
+      'value': 'C3770',
+      'label': '非公路休闲车及零配件制造'
     }]
   }, {
     'id': 'C38',
@@ -1701,6 +1832,10 @@ export const nicid = [{
         'value': 'C3972',
         'label': '印制电路板制造'
       }]
+    }, { 'id': 'C3940', 'value': 'C3940', 'label': '雷达及配套设备制造' }, {
+      'id': 'C3990',
+      'value': 'C3990',
+      'label': '其他电子设备制造'
     }]
   }, {
     'id': 'C40',
@@ -1753,6 +1888,10 @@ export const nicid = [{
         'value': 'C4042',
         'label': '眼镜制造'
       }]
+    }, { 'id': 'C4030', 'value': 'C4030', 'label': '钟表与计时仪器制造' }, {
+      'id': 'C4090',
+      'value': 'C4090',
+      'label': '其他仪器仪表制造业'
     }]
   }, {
     'id': 'C41',
@@ -1767,8 +1906,21 @@ export const nicid = [{
         'value': 'C4119',
         'label': '其他日用杂品制造'
       }]
+    }, { 'id': 'C4120', 'value': 'C4120', 'label': '煤制品制造' }, {
+      'id': 'C4130',
+      'value': 'C4130',
+      'label': '核辐射加工'
+    }, { 'id': 'C4190', 'value': 'C4190', 'label': '其他未列明制造业' }]
+  }, {
+    'id': 'C42',
+    'value': 'C42',
+    'label': '废弃资源综合利用业',
+    'children': [{ 'id': 'C4210', 'value': 'C4210', 'label': '金属废料和碎屑加工处理' }, {
+      'id': 'C4220',
+      'value': 'C4220',
+      'label': '非金属废料和碎屑加工处理'
     }]
-  }, { 'id': 'C42', 'value': 'C42', 'label': '废弃资源综合利用业' }, {
+  }, {
     'id': 'C43',
     'value': 'C43',
     'label': '金属制品、机械和设备修理业',
@@ -1785,6 +1937,18 @@ export const nicid = [{
         'value': 'C4349',
         'label': '其他运输设备修理'
       }]
+    }, { 'id': 'C4310', 'value': 'C4310', 'label': '金属制品修理' }, {
+      'id': 'C4320',
+      'value': 'C4320',
+      'label': '通用设备修理'
+    }, { 'id': 'C4330', 'value': 'C4330', 'label': '专用设备修理' }, {
+      'id': 'C4350',
+      'value': 'C4350',
+      'label': '电气设备修理'
+    }, { 'id': 'C4360', 'value': 'C4360', 'label': '仪器仪表修理' }, {
+      'id': 'C4390',
+      'value': 'C4390',
+      'label': '其他机械和设备修理业'
     }]
   }]
 }, {
@@ -1808,13 +1972,32 @@ export const nicid = [{
         'value': 'D4414',
         'label': '风力发电'
       }, { 'id': 'D4415', 'value': 'D4415', 'label': '太阳能发电' }, { 'id': 'D4419', 'value': 'D4419', 'label': '其他电力生产' }]
-    }]
-  }, { 'id': 'D45', 'value': 'D45', 'label': '燃气生产和供应业' }, { 'id': 'D46', 'value': 'D46', 'label': '水的生产和供应业' }]
+    }, { 'id': 'D4420', 'value': 'D4420', 'label': '电力供应' }, { 'id': 'D4430', 'value': 'D4430', 'label': '热力生产和供应' }]
+  }, {
+    'id': 'D45',
+    'value': 'D45',
+    'label': '燃气生产和供应业',
+    'children': [{ 'id': 'D4500', 'value': 'D4500', 'label': '燃气生产和供应业' }]
+  }, {
+    'id': 'D46',
+    'value': 'D46',
+    'label': '水的生产和供应业',
+    'children': [{ 'id': 'D4610', 'value': 'D4610', 'label': '自来水生产和供应' }, {
+      'id': 'D4620',
+      'value': 'D4620',
+      'label': '污水处理及其再生利用'
+    }, { 'id': 'D4690', 'value': 'D4690', 'label': '其他水的处理、利用与分配' }]
+  }]
 }, {
   'id': 'E',
   'value': 'E',
   'label': '建筑业',
-  'children': [{ 'id': 'E47', 'value': 'E47', 'label': '房屋建筑业' }, {
+  'children': [{
+    'id': 'E47',
+    'value': 'E47',
+    'label': '房屋建筑业',
+    'children': [{ 'id': 'E4700', 'value': 'E4700', 'label': '房屋建筑业' }]
+  }, {
     'id': 'E48',
     'value': 'E48',
     'label': '土木工程建筑业',
@@ -1849,8 +2032,21 @@ export const nicid = [{
         'value': 'E4852',
         'label': '管道工程建筑'
       }]
-    }]
-  }, { 'id': 'E49', 'value': 'E49', 'label': '建筑安装业' }, {
+    }, { 'id': 'E4830', 'value': 'E4830', 'label': '海洋工程建筑' }, {
+      'id': 'E4840',
+      'value': 'E4840',
+      'label': '工矿工程建筑'
+    }, { 'id': 'E4890', 'value': 'E4890', 'label': '其他土木工程建筑' }]
+  }, {
+    'id': 'E49',
+    'value': 'E49',
+    'label': '建筑安装业',
+    'children': [{ 'id': 'E4910', 'value': 'E4910', 'label': '电气安装' }, {
+      'id': 'E4920',
+      'value': 'E4920',
+      'label': '管道和设备安装'
+    }, { 'id': 'E4990', 'value': 'E4990', 'label': '其他建筑安装业' }]
+  }, {
     'id': 'E50',
     'value': 'E50',
     'label': '建筑装饰和其他建筑业',
@@ -1863,7 +2059,11 @@ export const nicid = [{
         'value': 'E5029',
         'label': '其他工程准备活动'
       }]
-    }]
+    }, { 'id': 'E5010', 'value': 'E5010', 'label': '建筑装饰业' }, {
+      'id': 'E5030',
+      'value': 'E5030',
+      'label': '提供施工设备服务'
+    }, { 'id': 'E5090', 'value': 'E5090', 'label': '其他未列明建筑业' }]
   }]
 }, {
   'id': 'F', 'value': 'F', 'label': '批发和零售业', 'children': [{
@@ -2184,7 +2384,7 @@ export const nicid = [{
         'value': 'G5332',
         'label': '货运火车站'
       }, { 'id': 'G5339', 'value': 'G5339', 'label': '其他铁路运输辅助活动' }]
-    }]
+    }, { 'id': 'G5310', 'value': 'G5310', 'label': '铁路旅客运输' }, { 'id': 'G5320', 'value': 'G5320', 'label': '铁路货物运输' }]
   }, {
     'id': 'G54',
     'value': 'G54',
@@ -2211,7 +2411,7 @@ export const nicid = [{
         'value': 'G5442',
         'label': '公路管理与养护'
       }, { 'id': 'G5449', 'value': 'G5449', 'label': '其他道路运输辅助活动' }]
-    }]
+    }, { 'id': 'G5420', 'value': 'G5420', 'label': '公路旅客运输' }, { 'id': 'G5430', 'value': 'G5430', 'label': '道路货物运输' }]
   }, {
     'id': 'G55',
     'value': 'G55',
@@ -2266,8 +2466,13 @@ export const nicid = [{
         'value': 'G5632',
         'label': '空中交通管理'
       }, { 'id': 'G5639', 'value': 'G5639', 'label': '其他航空运输辅助活动' }]
-    }]
-  }, { 'id': 'G57', 'value': 'G57', 'label': '管道运输业' }, {
+    }, { 'id': 'G5620', 'value': 'G5620', 'label': '通用航空服务' }]
+  }, {
+    'id': 'G57',
+    'value': 'G57',
+    'label': '管道运输业',
+    'children': [{ 'id': 'G5700', 'value': 'G5700', 'label': '管道运输业' }]
+  }, {
     'id': 'G58',
     'value': 'G58',
     'label': '装卸搬运和运输代理业',
@@ -2280,7 +2485,7 @@ export const nicid = [{
         'value': 'G5822',
         'label': '旅客票务代理'
       }, { 'id': 'G5829', 'value': 'G5829', 'label': '其他运输代理业' }]
-    }]
+    }, { 'id': 'G5810', 'value': 'G5810', 'label': '装卸搬运' }]
   }, {
     'id': 'G59',
     'value': 'G59',
@@ -2294,13 +2499,31 @@ export const nicid = [{
         'value': 'G5912',
         'label': '棉花仓储'
       }, { 'id': 'G5919', 'value': 'G5919', 'label': '其他农产品仓储' }]
+    }, { 'id': 'G5990', 'value': 'G5990', 'label': '其他仓储业' }]
+  }, {
+    'id': 'G60',
+    'value': 'G60',
+    'label': '邮政业',
+    'children': [{ 'id': 'G6010', 'value': 'G6010', 'label': '邮政基本服务' }, {
+      'id': 'G6020',
+      'value': 'G6020',
+      'label': '快递服务'
     }]
-  }, { 'id': 'G60', 'value': 'G60', 'label': '邮政业' }]
+  }]
 }, {
   'id': 'H',
   'value': 'H',
   'label': '住宿和餐饮业',
-  'children': [{ 'id': 'H61', 'value': 'H61', 'label': '住宿业' }, {
+  'children': [{
+    'id': 'H61',
+    'value': 'H61',
+    'label': '住宿业',
+    'children': [{ 'id': 'H6110', 'value': 'H6110', 'label': '旅游饭店' }, {
+      'id': 'H6120',
+      'value': 'H6120',
+      'label': '一般旅馆'
+    }, { 'id': 'H6190', 'value': 'H6190', 'label': '其他住宿业' }]
+  }, {
     'id': 'H62',
     'value': 'H62',
     'label': '餐饮业',
@@ -2326,7 +2549,7 @@ export const nicid = [{
         'value': 'H6292',
         'label': '餐饮配送服务'
       }, { 'id': 'H6299', 'value': 'H6299', 'label': '其他未列明餐饮业' }]
-    }]
+    }, { 'id': 'H6210', 'value': 'H6210', 'label': '正餐服务' }, { 'id': 'H6220', 'value': 'H6220', 'label': '快餐服务' }]
   }]
 }, {
   'id': 'I',
@@ -2354,8 +2577,17 @@ export const nicid = [{
         'value': 'I6322',
         'label': '无线广播电视传输服务'
       }]
-    }]
-  }, { 'id': 'I64', 'value': 'I64', 'label': '互联网和相关服务' }, {
+    }, { 'id': 'I6330', 'value': 'I6330', 'label': '卫星传输服务' }]
+  }, {
+    'id': 'I64',
+    'value': 'I64',
+    'label': '互联网和相关服务',
+    'children': [{ 'id': 'I6410', 'value': 'I6410', 'label': '互联网接入及相关服务' }, {
+      'id': 'I6420',
+      'value': 'I6420',
+      'label': '互联网信息服务'
+    }, { 'id': 'I6490', 'value': 'I6490', 'label': '其他互联网服务' }]
+  }, {
     'id': 'I65',
     'value': 'I65',
     'label': '软件和信息技术服务业',
@@ -2368,7 +2600,15 @@ export const nicid = [{
         'value': 'I6592',
         'label': '呼叫中心'
       }, { 'id': 'I6599', 'value': 'I6599', 'label': '其他未列明信息技术服务业' }]
-    }]
+    }, { 'id': 'I6510', 'value': 'I6510', 'label': '软件开发' }, {
+      'id': 'I6520',
+      'value': 'I6520',
+      'label': '信息系统集成服务'
+    }, { 'id': 'I6530', 'value': 'I6530', 'label': '信息技术咨询服务' }, {
+      'id': 'I6540',
+      'value': 'I6540',
+      'label': '数据处理和存储服务'
+    }, { 'id': 'I6550', 'value': 'I6550', 'label': '集成电路设计' }]
   }]
 }, {
   'id': 'J',
@@ -2387,7 +2627,11 @@ export const nicid = [{
         'value': 'J6632',
         'label': '财务公司'
       }, { 'id': 'J6633', 'value': 'J6633', 'label': '典当' }, { 'id': 'J6639', 'value': 'J6639', 'label': '其他非货币银行服务' }]
-    }]
+    }, { 'id': 'J6610', 'value': 'J6610', 'label': '中央银行服务' }, {
+      'id': 'J6620',
+      'value': 'J6620',
+      'label': '货币银行服务'
+    }, { 'id': 'J6640', 'value': 'J6640', 'label': '银行监管服务' }]
   }, {
     'id': 'J67',
     'value': 'J67',
@@ -2410,7 +2654,11 @@ export const nicid = [{
         'value': 'J6729',
         'label': '其他期货市场服务'
       }]
-    }]
+    }, { 'id': 'J6730', 'value': 'J6730', 'label': '证券期货监管服务' }, {
+      'id': 'J6740',
+      'value': 'J6740',
+      'label': '资本投资服务'
+    }, { 'id': 'J6790', 'value': 'J6790', 'label': '其他资本市场服务' }]
   }, {
     'id': 'J68',
     'value': 'J68',
@@ -2433,9 +2681,48 @@ export const nicid = [{
         'value': 'J6899',
         'label': '其他未列明保险活动'
       }]
-    }]
-  }, { 'id': 'J69', 'value': 'J69', 'label': '其他金融业' }]
-}, { 'id': 'K', 'value': 'K', 'label': '房地产业', 'children': [{ 'id': 'K70', 'value': 'K70', 'label': '房地产业' }] }, {
+    }, { 'id': 'J6820', 'value': 'J6820', 'label': '财产保险' }, {
+      'id': 'J6830',
+      'value': 'J6830',
+      'label': '再保险'
+    }, { 'id': 'J6840', 'value': 'J6840', 'label': '养老金' }, {
+      'id': 'J6850',
+      'value': 'J6850',
+      'label': '保险经纪与代理服务'
+    }, { 'id': 'J6860', 'value': 'J6860', 'label': '保险监管服务' }]
+  }, {
+    'id': 'J69',
+    'value': 'J69',
+    'label': '其他金融业',
+    'children': [{ 'id': 'J6910', 'value': 'J6910', 'label': '金融信托与管理服务' }, {
+      'id': 'J6920',
+      'value': 'J6920',
+      'label': '控股公司服务'
+    }, { 'id': 'J6930', 'value': 'J6930', 'label': '非金融机构支付服务' }, {
+      'id': 'J6940',
+      'value': 'J6940',
+      'label': '金融信息服务'
+    }, { 'id': 'J6990', 'value': 'J6990', 'label': '其他未列明金融业' }]
+  }]
+}, {
+  'id': 'K',
+  'value': 'K',
+  'label': '房地产业',
+  'children': [{
+    'id': 'K70',
+    'value': 'K70',
+    'label': '房地产业',
+    'children': [{ 'id': 'K7010', 'value': 'K7010', 'label': '房地产开发经营' }, {
+      'id': 'K7020',
+      'value': 'K7020',
+      'label': '物业管理'
+    }, { 'id': 'K7030', 'value': 'K7030', 'label': '房地产中介服务' }, {
+      'id': 'K7040',
+      'value': 'K7040',
+      'label': '自有房地产经营活动'
+    }, { 'id': 'K7090', 'value': 'K7090', 'label': '其他房地产业' }]
+  }]
+}, {
   'id': 'L',
   'value': 'L',
   'label': '租赁和商务服务业',
@@ -2553,13 +2840,26 @@ export const nicid = [{
         'value': 'L7296',
         'label': '担保服务'
       }, { 'id': 'L7299', 'value': 'L7299', 'label': '其他未列明商务服务业' }]
-    }]
+    }, { 'id': 'L7240', 'value': 'L7240', 'label': '广告业' }, { 'id': 'L7250', 'value': 'L7250', 'label': '知识产权服务' }]
   }]
 }, {
   'id': 'M',
   'value': 'M',
   'label': '科学研究和技术服务业',
-  'children': [{ 'id': 'M73', 'value': 'M73', 'label': '研究和试验发展' }, {
+  'children': [{
+    'id': 'M73',
+    'value': 'M73',
+    'label': '研究和试验发展',
+    'children': [{ 'id': 'M7310', 'value': 'M7310', 'label': '自然科学研究和试验发展' }, {
+      'id': 'M7320',
+      'value': 'M7320',
+      'label': '工程和技术研究和试验发展'
+    }, { 'id': 'M7330', 'value': 'M7330', 'label': '农业科学研究和试验发展' }, {
+      'id': 'M7340',
+      'value': 'M7340',
+      'label': '医学研究和试验发展'
+    }, { 'id': 'M7350', 'value': 'M7350', 'label': '社会人文科学研究' }]
+  }, {
     'id': 'M74',
     'value': 'M74',
     'label': '专业技术服务业',
@@ -2607,7 +2907,15 @@ export const nicid = [{
         'value': 'M7499',
         'label': '其他未列明专业技术服务业'
       }]
-    }]
+    }, { 'id': 'M7410', 'value': 'M7410', 'label': '气象服务' }, {
+      'id': 'M7420',
+      'value': 'M7420',
+      'label': '地震服务'
+    }, { 'id': 'M7430', 'value': 'M7430', 'label': '海洋服务' }, {
+      'id': 'M7440',
+      'value': 'M7440',
+      'label': '测绘服务'
+    }, { 'id': 'M7450', 'value': 'M7450', 'label': '质检技术服务' }]
   }, {
     'id': 'M75',
     'value': 'M75',
@@ -2625,13 +2933,30 @@ export const nicid = [{
         'value': 'M7514',
         'label': '节能技术推广服务'
       }, { 'id': 'M7519', 'value': 'M7519', 'label': '其他技术推广服务' }]
+    }, { 'id': 'M7520', 'value': 'M7520', 'label': '科技中介服务' }, {
+      'id': 'M7590',
+      'value': 'M7590',
+      'label': '其他科技推广和应用服务业'
     }]
   }]
 }, {
   'id': 'N',
   'value': 'N',
   'label': '水利、环境和公共设施管理业',
-  'children': [{ 'id': 'N76', 'value': 'N76', 'label': '水利管理业' }, {
+  'children': [{
+    'id': 'N76',
+    'value': 'N76',
+    'label': '水利管理业',
+    'children': [{ 'id': 'N7610', 'value': 'N7610', 'label': '防洪除涝设施管理' }, {
+      'id': 'N7620',
+      'value': 'N7620',
+      'label': '水资源管理'
+    }, { 'id': 'N7630', 'value': 'N7630', 'label': '天然水收集与分配' }, {
+      'id': 'N7640',
+      'value': 'N7640',
+      'label': '水文服务'
+    }, { 'id': 'N7690', 'value': 'N7690', 'label': '其他水利管理业' }]
+  }, {
     'id': 'N77',
     'value': 'N77',
     'label': '生态保护和环境治理业',
@@ -2675,13 +3000,38 @@ export const nicid = [{
         'value': 'N7852',
         'label': '游览景区管理'
       }]
-    }]
+    }, { 'id': 'N7810', 'value': 'N7810', 'label': '市政设施管理' }, {
+      'id': 'N7820',
+      'value': 'N7820',
+      'label': '环境卫生管理'
+    }, { 'id': 'N7830', 'value': 'N7830', 'label': '城乡市容管理' }, { 'id': 'N7840', 'value': 'N7840', 'label': '绿化管理' }]
   }]
 }, {
   'id': 'O',
   'value': 'O',
   'label': '居民服务、修理和其他服务业',
-  'children': [{ 'id': 'O79', 'value': 'O79', 'label': '居民服务业' }, {
+  'children': [{
+    'id': 'O79',
+    'value': 'O79',
+    'label': '居民服务业',
+    'children': [{ 'id': 'O7910', 'value': 'O7910', 'label': '家庭服务' }, {
+      'id': 'O7920',
+      'value': 'O7920',
+      'label': '托儿所服务'
+    }, { 'id': 'O7930', 'value': 'O7930', 'label': '洗染服务' }, {
+      'id': 'O7940',
+      'value': 'O7940',
+      'label': '理发及美容服务'
+    }, { 'id': 'O7950', 'value': 'O7950', 'label': '洗浴服务' }, {
+      'id': 'O7960',
+      'value': 'O7960',
+      'label': '保健服务'
+    }, { 'id': 'O7970', 'value': 'O7970', 'label': '婚姻服务' }, {
+      'id': 'O7980',
+      'value': 'O7980',
+      'label': '殡葬服务'
+    }, { 'id': 'O7990', 'value': 'O7990', 'label': '其他居民服务业' }]
+  }, {
     'id': 'O80',
     'value': 'O80',
     'label': '机动车、电子产品和日用产品修理业',
@@ -2739,7 +3089,7 @@ export const nicid = [{
         'value': 'O8119',
         'label': '其他清洁服务'
       }]
-    }]
+    }, { 'id': 'O8190', 'value': 'O8190', 'label': '其他未列明服务业' }]
   }]
 }, {
   'id': 'P', 'value': 'P', 'label': '教育', 'children': [{
@@ -2794,7 +3144,7 @@ export const nicid = [{
         'value': 'P8294',
         'label': '教育辅助服务'
       }, { 'id': 'P8299', 'value': 'P8299', 'label': '其他未列明教育' }]
-    }]
+    }, { 'id': 'P8210', 'value': 'P8210', 'label': '学前教育' }, { 'id': 'P8250', 'value': 'P8250', 'label': '特殊教育' }]
   }]
 }, {
   'id': 'Q',
@@ -2826,7 +3176,15 @@ export const nicid = [{
         'value': 'Q8322',
         'label': '街道卫生院'
       }, { 'id': 'Q8323', 'value': 'Q8323', 'label': '乡镇卫生院' }]
-    }]
+    }, { 'id': 'Q8330', 'value': 'Q8330', 'label': '门诊部（所）' }, {
+      'id': 'Q8340',
+      'value': 'Q8340',
+      'label': '计划生育技术服务活动'
+    }, { 'id': 'Q8350', 'value': 'Q8350', 'label': '妇幼保健院（所、站）' }, {
+      'id': 'Q8360',
+      'value': 'Q8360',
+      'label': '专科疾病防治院（所、站）'
+    }, { 'id': 'Q8370', 'value': 'Q8370', 'label': '疾病预防控制中心' }, { 'id': 'Q8390', 'value': 'Q8390', 'label': '其他卫生活动' }]
   }, {
     'id': 'Q84',
     'value': 'Q84',
@@ -2880,8 +3238,21 @@ export const nicid = [{
         'value': 'R8524',
         'label': '音像制品出版'
       }, { 'id': 'R8525', 'value': 'R8525', 'label': '电子出版物出版' }, { 'id': 'R8529', 'value': 'R8529', 'label': '其他出版业' }]
-    }]
-  }, { 'id': 'R86', 'value': 'R86', 'label': '广播、电视、电影和影视录音制作业' }, {
+    }, { 'id': 'R8510', 'value': 'R8510', 'label': '新闻业' }]
+  }, {
+    'id': 'R86',
+    'value': 'R86',
+    'label': '广播、电视、电影和影视录音制作业',
+    'children': [{ 'id': 'R8610', 'value': 'R8610', 'label': '广播' }, {
+      'id': 'R8620',
+      'value': 'R8620',
+      'label': '电视'
+    }, { 'id': 'R8630', 'value': 'R8630', 'label': '电影和影视节目制作' }, {
+      'id': 'R8640',
+      'value': 'R8640',
+      'label': '电影和影视节目发行'
+    }, { 'id': 'R8650', 'value': 'R8650', 'label': '电影放映' }, { 'id': 'R8660', 'value': 'R8660', 'label': '录音制作' }]
+  }, {
     'id': 'R87',
     'value': 'R87',
     'label': '文化艺术业',
@@ -2894,8 +3265,29 @@ export const nicid = [{
         'value': 'R8732',
         'label': '档案馆'
       }]
-    }]
-  }, { 'id': 'R88', 'value': 'R88', 'label': '体育' }, {
+    }, { 'id': 'R8710', 'value': 'R8710', 'label': '文艺创作与表演' }, {
+      'id': 'R8720',
+      'value': 'R8720',
+      'label': '艺术表演场馆'
+    }, { 'id': 'R8740', 'value': 'R8740', 'label': '文物及非物质文化遗产保护' }, {
+      'id': 'R8750',
+      'value': 'R8750',
+      'label': '博物馆'
+    }, { 'id': 'R8760', 'value': 'R8760', 'label': '烈士陵园、纪念馆' }, {
+      'id': 'R8770',
+      'value': 'R8770',
+      'label': '群众文化活动'
+    }, { 'id': 'R8790', 'value': 'R8790', 'label': '其他文化艺术业' }]
+  }, {
+    'id': 'R88',
+    'value': 'R88',
+    'label': '体育',
+    'children': [{ 'id': 'R8810', 'value': 'R8810', 'label': '体育组织' }, {
+      'id': 'R8820',
+      'value': 'R8820',
+      'label': '体育场馆'
+    }, { 'id': 'R8830', 'value': 'R8830', 'label': '休闲健身活动' }, { 'id': 'R8890', 'value': 'R8890', 'label': '其他体育' }]
+  }, {
     'id': 'R89',
     'value': 'R89',
     'label': '娱乐业',
@@ -2917,13 +3309,22 @@ export const nicid = [{
         'value': 'R8942',
         'label': '体育经纪人'
       }, { 'id': 'R8949', 'value': 'R8949', 'label': '其他文化艺术经纪代理' }]
-    }]
+    }, { 'id': 'R8920', 'value': 'R8920', 'label': '游乐园' }, {
+      'id': 'R8930',
+      'value': 'R8930',
+      'label': '彩票活动'
+    }, { 'id': 'R8990', 'value': 'R8990', 'label': '其他娱乐业' }]
   }]
 }, {
   'id': 'S',
   'value': 'S',
   'label': '公共管理、社会保障和社会组织',
-  'children': [{ 'id': 'S90', 'value': 'S90', 'label': '中国共产党机关' }, {
+  'children': [{
+    'id': 'S90',
+    'value': 'S90',
+    'label': '中国共产党机关',
+    'children': [{ 'id': 'S9000', 'value': 'S9000', 'label': '中国共产党机关' }]
+  }, {
     'id': 'S91',
     'value': 'S91',
     'label': '国家机构',
@@ -2953,11 +3354,21 @@ export const nicid = [{
         'value': 'S9132',
         'label': '人民检察院'
       }]
+    }, { 'id': 'S9110', 'value': 'S9110', 'label': '国家权力机构' }, { 'id': 'S9190', 'value': 'S9190', 'label': '其他国家机构' }]
+  }, {
+    'id': 'S92',
+    'value': 'S92',
+    'label': '人民政协、民主党派',
+    'children': [{ 'id': 'S9210', 'value': 'S9210', 'label': '人民政协' }, {
+      'id': 'S9220',
+      'value': 'S9220',
+      'label': '民主党派'
     }]
-  }, { 'id': 'S92', 'value': 'S92', 'label': '人民政协、民主党派' }, {
+  }, {
     'id': 'S93',
     'value': 'S93',
-    'label': '社会保障'
+    'label': '社会保障',
+    'children': [{ 'id': 'S9300', 'value': 'S9300', 'label': '社会保障' }]
   }, {
     'id': 'S94',
     'value': 'S94',
@@ -2980,6 +3391,25 @@ export const nicid = [{
         'value': 'S9422',
         'label': '行业性团体'
       }, { 'id': 'S9429', 'value': 'S9429', 'label': '其他社会团体' }]
+    }, { 'id': 'S9430', 'value': 'S9430', 'label': '基金会' }, { 'id': 'S9440', 'value': 'S9440', 'label': '宗教组织' }]
+  }, {
+    'id': 'S95',
+    'value': 'S95',
+    'label': '基层群众自治组织',
+    'children': [{ 'id': 'S9510', 'value': 'S9510', 'label': '社区自治组织' }, {
+      'id': 'S9520',
+      'value': 'S9520',
+      'label': '村民自治组织'
     }]
-  }, { 'id': 'S95', 'value': 'S95', 'label': '基层群众自治组织' }]
-}, { 'id': 'T', 'value': 'T', 'label': '国际组织', 'children': [{ 'id': 'T96', 'value': 'T96', 'label': '国际组织' }] }]
+  }]
+}, {
+  'id': 'T',
+  'value': 'T',
+  'label': '国际组织',
+  'children': [{
+    'id': 'T96',
+    'value': 'T96',
+    'label': '国际组织',
+    'children': [{ 'id': 'T9600', 'value': 'T9600', 'label': '国际组织' }]
+  }]
+}]
