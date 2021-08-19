@@ -152,9 +152,11 @@
           </tr>
         </table>
       </div>
+      <RobotPick ref="getNodeRef"></RobotPick>
       <div style="text-align: center;line-height: 100px">
-        <el-button style="width: 200px;" type="primary" @click="search(1)">搜索</el-button>
-        <el-button style="width: 200px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>
+        <el-button slot="reference" style="width: 150px;" type="success" @click="IntelligentSearch">智能搜索</el-button>
+        <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
+        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>
       </div>
       <div>
         <div class="search-res-wrapper">
@@ -259,10 +261,11 @@ import { address } from '@/data/address'
 import { regcap } from '@/data/regcap'
 import { sonum } from '@/data/sonum'
 import { vc_round } from '@/data/vs_round'
+import RobotPick from '@/components/RobotPick'
 
 export default {
   name: 'HomeCont',
-  components: {},
+  components: { RobotPick },
   props: {},
   data() {
     return {
@@ -288,7 +291,8 @@ export default {
         basic_ygrs: '',
         basic_regionid: '',
         jingying_vc_round: '',
-        basic_opscope: ''
+        basic_opscope: '',
+        basic_status: ''
       },
       paginate: {
         total: 0
@@ -301,6 +305,30 @@ export default {
     this.search(1)
   },
   methods: {
+    IntelligentSearch() {
+      let treeNode = this.$refs.getNodeRef.getNode()
+      if (treeNode.length > 0) {
+        this.search_cond.basic_entname = ''
+        this.search_cond.basic_nicid = ''
+        this.search_cond.basic_status = ''
+        this.search_cond.basic_opscope = ''
+        //拼接查询条件
+        treeNode.forEach(ele => {
+          let arr = ele.cond.split('|')
+          if (arr[0] === 'basic_entname') {
+            this.search_cond.basic_entname += arr[1] + ' '
+          } else if (arr[0] === 'basic_nicid') {
+            this.search_cond.basic_nicid += arr[1] + ','
+          } else if (arr[0] === 'basic_status') {
+            this.search_cond.basic_status += arr[1] + ','
+          } else if (arr[0] === 'basic_opscope') {
+            this.search_cond.basic_opscope += arr[1] + ' '
+          } else {
+          }
+        })
+        this.search(1)
+      }
+    },
     jumpHY() {
       this.$router.push({ path: '/HomeCont_hy' })
     },

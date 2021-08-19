@@ -7,23 +7,68 @@
       <div>
         <span style="font-size: 30px;color: red;font-weight: 800;text-align: center">数据样例</span>
       </div>
-      <img class="example-img" :src="require('../../../assets/features.png')"/>
+      <img class="example-img" :src="require('../../../assets/features.png')" alt=""/>
     </div>
     <div class="box">
-      <div class="cont">
-        <el-table :data="list" border style="width: 100%">
-          <el-table-column label="序号" type="index" width="60"/>
-          <el-table-column prop="name" label="企业特征" width="200"/>
-          <el-table-column prop="score" label="评分结果" width="80"/>
-          <el-table-column prop="desc" label="评分说明">
-            <template slot-scope="scope">
-              <div v-html="scope.row.desc"></div>
-            </template>
-          </el-table-column>
-        </el-table>
+      <div v-if="!hasTop">
+        <div class="cont">
+          <el-table :data="list" border style="width: 100%">
+            <el-table-column prop="name" label="指标名称" align="center" width="200"/>
+            <el-table-column prop="score" label="评分值" align="center" width="80"/>
+            <el-table-column prop="pic" label="能力等级：强、较强、中等、较弱、弱" align="center">
+              <template slot-scope="scope">
+                <img :src="scope.row.pic" alt=""/>
+              </template>
+            </el-table-column>
+            <el-table-column prop="desc" label="评分说明" align="center" width="350">
+              <template slot-scope="scope">
+                <div style="text-align: left" v-html="scope.row.desc"></div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="remarks" v-if="!showBtn">
+          <p>备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑</p>
+          <p>1.按0分到100分划分，评分越高，企业规模增长的能力越强</p>
+          <p>2.通过分析与企业资产维度有关行为后的评估结果。主要反映企业的资产变化情况，供判断企业的整体规模与合作能力</p>
+          <p>3.区间对应关系</p>
+          <p>81~100分，强</p>
+          <p>61~80分，较强</p>
+          <p>41~60分，中等</p>
+          <p>21~40分，较弱</p>
+          <p>20分以下，弱</p>
+        </div>
       </div>
-      <div class="remarks" v-if="!showBtn">
-        备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑
+      <div v-if="hasTop">
+        <div class="cont">
+          <el-table :data="list" :span-method="objectSpanMethod" border
+                    style="width: 100%">
+            <el-table-column prop="name" label="指标名称" align="center" width="200"/>
+            <el-table-column prop="score" label="评分值" align="center" width="80"/>
+            <el-table-column prop="pic" label="能力等级：强、较强、中等、较弱、弱" align="center">
+              <template slot-scope="scope">
+                <img :src="scope.row.pic" alt=""/>
+              </template>
+            </el-table-column>
+            <el-table-column prop="desc" label="评分说明" align="center" width="350">
+              <template slot-scope="scope">
+                <div style="text-align: left" v-html="scope.row.desc"></div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="remarks" v-if="!showBtn">
+          <p>备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑</p>
+          <p>1.按0分到100分划分，评分越高，企业规模增长的能力越强</p>
+          <p>2.通过分析与企业资产维度有关行为后的评估结果。主要反映企业的资产变化情况，供判断企业的整体规模与合作能力</p>
+          <p>3.区间对应关系</p>
+          <p>81~100分，强</p>
+          <p>61~80分，较强</p>
+          <p>41~60分，中等</p>
+          <p>21~40分，较弱</p>
+          <p>20分以下，弱</p>
+          <p>4.行业TOP企业的评分指标为企业同业规模在前20家头部企业的平均评分</p>
+        </div>
       </div>
     </div>
   </div>
@@ -47,7 +92,8 @@ export default {
         phone: ''
       },
       list: [],
-      showBtn: true
+      showBtn: true,
+      hasTop: false
     }
   },
   // inject: [],
@@ -59,31 +105,21 @@ export default {
     getFeatures(this.query).then(res => {
       if (res.data.code === 200) {
         this.showBtn = false
+        this.hasTop = res.data.msg === '有top'
         this.list = this.handleData(res.data.result)
       } else {
         this.showBtn = true
       }
     })
   },
-  // beforeCreate() {
-  // },
-  // created() {
-  // },
-  // beforeMount() {
-  // },
-  // beforeUpdate() {
-  // },
-  // updated() {
-  // },
-  // beforeDestroy() {
-  // },
-  // destroyed() {
-  // },
-  // activated() {
-  // },
-  // deactivated() {
-  // },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      if (rowIndex % 2 === 0) {
+        return 'warning-row'
+      } else {
+        return 'success-row'
+      }
+    },
     btnGetFeatures() {
       this.query.entName = localStorage.getItem('entName')
       this.query.phone = localStorage.getItem('phone')
@@ -111,6 +147,7 @@ export default {
             }
             if (res.data.code === 200) {
               this.showBtn = false
+              this.hasTop = res.data.msg === '有top'
               this.list = this.handleData(res.data.result)
             } else {
               this.showBtn = true
@@ -180,19 +217,58 @@ export default {
           default:
             continue
         }
-        tmpList.push({
-          name: row.name,
-          score: row.score,
-          desc: desc
-        })
+        if (row.topPic) {
+          tmpList.push({
+            name: row.name,
+            score: row.score,
+            desc: desc,
+            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.pic
+          })
+          tmpList.push({
+            name: '行业TOP企业的' + row.name,
+            score: row.topScore,
+            desc: desc,
+            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.topPic
+          })
+        } else {
+          tmpList.push({
+            name: row.name,
+            score: row.score,
+            desc: desc,
+            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.pic
+          })
+        }
       }
       return tmpList
+    },
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 3) {
+        if (rowIndex % 2 === 0) {
+          return {
+            rowspan: 2,
+            colspan: 1
+          }
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 0
+          }
+        }
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-table .warning-row {
+  background: oldlace;
+}
+
+::v-deep .el-table .success-row {
+  background: #f0f9eb;
+}
+
 .header {
   width: 94%;
   margin: 40px;
