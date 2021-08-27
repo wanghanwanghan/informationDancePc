@@ -99,7 +99,7 @@
 
 <script>
 import req from '@/utils/req'
-import { parseTime } from '@/utils/index'
+import { parseTime } from '@/utils'
 
 export default {
   name: 'FinancialThreeTable',
@@ -108,9 +108,6 @@ export default {
     parseTime: parseTime
   },
   props: {},
-  // provide() {
-  //   return {}
-  // },
   data() {
     return {
       auth_btn_show: true,
@@ -142,7 +139,6 @@ export default {
   },
   inject: ['reload'],
   computed: {},
-  // watch: {},
   mounted() {
     this.phone = localStorage.getItem('phone')
     this.token = localStorage.getItem('token')
@@ -155,24 +151,6 @@ export default {
     this.getData_zc_year()
     this.getData_zc_month()
   },
-  // beforeCreate() {
-  // },
-  // created() {
-  // },
-  // beforeMount() {
-  // },
-  // beforeUpdate() {
-  // },
-  // updated() {
-  // },
-  // beforeDestroy() {
-  // },
-  // destroyed() {
-  // },
-  // activated() {
-  // },
-  // deactivated() {
-  // },
   methods: {
     show_lr_table(type, index) {
       this.ly_year_table_show = false
@@ -334,7 +312,7 @@ export default {
       background: #fff;
       z-index: 10;
       position: fixed;
-      top: 0px;
+      top: 0;
 
       a {
         text-decoration: none;
