@@ -44,10 +44,15 @@ export default {
   },
   computed: {},
   mounted() {
+    this.$confirm('以下授权操作为需调取企业发票信息用于企业深度评估使用场景的模拟演示，具体内容将生成至企业评估报告或集成的客户评估系统，且原则上仅用于终端客户为持牌金融机构的应用场景', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
   },
   methods: {
     onSubmit() {
-      this.$confirm('授权成功', '', {
+      this.$confirm('您的授权已完成，请于20个工作日后登录贵方与每日信动合作集成的评估系统查看结果', '', {
         confirmButtonText: '确定',
         type: 'success'
       })

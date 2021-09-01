@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <div class="layer-wrapper-2">
-      <div class="title-wrapper">税务税务</div>
+      <div class="title-wrapper">税务能力</div>
       <router-link to='/FinancialThreeTable/Fapiao'>
         <el-button class="btn-class" type="primary">查看</el-button>
       </router-link>
