@@ -18,6 +18,12 @@
           <el-input v-model="form.phone"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-checkbox-group v-model="checkList">
+            <el-checkbox label="数字证书代办委托书（点击下载）"><span @click.stop.prevent="file1">数字证书代办委托书（点击下载）</span></el-checkbox>
+            <el-checkbox label="用户授权协议书（点击下载）"><span @click.stop.prevent="file2">用户授权协议书（点击下载）</span></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="onSubmit">立即授权</el-button>
           <el-button @click="onCancel">取消</el-button>
         </el-form-item>
@@ -33,6 +39,7 @@ export default {
   props: {},
   data() {
     return {
+      checkList: [],
       form: {
         entname: '',
         code: '',
@@ -53,11 +60,24 @@ export default {
     })
   },
   methods: {
+    file1() {
+      window.location.href = 'https://api.meirixindong.com/Static/数字证书代办委托书.docx'
+    },
+    file2() {
+      window.location.href = 'https://api.meirixindong.com/Static/用户授权协议书.docx'
+    },
     onSubmit() {
-      this.$confirm('您的授权已完成，请于20个工作日后登录贵方与每日信动合作集成的评估系统查看结果', '', {
-        confirmButtonText: '确定',
-        type: 'success'
-      })
+      if (this.checkList.length !== 2) {
+        this.$confirm('请先同意两个授权文件', '', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
+      } else {
+        this.$confirm('您的授权已完成，请于20个工作日后登录贵方与每日信动合作集成的评估系统查看结果', '', {
+          confirmButtonText: '确定',
+          type: 'success'
+        })
+      }
     },
     onCancel() {
       this.form.entname = ''
