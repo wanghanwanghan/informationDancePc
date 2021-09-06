@@ -65,6 +65,15 @@ export function createVeryEasy(data) {
   })
 }
 
+// 报告企业税务版word
+export function createTwoTable(data) {
+  return request({
+    url: '/api/v1/export/word/createTwoTable',
+    method: 'post',
+    data
+  })
+}
+
 // 报告企业速览版pdf
 export function createVeryEasypdf(data) {
   return request({

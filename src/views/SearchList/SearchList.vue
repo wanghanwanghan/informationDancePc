@@ -17,8 +17,8 @@
       <el-col :span="4">
         <div class="logo" @click="toIndex">
           <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
-<!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
-<!--          <img class="img" src="https://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
+          <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
+          <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
         </div>
       </el-col>
       <el-col :span="10">
@@ -136,16 +136,20 @@
       width="40%"
     >
       <div class="reportBox">
-        <el-button type="primary" plain style="width:252px;margin: 20px 0;" @click="toQyslb">
+        <el-button type="primary" plain style="margin: 20px 0;width: 300px" @click="toQyslb">
           <div style="margin-bottom:10px">企业速览版</div>
           <div>80元</div>
         </el-button>
-        <el-button type="primary" plain style="width:252px;margin: 20px 0;" @click="toQysdb">
+        <el-button type="primary" plain style="margin: 20px 0;width: 300px" @click="toQysdb">
           <div style="margin-bottom:10px">企业商调版</div>
           <div>300元</div>
         </el-button>
-        <el-button type="primary" plain style="margin: 20px 0;" @click="toJdb">
+        <el-button type="primary" plain style="margin: 20px 0;width: 300px" @click="toJdb">
           <div style="margin-bottom:10px">尽调版（需授权，请下载授权书）</div>
+          <div>500元</div>
+        </el-button>
+        <el-button type="primary" plain style="margin: 20px 0; width: 300px" @click="toSwb">
+          <div style="margin-bottom:10px">税务版（需授权，请在网页端授权）</div>
           <div>500元</div>
         </el-button>
       </div>
@@ -166,6 +170,21 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="ReportQyslb = false">取 消</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 企业税务版选择 -->
+    <el-dialog
+      title="企业税务版"
+      :visible.sync="ReportSwb"
+      width="40%"
+    >
+      <div class="reportBox">
+        <el-button type="primary" plain style="width:252px;margin: 20px 0;" @click="toSwbw">word版</el-button>
+        <!--        <el-button type="primary" plain style="width:252px;margin: 20px 0;" @click="toSwbp">pdf版</el-button>-->
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="ReportSwb = false">取 消</el-button>
       </span>
     </el-dialog>
 
@@ -255,7 +274,7 @@ import {
   authBookC,
   authBook,
   createDeepEasy,
-  getAuthentication
+  getAuthentication, createTwoTable
 } from '@/api/article'
 
 var token = localStorage.getItem('token')
@@ -364,6 +383,13 @@ export default {
         email: '',
         pay: 0
       },
+      querySwb: {
+        phone: '',
+        entName: '',
+        type: 3,
+        email: '',
+        pay: 0
+      },
       Reporttype: false,
       ReportQyslb: false,
       query3: {
@@ -374,6 +400,7 @@ export default {
         dataKey: '',
         pay: false
       },
+      ReportSwb: false,
       ReportJdb: false,
       ReportSq: false,
       fileList: [],
@@ -480,7 +507,7 @@ export default {
     this.input = entName
     this.query.entName = entName
     this.query.phone = this.query5.phone = this.query6.phone = localStorage.getItem('phone')
-    this.phone = this.query2.phone = this.query3.phone = this.query4.phone = localStorage.getItem('phone')
+    this.phone = this.query2.phone = this.query3.phone = this.query4.phone = this.querySwb.phone = localStorage.getItem('phone')
     getEntList(this.query).then(res => {
       // console.log(res)
       this.list = res.data.result
@@ -1239,6 +1266,63 @@ export default {
           this.$message({
             message: res.data.msg,
             type: 'warning'
+          })
+        }
+      })
+    },
+    //税务版
+    toSwb() {
+      this.ReportSwb = true
+    },
+    toSwbw() {
+      this.querySwb.email = '20210425修改'
+      this.querySwb.entName = localStorage.getItem('reportName')
+      this.querySwb.type = 'xd'
+      createTwoTable(this.querySwb).then(res => {
+        if (res.data.code === 210) {
+          this.msg = res.data.msg
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.querySwb.pay = true
+            createTwoTable(this.querySwb).then(res => {
+              if (res.data.code === 220) {
+                this.$confirm('余额不足，是否前往充值？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.$router.push('/login')
+                  localStorage.setItem('activeName', 'second')
+                }).catch(() => {
+                  this.$router.go(0)
+                })
+              } else {
+                this.$notify({
+                  title: '成功',
+                  message: '可在线生成并查看',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/login',
+                  query: {
+                    activeName: 'second'
+                  }
+                })
+                localStorage.setItem('activeName', 'second')
+              }
+            })
+          }).catch(() => {
+          })
+        } else {
+          this.$confirm(res.data.msg, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+          }).catch(() => {
           })
         }
       })

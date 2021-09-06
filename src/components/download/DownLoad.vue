@@ -34,6 +34,7 @@
               <span v-if="row.type === 10 || row.type === 11">企业速览版</span>
               <span v-if="row.type === 30 || row.type === 31">企业商调版</span>
               <span v-if="row.type === 50 || row.type === 51">尽调版</span>
+              <span v-if="row.type === 70 || row.type === 71">税务版</span>
             </template>
           </el-table-column>
 
