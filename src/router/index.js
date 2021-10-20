@@ -32,6 +32,16 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/FinancesSearchSecondPage',
+    component: () => import('@/views/FinancesSearch/FinancesSearchSecondPage'),
+    hidden: true
+  },
+  {
+    path: '/financesSearchIndex',
+    component: () => import('@/views/FinancesSearch/FinancesSearchIndex'),
+    hidden: true
+  },
+  {
     path: '/HomeCont_hy',
     component: () => import('@/components/HomeCont/HomeCont_hy'),
     hidden: true

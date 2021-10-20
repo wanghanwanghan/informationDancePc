@@ -2,7 +2,6 @@
   <div class="body-wrapper">
     <div class="logo-wrapper">
       <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>
-      <!--      <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
     </div>
     <div class="content-wrapper">
       <div>
@@ -153,15 +152,15 @@
           </tr>
         </table>
       </div>
-      <RobotPick ref="getNodeRef"></RobotPick>
       <div style="text-align: center;line-height: 100px">
-        <el-button slot="reference" style="width: 150px;" type="success" @click="IntelligentSearch">智能搜索</el-button>
         <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
-        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>
+        <el-button style="width: 150px;" type="success" @click="nextPage">下一步</el-button>
       </div>
       <div>
         <div class="search-res-wrapper">
           <el-table
+            ref="multipleTable"
+            @selection-change="handleSelectionChange"
             :data="search_res"
             v-loading="loading"
             element-loading-text="拼命加载中"
@@ -170,6 +169,11 @@
             min-height="100"
             max-height="600"
             style="width: 100%">
+            <el-table-column
+              type="selection"
+              width="55"
+              align="center">
+            </el-table-column>
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -262,14 +266,14 @@ import { address } from '@/data/address'
 import { regcap } from '@/data/regcap'
 import { sonum } from '@/data/sonum'
 import { vc_round } from '@/data/vs_round'
-import RobotPick from '@/components/RobotPick'
 
 export default {
-  name: 'HomeCont',
-  components: { RobotPick },
+  name: 'FinancesSearchIndex',
+  components: {},
   props: {},
   data() {
     return {
+      multipleSelection: [],
       loading: true,
       nicid: nicid,
       enttype: enttype,
@@ -306,32 +310,25 @@ export default {
     this.search(1)
   },
   methods: {
-    IntelligentSearch() {
-      let treeNode = this.$refs.getNodeRef.getNode()
-      if (treeNode.length > 0) {
-        this.search_cond.basic_entname = ''
-        this.search_cond.basic_nicid = ''
-        this.search_cond.basic_status = ''
-        this.search_cond.basic_opscope = ''
-        //拼接查询条件
-        treeNode.forEach(ele => {
-          let arr = ele.cond.split('|')
-          if (arr[0] === 'basic_entname') {
-            this.search_cond.basic_entname += arr[1] + ' '
-          } else if (arr[0] === 'basic_nicid') {
-            this.search_cond.basic_nicid += arr[1] + ','
-          } else if (arr[0] === 'basic_status') {
-            this.search_cond.basic_status += arr[1] + ','
-          } else if (arr[0] === 'basic_opscope') {
-            this.search_cond.basic_opscope += arr[1] + ' '
-          } else {
-          }
-        })
-        this.search(1)
+    nextPage() {
+      if (this.paginate.total > 2000) {
+        this.$confirm('数据总数小于2000才能进入下一步')
+        return
       }
+      //名单加入mysql
+      req.post('api/v1/xd/financesSearchResToMysql', this.search_cond, localStorage.getItem('token')).then(res => {
+        if (res.data.code === 200) {
+        }
+      })
+      if (this.multipleSelection.length !== 0) {
+        localStorage.setItem('financesSearchIndex_next_page_use_target', JSON.stringify(this.multipleSelection))
+      } else {
+        localStorage.setItem('financesSearchIndex_next_page_use_target', '')
+      }
+      this.$router.push({ path: '/FinancesSearchSecondPage' })
     },
-    jumpHY() {
-      this.$router.push({ path: '/HomeCont_hy' })
+    handleSelectionChange(val) {
+      this.multipleSelection = val
     },
     handleEdit(index, row) {
       let routeUrl = this.$router.resolve({
@@ -348,6 +345,7 @@ export default {
     search(page) {
       this.loading = true
       this.search_cond.page = page
+      localStorage.setItem('financesSearchIndex_search_cond', JSON.stringify(this.search_cond))
       req.post('api/v1/lx/superSearch', this.search_cond, localStorage.getItem('token')).then(res => {
         if (res.data.code === 200) {
           this.paginate = res.data.paging
