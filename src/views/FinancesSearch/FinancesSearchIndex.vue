@@ -153,6 +153,7 @@
         </table>
       </div>
       <div style="text-align: center;line-height: 100px">
+        <el-button style="width: 150px;" type="primary" @click="jumpToMyList">我的列表</el-button>
         <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
         <el-button style="width: 150px;" type="success" @click="nextPage">下一步</el-button>
       </div>
@@ -310,6 +311,9 @@ export default {
     this.search(1)
   },
   methods: {
+    jumpToMyList() {
+      this.$router.push({ path: '/FinancesSearchSecondPage' })
+    },
     nextPage() {
       if (this.paginate.total > 2000) {
         this.$confirm('数据总数小于2000才能进入下一步')

@@ -56,7 +56,7 @@
         </div>
       </div>
       <div style="text-align: center;line-height: 100px">
-        <el-button style="width: 150px;" type="success">下一步</el-button>
+        <el-button style="width: 150px;" type="primary" @click="exportCsv">导出详情列表</el-button>
       </div>
       <div>
         <div class="search-res-wrapper">
@@ -142,6 +142,12 @@
               width="76"
               align="center">
             </el-table-column>
+            <el-table-column
+              label="链接"
+              prop="lianjie"
+              width="76"
+              align="center">
+            </el-table-column>
             <el-table-column label="详情" align="center" width="150">
               <template slot-scope="scope">
                 <el-button
@@ -157,6 +163,7 @@
     <div style="text-align: right;margin-top: 15px">
       <el-button type="warning" @click="runFengXian">风险扫描</el-button>
       <el-button type="warning" @click="runCaiWu">营收标签</el-button>
+      <el-button type="warning" @click="runLianJie">链接标签</el-button>
     </div>
     <div class="footer-wrapper">
       <el-pagination
@@ -236,6 +243,17 @@ export default {
     this.group_search()
   },
   methods: {
+    exportCsv() {
+      let obj = {
+        group: this.group_name,
+        phone: this.group_form.phone
+      }
+      req.post('api/v1/xd/financesSearchExportDetail', obj, localStorage.getItem('token')).then(res => {
+        if (res.data.code === 200) {
+          window.open('https://api.meirixindong.com/Static/Temp/' + res.data.result, '_blank')
+        }
+      })
+    },
     editGroupDesc() {
       let obj = {
         groupDesc: this.group_form.group_desc,
@@ -265,6 +283,28 @@ export default {
           phone: localStorage.getItem('phone')
         }
         req.post('api/v1/xd/financesSearchHandleFengXianLabel', obj, localStorage.getItem('token')).then(res => {
+          if (res.data.code === 200) {
+
+          }
+        })
+      }).catch(() => {
+      })
+    },
+    runLianJie() {
+      this.$confirm('确定处理这批企业的 <链接> 标签吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '正在处理'
+        })
+        let obj = {
+          group_name: this.group_name,
+          phone: localStorage.getItem('phone')
+        }
+        req.post('api/v1/xd/financesSearchHandleLianJieLabel', obj, localStorage.getItem('token')).then(res => {
           if (res.data.code === 200) {
 
           }
