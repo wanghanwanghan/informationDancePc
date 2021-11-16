@@ -157,7 +157,7 @@
       <div style="text-align: center;line-height: 100px">
         <el-button slot="reference" style="width: 150px;" type="success" @click="IntelligentSearch">智能搜索</el-button>
         <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
-        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>
+<!--        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>-->
       </div>
       <div>
         <div class="search-res-wrapper">

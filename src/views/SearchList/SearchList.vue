@@ -16,12 +16,13 @@
     <div class="nav">
       <el-col :span="4">
         <div class="logo" @click="toIndex">
-          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+          <div class="logo-text">智能评价服务系统</div>
+          <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">-->
           <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
           <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="10" style="margin-left: 40px">
         <div class="search">
           <el-input v-model="input" placeholder="请输入内容" class="input-with-select" @change="sousuo">
             <el-button slot="append" icon="el-icon-search" @click="sousuo"/>
@@ -1383,6 +1384,15 @@ export default {
       width: 170px;
       height: 47px;
       margin-left: 10px;
+    }
+
+    .logo-text {
+      margin-top: 6px;
+      margin-left: 20px;
+      font-size: 25px;
+      font-weight: 800;
+      width: 400px;
+      color: rgb(64, 158, 255, 1);
     }
   }
 

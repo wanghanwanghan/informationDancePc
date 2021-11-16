@@ -1,7 +1,8 @@
 <template>
   <div class="body-wrapper">
     <div class="logo-wrapper">
-      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>
+      <!--      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>-->
+      <div class="logo-text">智能评价服务系统</div>
     </div>
     <div class="content-wrapper">
       <div>
@@ -14,38 +15,39 @@
             element-loading-background="rgba(0, 0, 0, 0.6)"
             min-height="100"
             max-height="600"
+            border
             style="width: 100%">
             <el-table-column
-              type="selection"
-              width="55"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              label="组名称"
+              label="优企信息包编号"
               prop="group"
               align="center">
             </el-table-column>
             <el-table-column
-              label="组描述"
+              label="优企群名称"
               prop="groupDesc"
               align="center">
             </el-table-column>
             <el-table-column
-              label="企业个数"
+              label="企业数量"
               prop="num"
               align="center">
             </el-table-column>
-            <el-table-column label="详情" align="center" width="150">
+            <el-table-column label="详情" align="center" width="250">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
                   @click="getGroupRow(scope.$index, scope.row)">查看
                 </el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="delGroupRow(scope.$index, scope.row)">删除
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
-        <div style="text-align: right">
+        <div style="text-align: right;margin-top: 15px">
           <el-pagination
             background
             layout="total, prev, pager, next"
@@ -61,6 +63,7 @@
       <div>
         <div class="search-res-wrapper">
           <el-table
+            border
             :data="search_res"
             v-loading="loading"
             element-loading-text="拼命加载中"
@@ -97,12 +100,12 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="名称"
+              label="企业名称"
               prop="entName"
               align="center">
             </el-table-column>
             <el-table-column
-              label="法人"
+              label="法人代表"
               prop="detail.faren"
               width="130"
               align="center">
@@ -132,27 +135,45 @@
             </el-table-column>
             <el-table-column
               label="风险"
-              prop="fengxian"
-              width="76"
+              width="80"
               align="center">
+              <template slot-scope="props">
+                <el-tag class="tag-wrapper-xx" type="danger" @click="jumpFengXianDetail(props.row.id)">
+                  {{ props.row.fengxian }}
+                </el-tag>
+              </template>
             </el-table-column>
             <el-table-column
-              label="营收"
+              label="规模"
               prop="caiwu"
-              width="76"
+              width="80"
               align="center">
             </el-table-column>
             <el-table-column
-              label="链接"
-              prop="lianjie"
-              width="76"
+              label="连接"
+              width="80"
+              align="center">
+              <template slot-scope="props">
+                <el-tag class="tag-wrapper-xx" type="success" @click="jumpLianXiDetail(props.row.id)">
+                  {{ props.row.lianjie }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="备注"
+              prop="remarks"
               align="center">
             </el-table-column>
-            <el-table-column label="详情" align="center" width="150">
+            <el-table-column label="操作" align="center" width="160">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                >查看
+                  @click="handleEdit(scope.$index, scope.row)">查看
+                </el-button>
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="showEditRemarksDia(scope.$index, scope.row)">填备注
                 </el-button>
               </template>
             </el-table-column>
@@ -162,8 +183,8 @@
     </div>
     <div style="text-align: right;margin-top: 15px">
       <el-button type="warning" @click="runFengXian">风险扫描</el-button>
-      <el-button type="warning" @click="runCaiWu">营收标签</el-button>
-      <el-button type="warning" @click="runLianJie">链接标签</el-button>
+      <el-button type="warning" @click="runCaiWu">规模特征</el-button>
+      <el-button type="warning" @click="runLianJie">连接优企</el-button>
     </div>
     <div class="footer-wrapper">
       <el-pagination
@@ -175,23 +196,48 @@
       </el-pagination>
     </div>
     <div>
-      <el-dialog
-        title="查看"
-        :visible.sync="group_dialog_show_flag"
-        width="30%">
-
+      <el-dialog title="查看" :visible.sync="group_dialog_show_flag" width="30%">
         <el-form :model="group_form">
-          <el-form-item label="组名称">
+          <el-form-item label="优企信息包编号">
             <el-input v-model="group_form.group" autocomplete="off" disabled></el-input>
           </el-form-item>
-          <el-form-item label="组描述">
+          <el-form-item label="优企群名称">
             <el-input v-model="group_form.group_desc" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
-
         <span slot="footer" class="dialog-footer">
           <el-button @click="group_dialog_show_flag = false">查看数据</el-button>
           <el-button type="primary" @click="editGroupDesc">确定修改</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog title="" :visible.sync="fengxianDia" width="80%">
+        <el-table :data="showDiaData" border>
+          <el-table-column property="title" label="标题" align="center"></el-table-column>
+          <el-table-column property="desc" label="描述" align="center"></el-table-column>
+          <el-table-column property="content" label="详情" align="center"></el-table-column>
+          <el-table-column property="date" label="日期" align="center"></el-table-column>
+          <el-table-column property="remarks" label="备注" align="center"></el-table-column>
+          <el-table-column property="reservedFields" label="保留字段" align="center" width="80"></el-table-column>
+        </el-table>
+      </el-dialog>
+      <el-dialog title="" :visible.sync="lianxiDia" width="80%">
+        <el-table :data="showDiaData" border>
+          <el-table-column property="duty" label="职位" align="center"></el-table-column>
+          <el-table-column property="source" label="来源" align="center"></el-table-column>
+          <el-table-column property="quhao" label="区号" align="center"></el-table-column>
+          <el-table-column property="lianxi" label="号码" align="center"></el-table-column>
+          <el-table-column property="lianxitype" label="联系方式" align="center"></el-table-column>
+        </el-table>
+      </el-dialog>
+      <el-dialog title="修改备注" :visible.sync="show_edit_remarks_flag" width="30%">
+        <el-form>
+          <el-form-item label="">
+            <el-input v-model="remarks.val" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="show_edit_remarks_flag = false">取消</el-button>
+          <el-button type="primary" @click="editRemarks">确定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -208,6 +254,15 @@ export default {
   props: {},
   data() {
     return {
+      remarks: {
+        table_index: '',
+        group_id: '',
+        val: ''
+      },
+      show_edit_remarks_flag: false,
+      fengxianDia: false,
+      lianxiDia: false,
+      showDiaData: [],
       group_form: {
         group: '',
         group_desc: '',
@@ -243,6 +298,55 @@ export default {
     this.group_search()
   },
   methods: {
+    showEditRemarksDia(index, row) {
+      this.show_edit_remarks_flag = true
+      this.remarks.group_id = row.id
+      this.remarks.val = ''
+      this.remarks.table_index = index
+    },
+    editRemarks() {
+      let obj = {
+        id: this.remarks.group_id,
+        remarks: this.remarks.val,
+        phone: this.group_form.phone
+      }
+      console.log(obj)
+      this.search_res.forEach(item => {
+        if (item.id === this.remarks.group_id) {
+          item.remarks = this.remarks.val
+        }
+      })
+      req.post('api/v1/xd/editGroupRemarks', obj, localStorage.getItem('token')).then(res => {
+        if (res.data.code === 200) {
+          this.show_edit_remarks_flag = false
+        }
+      })
+    },
+    handleEdit(index, row) {
+      let routeUrl = this.$router.resolve({
+        path: './SearchList',
+        query: {
+          entName: row.entName
+        }
+      })
+      window.open(routeUrl.href, '_blank')
+    },
+    jumpFengXianDetail(id) {
+      this.fengxianDia = true
+      this.search_res.forEach(item => {
+        if (item.id === id) {
+          this.showDiaData = item.fengxianDetail.length > 5 ? JSON.parse(item.fengxianDetail) : []
+        }
+      })
+    },
+    jumpLianXiDetail(id) {
+      this.lianxiDia = true
+      this.search_res.forEach(item => {
+        if (item.id === id) {
+          this.showDiaData = item.lianjieDetail.length > 5 ? JSON.parse(item.lianjieDetail) : []
+        }
+      })
+    },
     exportCsv() {
       let obj = {
         group: this.group_name,
@@ -262,10 +366,9 @@ export default {
       }
       req.post('api/v1/xd/financesSearchEditGroupDesc', obj, localStorage.getItem('token')).then(res => {
         if (res.data.code === 200) {
-
+          location.reload()
         }
       })
-      location.reload()
       this.group_dialog_show_flag = false
     },
     runFengXian() {
@@ -362,6 +465,30 @@ export default {
         }
       })
     },
+    delGroupRow(index, row) {
+      this.$confirm('确认要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let obj = {
+          group: row.group,
+          userId: row.userId,
+          phone: localStorage.getItem('phone')
+        }
+        console.log(obj)
+        req.post('api/v1/xd/delUserGroupList', obj, localStorage.getItem('token')).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '成功'
+            })
+            location.reload()
+          }
+        })
+      }).catch(() => {
+      })
+    },
     pageChange(index) {
       this.loading = true
       let obj = {
@@ -381,7 +508,13 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
+
+.search-res-wrapper ::v-deep .tag-wrapper-xx {
+  cursor: pointer;
+}
+
 .demo-table-expand {
   font-size: 0;
 }
@@ -409,6 +542,14 @@ export default {
       width: 450px;
       height: 130px;
     }
+
+    .logo-text {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 50px;
+      font-weight: 800;
+      color: rgb(64, 158, 255, 1);
+    }
   }
 
   .content-wrapper {
@@ -430,7 +571,6 @@ export default {
       }
 
       .search-res-wrapper {
-
       }
     }
   }

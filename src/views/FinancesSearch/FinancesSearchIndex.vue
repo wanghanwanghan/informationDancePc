@@ -1,7 +1,8 @@
 <template>
   <div class="body-wrapper">
     <div class="logo-wrapper">
-      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>
+      <!--      <img class="logo" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt=""/>-->
+      <div class="logo-text">智能评价服务系统</div>
     </div>
     <div class="content-wrapper">
       <div>
@@ -153,8 +154,8 @@
         </table>
       </div>
       <div style="text-align: center;line-height: 100px">
-        <el-button style="width: 150px;" type="primary" @click="jumpToMyList">我的列表</el-button>
-        <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
+        <el-button style="width: 150px;" type="primary" @click="jumpToMyList">查看已检索列表</el-button>
+        <el-button style="width: 150px;" type="primary" @click="search(1)">目标群体检索</el-button>
         <el-button style="width: 150px;" type="success" @click="nextPage">下一步</el-button>
       </div>
       <div>
@@ -170,11 +171,6 @@
             min-height="100"
             max-height="600"
             style="width: 100%">
-            <el-table-column
-              type="selection"
-              width="55"
-              align="center">
-            </el-table-column>
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -322,14 +318,14 @@ export default {
       //名单加入mysql
       req.post('api/v1/xd/financesSearchResToMysql', this.search_cond, localStorage.getItem('token')).then(res => {
         if (res.data.code === 200) {
+          if (this.multipleSelection.length !== 0) {
+            localStorage.setItem('financesSearchIndex_next_page_use_target', JSON.stringify(this.multipleSelection))
+          } else {
+            localStorage.setItem('financesSearchIndex_next_page_use_target', '')
+          }
+          this.$router.push({ path: '/FinancesSearchSecondPage' })
         }
       })
-      if (this.multipleSelection.length !== 0) {
-        localStorage.setItem('financesSearchIndex_next_page_use_target', JSON.stringify(this.multipleSelection))
-      } else {
-        localStorage.setItem('financesSearchIndex_next_page_use_target', '')
-      }
-      this.$router.push({ path: '/FinancesSearchSecondPage' })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
@@ -446,6 +442,14 @@ export default {
     .logo {
       width: 450px;
       height: 130px;
+    }
+
+    .logo-text {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 50px;
+      font-weight: 800;
+      color: rgb(64, 158, 255, 1);
     }
   }
 
