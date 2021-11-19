@@ -14,7 +14,8 @@
         <a class="et-hero-tab" href="#tab-jzzgzs">建筑资格证书</a>
         <a class="et-hero-tab" href="#tab-jzgcxm">建筑工程项目</a>
         <a class="et-hero-tab" href="#tab-zq">债券</a>
-        <span class="et-hero-tab-slider" />
+        <a class="et-hero-tab" href="#tab-jzl">竞争力</a>
+        <span class="et-hero-tab-slider"/>
       </div>
     </section>
     <main class="et-main">
@@ -194,7 +195,8 @@
                   <router-link :to="'/EnterpriseDevelopment/ztbDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -267,7 +269,8 @@
                   <router-link :to="'/EnterpriseDevelopment/gdDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -328,7 +331,8 @@
                   <router-link :to="'/EnterpriseDevelopment/tdgsDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -389,7 +393,8 @@
                   <router-link :to="'/EnterpriseDevelopment/tdzrDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -468,7 +473,8 @@
                   <router-link :to="'/EnterpriseDevelopment/zpDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -541,7 +547,8 @@
                   <router-link :to="'/EnterpriseDevelopment/jzzgDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -602,7 +609,8 @@
                   <router-link :to="'/EnterpriseDevelopment/jzgcDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -669,7 +677,8 @@
                   <router-link :to="'/EnterpriseDevelopment/zqDetail/'+scope.row.Id">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
 
@@ -686,11 +695,52 @@
           </div>
         </div>
       </section>
+      <section id="tab-jzl" class="et-slide" style="min-height:100px;margin-top:50px;">
+        <h3 style="margin-left:20px;">竞争力</h3>
+        <div class="box2">
+          <!-- 竞争力 -->
+          <div class="cont">
+            <el-table
+              :data="EntScoreList"
+              border
+              style="width: 100%"
+            >
+              <el-table-column prop="SOCIALCON" align="center" label="社会贡献分数"/>
+              <el-table-column prop="SOCIALCON_G" align="center" label="社会贡献等级"/>
+              <el-table-column prop="SCALE" align="center" label="身份特征分数"/>
+              <el-table-column prop="SCALE_G" align="center" label="身份特征评级"/>
+              <el-table-column prop="INNOVATE" align="center" label="创新能力分数"/>
+              <el-table-column prop="INNOVATE_G" align="center" label="创新能力评级"/>
+              <el-table-column prop="STRENGTH" align="center" label="综合实力分数"/>
+              <el-table-column prop="STRENGTH_G" align="center" label="综合实力评级"/>
+              <el-table-column prop="ACTIVITY" align="center" label="活跃度分数"/>
+              <el-table-column prop="ACTIVITY_G" align="center" label="活跃度评级"/>
+              <el-table-column prop="LEGAL" align="center" label="合法合规分数"/>
+              <el-table-column prop="LEGAL_G" align="center" label="合法合规评级"/>
+              <el-table-column prop="GROWTH" align="center" label="成长能力分数"/>
+              <el-table-column prop="GROWTH_G" align="center" label="成长能力评级"/>
+            </el-table>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 </template>
 <script>
-import { getEntFinancing, getInvestmentAbroadInfo, getTenderSearch, getlandPurchaseList, getlandPublishList, getlandTransferList, getRecruitmentList, getQualificationList, getBuildingProjectList, getBondList } from '@/api/EnterpriseDevelopment'
+import {
+  getEntFinancing,
+  getInvestmentAbroadInfo,
+  getTenderSearch,
+  getlandPurchaseList,
+  getlandPublishList,
+  getlandTransferList,
+  getRecruitmentList,
+  getQualificationList,
+  getBuildingProjectList,
+  getBondList,
+  getEntScoreList
+} from '@/api/EnterpriseDevelopment'
+
 export default {
   data() {
     return {
@@ -726,7 +776,9 @@ export default {
       BuildingProjectList: [],
       totalBuildingProjectList: 0,
       BondList: [],
-      totalBondList: 0
+      totalBondList: 0,
+      EntScoreList: [],
+      totalEntScoreList: 0
     }
   },
   mounted() {
@@ -792,6 +844,10 @@ export default {
       // console.log(res)
       this.BondList = res.data.result
       this.totalBondList = res.data.paging.total
+    })
+    // 竞争力
+    getEntScoreList(this.query1).then(res => {
+      this.EntScoreList = res.data.result
     })
   },
   methods: {
@@ -913,8 +969,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.box{
-  .et-hero-tabs{
+.box {
+  .et-hero-tabs {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -926,7 +982,7 @@ export default {
     background: #eee;
     text-align: center;
     // padding: 0 2em;
-    .et-hero-tabs-containerf{
+    .et-hero-tabs-containerf {
       display: flex;
       flex-direction: row;
       /* position: absolute; */
@@ -938,9 +994,11 @@ export default {
       z-index: 10;
       position: fixed;
       top: 0px;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
         display: flex;
         justify-content: center;
@@ -951,11 +1009,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -965,6 +1025,7 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container {
       display: flex;
       flex-direction: row;
@@ -975,9 +1036,11 @@ export default {
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       background: #fff;
       z-index: 10;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
         display: flex;
         justify-content: center;
@@ -988,11 +1051,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -1002,11 +1067,13 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container--top {
       position: fixed;
       top: 0;
     }
-    .et-main{
+
+    .et-main {
       .et-slide {
         display: flex;
         flex-direction: column;
@@ -1017,62 +1084,73 @@ export default {
         background: #eee;
         text-align: center;
         padding: 0 2em;
-        .cont{
-          width:94%;
+
+        .cont {
+          width: 94%;
           // min-height:500px;
-          margin:40px;
-          border:1px solid #EBEBEB;
+          margin: 40px;
+          border: 1px solid #EBEBEB;
         }
       }
     }
   }
 }
-.box1{
+
+.box1 {
   width: 100%;
-  .cont{
-    width:94%;
-    min-height:500px;
-    margin:40px;
-    border:1px solid #EBEBEB;
-      tr{
-        display: table-row;
-        vertical-align: inherit;
-        border-color: inherit;
-      td{
+
+  .cont {
+    width: 94%;
+    min-height: 500px;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
+
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+
+      td {
         border-bottom: 1px solid #EBEBEB;
         border-right: 1px solid #EBEBEB;
         line-height: 1.5;
         padding: 8px 6px;
       }
-      .type1{
-        width:100px
+
+      .type1 {
+        width: 100px
       }
-      .type2{
-        width:200px
+
+      .type2 {
+        width: 200px
       }
-      .type3{
+
+      .type3 {
         // colspan:'4'
-        border-right:none
+        border-right: none
       }
-      .type4{
+
+      .type4 {
         border-bottom: none;
       }
     }
   }
 
 }
-.box2{
-  .cont{
-    width:94%;
+
+.box2 {
+  .cont {
+    width: 94%;
     // min-height:500px;
-    margin:40px;
-    border:1px solid #EBEBEB;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
   }
 }
-.cont1{
-  padding:40px 0 40px 400px;
-  width:94%;
-  border:1px solid #EBEBEB;
+
+.cont1 {
+  padding: 40px 0 40px 400px;
+  width: 94%;
+  border: 1px solid #EBEBEB;
 }
 </style>
 

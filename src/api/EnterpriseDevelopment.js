@@ -8,6 +8,7 @@ export function getEntFinancing(data) {
     data
   })
 }
+
 // 对外投资
 export function getInvestmentAbroadInfo(data) {
   return request({
@@ -16,6 +17,7 @@ export function getInvestmentAbroadInfo(data) {
     data
   })
 }
+
 // 招投标
 export function getTenderSearch(data) {
   return request({
@@ -24,6 +26,7 @@ export function getTenderSearch(data) {
     data
   })
 }
+
 // 招投标详情
 export function tenderSearchDetail(data) {
   return request({
@@ -32,6 +35,7 @@ export function tenderSearchDetail(data) {
     data
   })
 }
+
 // 购地信息
 export function getlandPurchaseList(data) {
   return request({
@@ -40,6 +44,7 @@ export function getlandPurchaseList(data) {
     data
   })
 }
+
 // 购地信息详情
 export function landPurchaseListDetail(data) {
   return request({
@@ -48,6 +53,7 @@ export function landPurchaseListDetail(data) {
     data
   })
 }
+
 // 土地公示
 export function getlandPublishList(data) {
   return request({
@@ -56,6 +62,7 @@ export function getlandPublishList(data) {
     data
   })
 }
+
 // 土地公示详情
 export function landPublishListDetail(data) {
   return request({
@@ -64,6 +71,7 @@ export function landPublishListDetail(data) {
     data
   })
 }
+
 // 土地转让
 export function getlandTransferList(data) {
   return request({
@@ -72,6 +80,7 @@ export function getlandTransferList(data) {
     data
   })
 }
+
 // 土地转让详情
 export function landTransferListDetail(data) {
   return request({
@@ -80,6 +89,7 @@ export function landTransferListDetail(data) {
     data
   })
 }
+
 // 招聘信息
 export function getRecruitmentList(data) {
   return request({
@@ -88,6 +98,7 @@ export function getRecruitmentList(data) {
     data
   })
 }
+
 // 招聘信息详情
 export function getRecruitmentListDetail(data) {
   return request({
@@ -96,6 +107,7 @@ export function getRecruitmentListDetail(data) {
     data
   })
 }
+
 // 建筑资格证书
 export function getQualificationList(data) {
   return request({
@@ -104,6 +116,7 @@ export function getQualificationList(data) {
     data
   })
 }
+
 // 建筑资格证书详情
 export function getQualificationListDetail(data) {
   return request({
@@ -112,6 +125,7 @@ export function getQualificationListDetail(data) {
     data
   })
 }
+
 // 建筑工程项目
 export function getBuildingProjectList(data) {
   return request({
@@ -120,6 +134,7 @@ export function getBuildingProjectList(data) {
     data
   })
 }
+
 // 建筑工程项目详情
 export function getBuildingProjectListDetail(data) {
   return request({
@@ -128,6 +143,7 @@ export function getBuildingProjectListDetail(data) {
     data
   })
 }
+
 // 债券
 export function getBondList(data) {
   return request({
@@ -136,10 +152,20 @@ export function getBondList(data) {
     data
   })
 }
+
 // 债券详情
 export function getBondListDetail(data) {
   return request({
     url: '/api/v1/qcc/getBondListDetail',
+    method: 'post',
+    data
+  })
+}
+
+// 竞争力
+export function getEntScoreList(data) {
+  return request({
+    url: '/api/v1/ts/getEntScore',
     method: 'post',
     data
   })
