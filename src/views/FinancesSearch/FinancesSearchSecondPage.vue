@@ -293,8 +293,8 @@ export default {
   },
   computed: {},
   mounted() {
-    console.log(localStorage.getItem('financesSearchIndex_search_cond'))
-    console.log(localStorage.getItem('financesSearchIndex_next_page_use_target'))
+    //console.log(localStorage.getItem('financesSearchIndex_search_cond'))
+    //console.log(localStorage.getItem('financesSearchIndex_next_page_use_target'))
     this.group_search()
   },
   methods: {
