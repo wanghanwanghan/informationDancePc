@@ -211,6 +211,26 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/CompetitivePower',
+    component: Layout,
+    redirect: '/CompetitivePower/CompetitivePower',
+    name: 'CompetitivePower',
+    meta: {
+      title: '竞争力'
+    },
+    children: [
+      {
+        path: 'CompetitivePower',
+        component: () => import('@/views/CompetitivePower/CompetitivePower'),
+        name: 'CompetitivePower',
+        meta: {
+          title: '竞争力',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
     path: '/Features',
     component: Layout,
     redirect: '/Features/Features',

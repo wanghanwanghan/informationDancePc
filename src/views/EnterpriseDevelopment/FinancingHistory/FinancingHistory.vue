@@ -14,7 +14,6 @@
         <a class="et-hero-tab" href="#tab-jzzgzs">建筑资格证书</a>
         <a class="et-hero-tab" href="#tab-jzgcxm">建筑工程项目</a>
         <a class="et-hero-tab" href="#tab-zq">债券</a>
-        <a class="et-hero-tab" href="#tab-jzl">竞争力</a>
         <span class="et-hero-tab-slider"/>
       </div>
     </section>
@@ -692,34 +691,6 @@
               :total="totalBondList"
               @current-change="handleChangeBondList"
             />
-          </div>
-        </div>
-      </section>
-      <section id="tab-jzl" class="et-slide" style="min-height:100px;margin-top:50px;">
-        <h3 style="margin-left:20px;">竞争力</h3>
-        <div class="box2">
-          <!-- 竞争力 -->
-          <div class="cont">
-            <el-table
-              :data="EntScoreList"
-              border
-              style="width: 100%"
-            >
-              <el-table-column prop="SOCIALCON" align="center" label="社会贡献分数"/>
-              <el-table-column prop="SOCIALCON_G" align="center" label="社会贡献等级"/>
-              <el-table-column prop="SCALE" align="center" label="身份特征分数"/>
-              <el-table-column prop="SCALE_G" align="center" label="身份特征评级"/>
-              <el-table-column prop="INNOVATE" align="center" label="创新能力分数"/>
-              <el-table-column prop="INNOVATE_G" align="center" label="创新能力评级"/>
-              <el-table-column prop="STRENGTH" align="center" label="综合实力分数"/>
-              <el-table-column prop="STRENGTH_G" align="center" label="综合实力评级"/>
-              <el-table-column prop="ACTIVITY" align="center" label="活跃度分数"/>
-              <el-table-column prop="ACTIVITY_G" align="center" label="活跃度评级"/>
-              <el-table-column prop="LEGAL" align="center" label="合法合规分数"/>
-              <el-table-column prop="LEGAL_G" align="center" label="合法合规评级"/>
-              <el-table-column prop="GROWTH" align="center" label="成长能力分数"/>
-              <el-table-column prop="GROWTH_G" align="center" label="成长能力评级"/>
-            </el-table>
           </div>
         </div>
       </section>
