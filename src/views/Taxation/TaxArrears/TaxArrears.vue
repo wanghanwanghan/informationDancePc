@@ -10,7 +10,7 @@
         <a class="et-hero-tab" href="#tab-nsxydj">纳税信用等级</a>
         <a class="et-hero-tab" href="#tab-swdj">税务登记</a>
         <a class="et-hero-tab" href="#tab-swxk">税务许可</a>
-        <span class="et-hero-tab-slider" />
+        <span class="et-hero-tab-slider"/>
       </div>
     </section>
     <main class="et-main">
@@ -69,7 +69,8 @@
                   <router-link :to="'/Taxation/qsggDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -140,7 +141,8 @@
                   <router-link :to="'/Taxation/sscfDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -211,7 +213,8 @@
                   <router-link :to="'/Taxation/swfzcDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -282,7 +285,8 @@
                   <router-link :to="'/Taxation/xydjDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -353,7 +357,8 @@
                   <router-link :to="'/Taxation/swdjDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -424,7 +429,8 @@
                   <router-link :to="'/Taxation/swxkDetail/'+scope.row.entryId">
                     <el-button
                       size="mini"
-                    >查看详情</el-button>
+                    >查看详情
+                    </el-button>
                   </router-link>
                 </template>
               </el-table-column>
@@ -457,6 +463,7 @@ import {
   createoneSaid,
   editoneSaid
 } from '@/api/JudicialDecisions'
+
 export default {
   data() {
     return {
@@ -573,9 +580,16 @@ export default {
 
     // 纳税信用等级
     getSatpartyXin(this.query).then(res => {
-      // console.log(res)
-      this.SatpartyXin = res.data.result
-      this.totalSatpartyXin = res.data.paging.total
+      if (res.data.result.length > 0) {
+        res.data.result.forEach(item => {
+          item.entryId = item.entryId.split('@')[0]
+        })
+        this.SatpartyXin = res.data.result
+        this.totalSatpartyXin = res.data.paging.total
+      } else {
+        this.SatpartyXin = []
+        this.totalSatpartyXin = 0
+      }
     })
     // 纳税信用等级留言
     this.query4.entName = localStorage.getItem('entName')
@@ -921,8 +935,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.box{
-  .et-hero-tabs{
+.box {
+  .et-hero-tabs {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -934,7 +948,7 @@ export default {
     background: #eee;
     text-align: center;
     // padding: 0 2em;
-    .et-hero-tabs-containerf{
+    .et-hero-tabs-containerf {
       display: flex;
       flex-direction: row;
       /* position: absolute; */
@@ -946,9 +960,11 @@ export default {
       z-index: 10;
       position: fixed;
       top: 0px;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
         display: flex;
         justify-content: center;
@@ -959,11 +975,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -973,6 +991,7 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container {
       display: flex;
       flex-direction: row;
@@ -983,9 +1002,11 @@ export default {
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       background: #fff;
       z-index: 10;
+
       a {
         text-decoration: none;
       }
+
       .et-hero-tab {
         display: flex;
         justify-content: center;
@@ -996,11 +1017,13 @@ export default {
         transition: all 0.5s ease;
         font-size: 14px;
       }
+
       .et-hero-tab:hover {
         color: white;
         background: rgba(102, 177, 241, 0.8);
         transition: all 0.5s ease;
       }
+
       .et-hero-tab-slider {
         position: absolute;
         bottom: 0;
@@ -1010,11 +1033,13 @@ export default {
         transition: left 0.3s ease;
       }
     }
+
     .et-hero-tabs-container--top {
       position: fixed;
       top: 0;
     }
-    .et-main{
+
+    .et-main {
       .et-slide {
         display: flex;
         flex-direction: column;
@@ -1025,62 +1050,73 @@ export default {
         background: #eee;
         text-align: center;
         padding: 0 2em;
-        .cont{
-          width:94%;
+
+        .cont {
+          width: 94%;
           // min-height:500px;
-          margin:40px;
-          border:1px solid #EBEBEB;
+          margin: 40px;
+          border: 1px solid #EBEBEB;
         }
       }
     }
   }
 }
-.box1{
+
+.box1 {
   width: 100%;
-  .cont{
-    width:94%;
-    min-height:500px;
-    margin:40px;
-    border:1px solid #EBEBEB;
-      tr{
-        display: table-row;
-        vertical-align: inherit;
-        border-color: inherit;
-      td{
+
+  .cont {
+    width: 94%;
+    min-height: 500px;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
+
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+
+      td {
         border-bottom: 1px solid #EBEBEB;
         border-right: 1px solid #EBEBEB;
         line-height: 1.5;
         padding: 8px 6px;
       }
-      .type1{
-        width:100px
+
+      .type1 {
+        width: 100px
       }
-      .type2{
-        width:200px
+
+      .type2 {
+        width: 200px
       }
-      .type3{
+
+      .type3 {
         // colspan:'4'
-        border-right:none
+        border-right: none
       }
-      .type4{
+
+      .type4 {
         border-bottom: none;
       }
     }
   }
 
 }
-.box2{
-  .cont{
-    width:94%;
+
+.box2 {
+  .cont {
+    width: 94%;
     // min-height:500px;
-    margin:40px;
-    border:1px solid #EBEBEB;
+    margin: 40px;
+    border: 1px solid #EBEBEB;
   }
 }
-.cont1{
-  padding:40px 0 40px 400px;
-  width:94%;
-  border:1px solid #EBEBEB;
+
+.cont1 {
+  padding: 40px 0 40px 400px;
+  width: 94%;
+  border: 1px solid #EBEBEB;
 }
 </style>
 
