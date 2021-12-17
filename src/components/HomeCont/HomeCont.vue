@@ -157,7 +157,7 @@
       <div style="text-align: center;line-height: 100px">
         <el-button slot="reference" style="width: 150px;" type="success" @click="IntelligentSearch">智能搜索</el-button>
         <el-button style="width: 150px;" type="primary" @click="search(1)">搜索</el-button>
-<!--        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>-->
+        <!--        <el-button style="width: 150px;" type="primary" @click="jumpHY">创投企业搜产品</el-button>-->
       </div>
       <div>
         <div class="search-res-wrapper">
@@ -229,6 +229,14 @@
               prop="REGCAP"
               width="180"
               align="center">
+            </el-table-column>
+            <el-table-column label="规模" width="80" align="center">
+              <template slot-scope="props">
+                <el-tooltip placement="right" effect="light">
+                  <div slot="content">{{ props.row.vendincScale[1] }}</div>
+                  <el-tag>{{ props.row.vendincScale[0] }}</el-tag>
+                </el-tooltip>
+              </template>
             </el-table-column>
             <el-table-column label="详情" align="center" width="150">
               <template slot-scope="scope">

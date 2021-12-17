@@ -55,6 +55,41 @@
           <el-image :src="require('../../../assets/zcgm.png')"></el-image>
         </div>
       </div>
+      <div class="VENDINC-scale-wrapper" v-show="!showBtn">
+        <div style="float: left;margin-bottom: 10px;margin-top:10px;color: rgb(142,143,151)">营收规模标签</div>
+        <el-table
+          :data="VENDINC_scale_label_data"
+          border
+          style="width: 100%"
+          :header-cell-style="{color:'#006eda'}">
+          <el-table-column
+            label="序号"
+            type="index"
+            align="center"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="entname"
+            label="企业名称"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="label"
+            label="标签"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="desc"
+            label="描述"
+            align="center">
+          </el-table-column>
+        </el-table>
+        <div style="font-size:12px;margin-bottom: 10px;margin-top:10px;color: rgb(142,143,151);text-align: left">
+          <p>说明：通过对主板、创业板、新三板等各类大中小型企业公开财务规模指标的规范化处理，建立了对应企业规模类型的各类企业行为因素关系</p>
+          <p>在剔除不显著行为因素的同时提取显著行为因素重新进行回归分析，建立了由企业行为因素通过专有编码分析反应至普适化企业群体规模的分析模型</p>
+          <p>最终得到了适用于绝大部分企业规模参考的分析标签结果。结果仅供参考，在任何情况下本公司不保证真实性、准确性和时效性，不作为任何决策的唯一、实质性参考依据。</p>
+        </div>
+      </div>
       <div class="VENDINC-ec-wrapper" v-show="!showBtn">
         <div class="VENDINC-ec-pic" ref="VENDINC"></div>
         <el-collapse accordion>
@@ -241,6 +276,7 @@ export default {
   props: {},
   data() {
     return {
+      VENDINC_scale_label_data: [],
       bestEntForVENDINC: '',
       bestEntForPROGRO: '',
       bestEntForASSGRO: '',
@@ -279,6 +315,17 @@ export default {
     this.getLookCount()
   },
   methods: {
+    getVendincScale() {
+      req.post('api/v1/xd/getVendincScale', {
+        'entName': this.diffList.join(),
+        'phone': this.phone,
+        'pay': 1
+      }, this.token).then(res => {
+        if (res.data.code === 200) {
+          this.VENDINC_scale_label_data = res.data.result
+        }
+      })
+    },
     getLookCount() {
       req.post('api/v1/lx/getFinanceTemp', {
         'phone': this.phone,
@@ -290,6 +337,7 @@ export default {
       })
     },
     getData() {
+      this.getVendincScale()
       req.post('api/v1/lx/getFinanceTemp', {
         'entName': this.diffList.join(),
         'phone': this.phone,
@@ -708,6 +756,7 @@ export default {
               'pay': 1
             }, this.token).then(res_s => {
               if (res_s.data.code === 200) {
+                this.getVendincScale()
                 this.handlerPData(res_s.data.result)
                 this.handlerAData(res_s.data.result)
                 this.handlerVData(res_s.data.result)
@@ -802,6 +851,10 @@ export default {
         width: 1258px;
         height: 700px;
       }
+    }
+
+    .VENDINC-scale-wrapper {
+
     }
 
     .VENDINC-ec-wrapper {
