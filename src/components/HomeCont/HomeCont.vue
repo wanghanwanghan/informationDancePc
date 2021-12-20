@@ -230,11 +230,11 @@
               width="180"
               align="center">
             </el-table-column>
-            <el-table-column label="规模" width="80" align="center">
+            <el-table-column label="规模" width="100" align="center">
               <template slot-scope="props">
                 <el-tooltip placement="right" effect="light">
                   <div slot="content">{{ props.row.vendincScale[1] }}</div>
-                  <el-tag>{{ props.row.vendincScale[0] }}</el-tag>
+                  <el-tag>{{ props.row.vendincScaleDesc }}</el-tag>
                 </el-tooltip>
               </template>
             </el-table-column>
@@ -359,6 +359,16 @@ export default {
       req.post('api/v1/lx/superSearch', this.search_cond, localStorage.getItem('token')).then(res => {
         if (res.data.code === 200) {
           this.paginate = res.data.paging
+
+          if (res.data.result.length > 0) {
+            res.data.result.forEach(item => {
+              if (item.vendincScale[1] !== '未找到') {
+                let desc = item.vendincScale[1].split('，')
+                item.vendincScaleDesc = desc[0]
+              }
+            })
+          }
+
           this.search_res = res.data.result
           this.loading = false
         } else {

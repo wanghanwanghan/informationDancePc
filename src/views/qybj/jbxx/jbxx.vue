@@ -50,11 +50,18 @@
                 <td>注册地址</td>
                 <td colspan="3" class="type3">{{ list.Address }}</td>
                 <td>行业</td>
-                <td>{{ INDUSTRY }}</td>
+                <td class="type3">{{ INDUSTRY }}</td>
               </tr>
               <tr>
-                <td class="type4">经营范围</td>
-                <td colspan="5" class="type3 type4">{{ list.Scope }}</td>
+                <td>经营范围</td>
+                <td colspan="5" class="type3">{{ list.Scope }}</td>
+              </tr>
+              <tr>
+                <td class="type4">规模标签</td>
+                <td class="type4">{{ list.VENDINC.desc }}</td>
+                <td colspan="4" class="type3 type4">
+                  说明：通过对主板、创业板、新三板等各类大中小型企业公开财务规模指标的规范化处理，建立了对应企业规模类型的各类企业行为因素关系，在剔除不显著行为因素的同时提取显著行为因素重新进行回归分析，建立了由企业行为因素通过专有编码分析反应至普适化企业群体规模的分析模型，最终得到了适用于绝大部分企业规模参考的分析标签结果。结果仅供参考，在任何情况下本公司不保证真实性、准确性和时效性，不作为任何决策的唯一、实质性参考依据。
+                </td>
               </tr>
             </table>
           </div>
@@ -469,7 +476,7 @@ export default {
     this.query1.phone = localStorage.getItem('phone')
     this.query2.entName = localStorage.getItem('entName')
     this.query2.phone = localStorage.getItem('phone')
-    // 基本信息
+    //基本信息
     getRegisterInfo(this.query).then(res => {
       this.INDUSTRY = res.data.result[0].INDUSTRY
     })
@@ -776,7 +783,7 @@ export default {
       }
 
       .type1 {
-        width: 100px
+        width: 110px
       }
 
       .type2 {
