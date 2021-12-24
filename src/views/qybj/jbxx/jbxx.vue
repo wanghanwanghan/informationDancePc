@@ -3,7 +3,6 @@
     <!-- 基本信息 -->
     <section class="et-hero-tabs">
       <div :class="isFixed?'et-hero-tabs-containerf':'et-hero-tabs-container'">
-        <!-- <div class="et-hero-tabs-container"> -->
         <a class="et-hero-tab" href="#tab-jb">基本信息</a>
         <a class="et-hero-tab" href="#tab-gd">股东</a>
         <a class="et-hero-tab" href="#tab-contor">实际控制人</a>
@@ -56,11 +55,20 @@
                 <td>经营范围</td>
                 <td colspan="5" class="type3">{{ list.Scope }}</td>
               </tr>
-              <tr>
-                <td class="type4">规模标签</td>
-                <td class="type4">{{ list.VENDINC.desc }}</td>
+              <tr v-show="isShowVendincDesc">
+                <td class="type4">规模类型</td>
                 <td colspan="4" class="type3 type4">
-                  说明：通过对主板、创业板、新三板等各类大中小型企业公开财务规模指标的规范化处理，建立了对应企业规模类型的各类企业行为因素关系，在剔除不显著行为因素的同时提取显著行为因素重新进行回归分析，建立了由企业行为因素通过专有编码分析反应至普适化企业群体规模的分析模型，最终得到了适用于绝大部分企业规模参考的分析标签结果。结果仅供参考，在任何情况下本公司不保证真实性、准确性和时效性，不作为任何决策的唯一、实质性参考依据。
+                  {{ list.VENDINC.desc.split('，')[0] }}
+                  <el-tooltip class="item" effect="light"
+                              content="说明：通过对主板、创业板、新三板等各类大中小型企业公开财务规模指标的规范化处理，
+                              建立了对应企业规模类型的各类企业行为因素关系，在剔除不显著行为因素的同时提取显著行为因素重新进行回归分析，
+                              建立了由企业行为因素通过专有编码分析反应至普适化企业群体规模的分析模型，
+                              最终得到了适用于绝大部分企业规模参考的分析标签结果。
+                              结果仅供参考，在任何情况下本公司不保证真实性、准确性和时效性，不作为任何决策的唯一、实质性参考依据。"
+                              placement="bottom">
+                    <i style="color: #409eff;cursor: pointer"
+                       class="el-icon-info"></i>
+                  </el-tooltip>
                 </td>
               </tr>
             </table>
@@ -436,6 +444,7 @@ export default {
   data() {
     return {
       isFixed: false,
+      isShowVendincDesc: false,
       scrollHeight: 258,
       query: {
         entName: '',
@@ -483,6 +492,9 @@ export default {
     // 基本信息
     getBasicDetails(this.query).then(res => {
       this.list = res.data.result[0]
+      if (Object.keys(this.list.VENDINC).length > 0 && this.list.VENDINC.desc !== '未找到') {
+        this.isShowVendincDesc = true
+      }
       for (const key in this.list) {
         if (key === 'CreditCode') {
           // console.log(this.list[key])
@@ -783,7 +795,7 @@ export default {
       }
 
       .type1 {
-        width: 110px
+        width: 150px
       }
 
       .type2 {
