@@ -67,6 +67,13 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'Crm',
+  data() {}
+}
+</script>
+
 <style scoped>
 #biaoti {
   font-size: 40px;
@@ -97,7 +104,7 @@
   box-shadow: 3px 3px 10px 0px #bbd0e5;
   line-height: 140px;
   color: #1b2559;
-  padding: 25%;
+  padding: 23%;
 }
 .youbian{
   height: 10%;
