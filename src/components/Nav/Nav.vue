@@ -115,6 +115,9 @@
           <el-tab-pane label="我的" name="fifth">
             <My/>
           </el-tab-pane>
+          <el-tab-pane label="CRM" name="crm">
+            <Crm/>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -127,6 +130,7 @@ import RiskMonitoring from '@/components/RiskMonitoring/RiskMonitoring'
 import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
+import Crm from '@/components/Crm/Crm'
 import { getCodes, Login, Zreg } from '@/api/article'
 import { getBeneficiary } from '@/api/EnterpriseBackground'
 
@@ -138,7 +142,8 @@ export default {
     RiskMonitoring,
     RiskMonitoringList,
     My,
-    Recharge
+    Recharge,
+    Crm
   },
   data() {
     var checkname = (rule, value, callback) => {
