@@ -67,12 +67,6 @@
   </div>
 </template>
 
-<script>
-export default {
-name: "Crm"
-}
-</script>
-
 <style scoped>
 #biaoti {
   font-size: 40px;
