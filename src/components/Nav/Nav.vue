@@ -115,7 +115,7 @@
           <el-tab-pane label="我的" name="fifth">
             <My/>
           </el-tab-pane>
-          <el-tab-pane label="CRM" name="crm">
+          <el-tab-pane label="SCRM" name="crm">
             <CrmIndex/>
           </el-tab-pane>
         </el-tabs>
