@@ -61,10 +61,16 @@
 
 <script>
 export default {
-  name: 'Crm',
+  name: 'CrmIndex',
+  components: {},
+  props: {},
   data() {
     return {}
-  }
+  },
+  computed: {},
+  mounted() {
+  },
+  methods: {}
 }
 </script>
 
