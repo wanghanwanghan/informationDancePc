@@ -96,7 +96,7 @@ export default {
   box-shadow: 3px 3px 10px 0px #bbd0e5;
   line-height: 140px;
   color: #1b2559;
-  padding: 30%;
+  padding: 25%;
 }
 .youbian{
   height: 140px;
