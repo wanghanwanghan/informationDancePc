@@ -118,6 +118,9 @@
           <el-tab-pane label="SCRM" name="crm">
             <CrmIndex/>
           </el-tab-pane>
+          <el-tab-pane label="呼叫中心" name="cs" >
+            <CsIndex/>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -131,7 +134,8 @@ import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
 import CrmIndex from '@/components/Crm/CrmIndex'
-import { getCodes, Login, Zreg } from '@/api/article'
+import CsIndex from '@/components/Cs/CsIndex'
+import {getCodes, Login, Zreg} from '@/api/article'
 import { getBeneficiary } from '@/api/EnterpriseBackground'
 
 export default {
@@ -143,7 +147,8 @@ export default {
     RiskMonitoringList,
     My,
     Recharge,
-    CrmIndex
+    CrmIndex,
+    CsIndex
   },
   data() {
     var checkname = (rule, value, callback) => {
@@ -157,12 +162,12 @@ export default {
       }
       callback()
     }
-    var checkpassword = (rule, value, callback) => {
-      if (value.length === 0) {
-        return callback(new Error('验证码不能为空'))
-      }
-      callback()
-    }
+    // var checkpassword = (rule, value, callback) => {
+    //   if (value.length === 0) {
+    //     return callback(new Error('验证码不能为空'))
+    //   }
+    //   callback()
+    // }
     var checkzphone = (rule, value, callback) => {
       if (value.length === 0) {
         return callback(new Error('手机号不能为空'))
@@ -252,9 +257,9 @@ export default {
         name: [
           { required: true, validator: checkname, trigger: 'blur' }
         ]
-        //password: [
+        // password: [
         //  { required: true, validator: checkpassword, trigger: 'blur' }
-        //]
+        // ]
       },
       rulesR: {
         zphone: [

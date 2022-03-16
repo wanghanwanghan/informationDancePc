@@ -405,7 +405,12 @@ export function setUserPassword(data) {
     data
   })
 }
-
-
-
+// 报告深度word
+export function directUrl(data) {
+  return request({
+    url: 'api/v1/zc/directUrl',
+    method: 'post',
+    data
+  })
+}
 
