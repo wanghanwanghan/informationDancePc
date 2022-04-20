@@ -118,8 +118,11 @@
           <el-tab-pane label="SCRM" name="crm">
             <CrmIndex/>
           </el-tab-pane>
-          <el-tab-pane label="呼叫中心" name="cs" >
+          <el-tab-pane label="呼叫中心" name="cs">
             <CsIndex/>
+          </el-tab-pane>
+          <el-tab-pane label="高级搜索" name="as">
+            <ASIndex/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -135,12 +138,14 @@ import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
 import CrmIndex from '@/components/Crm/CrmIndex'
 import CsIndex from '@/components/Cs/CsIndex'
-import {getCodes, Login, Zreg} from '@/api/article'
+import { getCodes, Login, Zreg } from '@/api/article'
 import { getBeneficiary } from '@/api/EnterpriseBackground'
+import ASIndex from '@/components/AdvancedSearch/ASIndex'
 
 export default {
   name: 'Nav',
   components: {
+    ASIndex,
     HomeCont,
     DownLoad,
     RiskMonitoring,
