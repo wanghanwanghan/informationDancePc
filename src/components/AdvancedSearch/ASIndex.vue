@@ -53,7 +53,106 @@
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer('杭州随便科技有限公司','ABABABABABABABABAB')">杭州随便科技有限公司</div>
+                <div class="ent-name" @click="getDrawer('杭州随便点互联网科技有限公司','ABABABABABABABABAB')">杭州随便点互联网科技有限公司</div>
+                <div class="ent-label">
+                  <el-tag size="mini">标签一</el-tag>
+                  <el-tag size="mini" type="success">标签二</el-tag>
+                  <el-tag size="mini" type="info">标签三</el-tag>
+                  <el-tag size="mini" type="warning">标签四</el-tag>
+                  <el-tag size="mini" type="danger">标签五</el-tag>
+                </div>
+                <div class="ent-other-wrapper">
+                  <el-row :gutter="10">
+                    <el-col :span="2">
+                      <div class="row-h">企业法人 :</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h under">相亲对象</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">成立日期 :</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h under">2018-08-08</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">注册资本 :</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h under">100万</div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="10">
+                    <el-col :span="2">
+                      <div class="row-h">企业规模 :</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h under">50-99人</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">企业网址 :</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h under">www.kengni.com</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">国标行业 :</div>
+                    </el-col>
+                    <el-col :span="6">
+                      <div class="row-h under">金融业 > 其他金融业</div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="10">
+                    <el-col :span="4">
+                      <div class="row-h">统一社会信用代码 :</div>
+                    </el-col>
+                    <el-col :span="100">
+                      <div class="row-h under">ABABABABABABABABABABABAB</div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="10">
+                    <el-col :span="2">
+                      <div class="row-h">经营地址 :</div>
+                    </el-col>
+                    <el-col :span="100">
+                      <div class="row-h under">12312312312312312312312</div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="10">
+                    <el-col :span="3">
+                      <div class="row-h">基本信息 (99)</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h">工商详情 (99)</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h">招聘信息 (99)</div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+              <div class="action-wrapper">
+                <el-badge :value="12" class="item">
+                  <el-button size="small" type="primary">领取线索</el-button>
+                </el-badge>
+              </div>
+            </div>
+            <div class="ent-desc-wrapper">
+              <i class="el-icon-lightning"></i>
+              <div>百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科</div>
+            </div>
+            <el-divider content-position="right"></el-divider>
+          </div>
+        </div>
+        <div class="search-res-info">
+          <div class="logo-wrapper">
+            <img class="logo"
+                 src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500">
+          </div>
+          <div class="content-wrapper">
+            <div class="ent-info-wrapper">
+              <div class="info-wrapper">
+                <div class="ent-name" @click="getDrawer('北京百程国际旅游股份有限公司','ABABABABABABABABAB')">北京百程国际旅游股份有限公司</div>
                 <div class="ent-label">
                   <el-tag size="mini">标签一</el-tag>
                   <el-tag size="mini" type="success">标签二</el-tag>
@@ -150,7 +249,9 @@
       :entname="drawer_data.entname"
       :shx="drawer_data.shx"
       @set-drawer-type="setDrawerType"
-      :drawer="show.show_drawer"></Drawer>
+      :drawer="show.show_drawer"
+    >
+    </Drawer>
   </div>
 </template>
 
@@ -247,6 +348,7 @@ export default {
       this.value = val
     },
     getDrawer(entname, shx) {
+      localStorage.setItem('entName', entname)
       this.drawer_data.entname = entname
       this.drawer_data.shx = shx
       this.show.show_drawer = !this.show.show_drawer

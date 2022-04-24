@@ -485,7 +485,7 @@ export default {
     this.query1.phone = localStorage.getItem('phone')
     this.query2.entName = localStorage.getItem('entName')
     this.query2.phone = localStorage.getItem('phone')
-    //基本信息
+    // 基本信息
     getRegisterInfo(this.query).then(res => {
       this.INDUSTRY = res.data.result[0].INDUSTRY
     })
