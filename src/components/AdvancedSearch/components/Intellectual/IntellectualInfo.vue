@@ -116,14 +116,8 @@
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <router-link :to="'/intellectualProperty/zlDetail/'+scope.row.Id">
-                    <el-button
-                      size="mini"
-                    >查看详情
-                    </el-button>
-                  </router-link>
+                  <el-button type="primary" size="mini" @click="zlHandleDetail(scope.row.Id)">查看详情</el-button>
                 </template>
-
               </el-table-column>
             </el-table>
           </div>
@@ -310,14 +304,8 @@
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <router-link :to="'/intellectualProperty/qyzsDetail/'+scope.row.Id">
-                    <el-button
-                      size="mini"
-                    >查看详情
-                    </el-button>
-                  </router-link>
+                  <el-button type="primary" size="mini" @click="qyzsHandleDetail(scope.row.Id)">查看详情</el-button>
                 </template>
-
               </el-table-column>
             </el-table>
           </div>
@@ -334,35 +322,114 @@
     </main>
     <el-dialog
       :title="sbDetail.Name"
-      :visible.sync="satpartyXinDialogVisible"
+      :visible.sync="sbDialogVisible"
       z-index="100"
-      width="50%">
+      width="50%"
+    >
       <div class="box">
         <table>
           <tr>
-            <td style="width: 100px">公司名称：</td>
-            <td>{{ sbDetail.Name }}}</td>
+            <td style="width: 120px">商标名称：</td>
+            <td>{{ sbDetail.Name }}</td>
           </tr>
           <tr>
-            <td>评级机构：</td>
-            <td>{{ sbDetail.authority }}</td>
+            <td>商标类别：</td>
+            <td>{{ sbDetail.TmType }}</td>
           </tr>
           <tr>
-            <td>等级：</td>
-            <td>{{ sbDetail.eventResult }}</td>
+            <td>申请注册号：</td>
+            <td>{{ sbDetail.RegNo }}</td>
           </tr>
           <tr>
-            <td>纳税人ID：</td>
-            <td>{{ sbDetail.taxpayerId }}</td>
+            <td>商标状态：</td>
+            <td>{{ sbDetail.FlowStatusDesc }}</td>
           </tr>
           <tr>
-            <td>内容：</td>
-            <td>{{ sbDetail.body }}</td>
+            <td>商标申请日期：</td>
+            <td>{{ sbDetail.AppDate }}</td>
+          </tr>
+          <tr>
+            <td>申请人名称：</td>
+            <td>{{ sbDetail.ApplicantCn }}</td>
+          </tr>
+          <tr>
+            <td>申请人地址：</td>
+            <td>{{ sbDetail.AddressCn }}</td>
+          </tr>
+          <tr>
+            <td>代理/代办机构：</td>
+            <td>{{ sbDetail.Agent }}</td>
+          </tr>
+          <tr>
+            <td>商品/服务项目：</td>
+            <td>
+              <span v-for="item in sbDetail.ListGroupItems" :key="item">
+                {{ item }}
+              </span>
+            </td>
           </tr>
         </table>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="satpartyXinDialogVisible = false">关 闭</el-button>
+        <el-button type="primary" @click="sbDialogVisible = false">关 闭</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      :title="zlDetail.Title"
+      :visible.sync="zlDialogVisible"
+      z-index="100"
+      width="50%"
+    >
+      <div class="box">
+        <table>
+          <tr>
+            <td style="width: 120px">发明名称：</td>
+            <td>{{ zlDetail.Title }}</td>
+          </tr>
+          <tr>
+            <td>申请号：</td>
+            <td>{{ zlDetail.PublicationNumber }}</td>
+          </tr>
+          <tr>
+            <td>申请日：</td>
+            <td>{{ zlDetail.ApplicationDate }}</td>
+          </tr>
+          <tr>
+            <td>公开（公告）号：</td>
+            <td>{{ zlDetail.ApplicationNumber }}</td>
+          </tr>
+          <tr>
+            <td>公开（公告）日期：</td>
+            <td>{{ zlDetail.ApplicationDate }}</td>
+          </tr>
+          <tr>
+            <td>IPC分类号：</td>
+            <td>
+              <span v-for="item in zlDetail.IPCList" :key="item">
+                {{ item }}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="zlDialogVisible = false">关 闭</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      :visible.sync="qyzsDialogVisible"
+      z-index="100"
+      width="50%"
+    >
+      <div class="box">
+        <table>
+          <tr v-for="(item,key) in qyzsDetail.Data" :key="item">
+            <td style="width: 150px">{{ key }}:     </td><td>   {{ item }}</td>
+          </tr>
+        </table>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="qyzsDialogVisible = false">关 闭</el-button>
       </span>
     </el-dialog>
   </div>
@@ -370,8 +437,8 @@
 
 <script>
 import {
-  getPatentV4Search,
-  getSearchCertification,
+  getPatentV4Search, getPatentV4SearchDetail,
+  getSearchCertification, getSearchCertificationDetail,
   getSearchCopyRight,
   getSearchSoftwareCr,
   getTmSearch, getTmSearchDetail
@@ -407,7 +474,26 @@ export default {
         pageSize: 10,
         id: ''
       },
-      sbDetail: ''
+      zlQuery: {
+        entName: '',
+        phone: '',
+        pageNo: 1,
+        pageSize: 10,
+        id: ''
+      },
+      sbDetail: '',
+      sbDialogVisible: false,
+      zlDetail: '',
+      zlDialogVisible: false,
+      qyzsDialogVisible: false,
+      qyzsDetail: '',
+      qyzsQuery: {
+        entName: '',
+        phone: '',
+        pageNo: 1,
+        pageSize: 10,
+        id: ''
+      }
     }
   },
   mounted() {
@@ -500,9 +586,27 @@ export default {
       this.sbQuery.phone = localStorage.getItem('phone')
       getTmSearchDetail(this.sbQuery).then(res => {
         this.sbDetail = res.data.result
+        this.sbDialogVisible = true
+      })
+    },
+    zlHandleDetail(id) {
+      this.zlQuery.entName = localStorage.getItem('entName')
+      this.zlQuery.id = id
+      this.zlQuery.phone = localStorage.getItem('phone')
+      getPatentV4SearchDetail(this.zlQuery).then(res => {
+        this.zlDetail = res.data.result
+        this.zlDialogVisible = true
+      })
+    },
+    qyzsHandleDetail(id) {
+      this.qyzsQuery.entName = localStorage.getItem('entName')
+      this.qyzsQuery.id = id
+      this.qyzsQuery.phone = localStorage.getItem('phone')
+      getSearchCertificationDetail(this.qyzsQuery).then(res => {
+        this.qyzsDetail = res.data.result
+        this.qyzsDialogVisible = true
       })
     }
-
   }
 }
 </script>
