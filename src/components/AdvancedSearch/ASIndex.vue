@@ -1,25 +1,25 @@
 <template>
   <div class="bg">
     <div class="search-wrapper">
-      <el-input placeholder="请输入搜索内容" v-model="search_val" class="input-with-select">
-        <el-select v-model="search_type" slot="prepend" placeholder="请选择">
-          <el-option label="智能搜索" value="1"></el-option>
+      <el-input v-model="search_val" placeholder="请输入搜索内容" class="input-with-select">
+        <el-select slot="prepend" v-model="search_type" placeholder="请选择">
+          <el-option label="智能搜索" value="1" />
         </el-select>
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" />
       </el-input>
     </div>
     <div class="cond-wrapper">
-      <div class="cond-up">
-        <Cond v-for="(item,index) of list"
-              :type="item.type"
-              :title="item.title"
-              :list="item.list"
-              :key="index"
-              @set-value="setValue"></Cond>
+      <div v-model="optionCheckBox" class="cond-up" @change="handleChange_option">
+        <Cond
+          v-for="(item,index) of list"
+          :key="index"
+          :type="item.type"
+          :title="item.title"
+          :list="item.list"
+          @set-value="setValue"
+        />
       </div>
-      <div class="cond-down" v-show="show.cond_down">
-
-      </div>
+      <div v-show="show.cond_down" class="cond-down" />
       <el-button type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
         <div class="cond-word">已选(5)</div>
@@ -28,8 +28,10 @@
             v-for="tag in tags"
             :key="tag.name"
             closable
-            :type="tag.type">
+            :type="tag.type"
+          >
             {{ tag.name }}
+
           </el-tag>
         </div>
       </div>
@@ -40,20 +42,22 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="1000">
-        </el-pagination>
+          :total="1000"
+        />
       </div>
       <el-divider content-position="center">查询结果</el-divider>
       <div class="slide-div">
         <div class="search-res-info">
           <div class="logo-wrapper">
-            <img class="logo"
-                 src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500">
+            <img
+              class="logo"
+              src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500"
+            >
           </div>
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer('杭州随便点互联网科技有限公司','ABABABABABABABABAB')">杭州随便点互联网科技有限公司</div>
+                <div class="ent-name" @click="getDrawer('安利（中国）日用品有限公司','ABABABABABABABABAB')">安利（中国）日用品有限公司</div>
                 <div class="ent-label">
                   <el-tag size="mini">标签一</el-tag>
                   <el-tag size="mini" type="success">标签二</el-tag>
@@ -138,16 +142,18 @@
               </div>
             </div>
             <div class="ent-desc-wrapper">
-              <i class="el-icon-lightning"></i>
+              <i class="el-icon-lightning" />
               <div>百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科</div>
             </div>
-            <el-divider content-position="right"></el-divider>
+            <el-divider content-position="right" />
           </div>
         </div>
         <div class="search-res-info">
           <div class="logo-wrapper">
-            <img class="logo"
-                 src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500">
+            <img
+              class="logo"
+              src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500"
+            >
           </div>
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
@@ -237,10 +243,10 @@
               </div>
             </div>
             <div class="ent-desc-wrapper">
-              <i class="el-icon-lightning"></i>
+              <i class="el-icon-lightning" />
               <div>百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科</div>
             </div>
-            <el-divider content-position="right"></el-divider>
+            <el-divider content-position="right" />
           </div>
         </div>
       </div>
@@ -248,10 +254,9 @@
     <Drawer
       :entname="drawer_data.entname"
       :shx="drawer_data.shx"
-      @set-drawer-type="setDrawerType"
       :drawer="show.show_drawer"
-    >
-    </Drawer>
+      @set-drawer-type="setDrawerType"
+    />
   </div>
 </template>
 
@@ -285,7 +290,8 @@ export default {
         { name: '标签三', type: 'info' },
         { name: '标签四', type: 'warning' },
         { name: '标签五', type: 'danger' }
-      ]
+      ],
+      optionCheckBox: []
     }
   },
   computed: {},
@@ -294,9 +300,9 @@ export default {
     this.token = localStorage.getItem('token')
   },
   mounted() {
-    let list = []
+    const list = []
     for (let i = 0; i < this.mt_rand_int(50); i++) {
-      let temp = []
+      const temp = []
       for (let j = 0; j < this.mt_rand_int(50); j++) {
         temp.push({
           id: this.mt_rand_int(50),
@@ -322,19 +328,19 @@ export default {
   },
   methods: {
     mt_rand_int(length) {
-      //生成随机数
+      // 生成随机数
       return Math.round(Math.random() * length)
     },
     mt_rand_str(length) {
-      //生成随机字符串
-      let arr = [
+      // 生成随机字符串
+      const arr = [
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
         'a', 'b', 'c', 'd', 'e', 'f', 'g',
         'h', 'i', 'j', 'k', 'l', 'm', 'n',
         'o', 'p', 'q', 'r', 's', 't', 'u',
         'v', 'w', 'x', 'y', 'z'
       ]
-      let arr_length = arr.length - 1
+      const arr_length = arr.length - 1
       let str = ''
       for (let i = 0; i < length; i++) {
         str = str + arr[Math.round(Math.random() * arr_length)]
@@ -355,6 +361,22 @@ export default {
     },
     setDrawerType(type) {
       this.show.show_drawer = type
+    },
+    handleChange_option(val) {
+      const itemTitle = val.path['9'].getElementsByClassName('title-wrapper').item(0).innerHTML
+      this.tags = []
+      val.currentTarget.getElementsByClassName('el-checkbox__original').forEach((value) => {
+        const kidTitle = value.parentElement.parentElement.getElementsByClassName('el-checkbox__label').item(0).innerHTML
+        if (value.checked) {
+          this.tags.push({ name: itemTitle + '-' + kidTitle.replace(/<!---->/g, ""), type: value.value })
+        }
+      })
+      val.currentTarget.getElementsByClassName('el-radio__original').forEach((value) => {
+        const kidTitle = value.parentElement.parentElement.getElementsByClassName('el-radio__label').item(0).innerHTML
+        if (value.checked) {
+          this.tags.push({ name: itemTitle + '-' + kidTitle.replace(/<!---->/g, ""), type: value.value })
+        }
+      })
     }
   }
 }

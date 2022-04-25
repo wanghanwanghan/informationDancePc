@@ -321,7 +321,7 @@
       </section>
     </main>
     <el-dialog
-      :title="sbDetail.Name"
+      title="详情"
       :visible.sync="sbDialogVisible"
       z-index="100"
       width="50%"
@@ -375,7 +375,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="zlDetail.Title"
+      title="详情"
       :visible.sync="zlDialogVisible"
       z-index="100"
       width="50%"
@@ -417,14 +417,16 @@
       </span>
     </el-dialog>
     <el-dialog
+      title="详情"
       :visible.sync="qyzsDialogVisible"
       z-index="100"
       width="50%"
     >
       <div class="box">
         <table>
-          <tr v-for="(item,key) in qyzsDetail.Data" :key="item">
-            <td style="width: 150px">{{ key }}:     </td><td>   {{ item }}</td>
+          <tr v-for="(item,index) in qyzsDetail.Data" :key="index">
+            <td style="width: 180px"><span>{{ index }}：</span></td>
+            <td><span class="grid-content bg-purple">{{ item }}</span></td>
           </tr>
         </table>
       </div>
