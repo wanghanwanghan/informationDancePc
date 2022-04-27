@@ -9,9 +9,10 @@
       </el-input>
     </div>
     <div class="cond-wrapper">
-      <div v-model="optionCheckBox" class="cond-up" @change="handleChange_option">
+      <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
         <Cond
           v-for="(item,index) of list"
+          :id="item.id"
           :key="index"
           :type="item.type"
           :title="item.title"
@@ -19,7 +20,49 @@
           @set-value="setValue"
         />
       </div>
-      <div v-show="show.cond_down" class="cond-down" />
+      <div v-show="show.cond_down" class="cond-down">
+        <table class="search-table" cellspacing="15">
+          <tr class="search-table-tr">
+            <td class="search-table-td bg-color">企业行业</td>
+            <td class="search-table-td bg-color">企业所属地区</td>
+            <td class="search-table-td bg-color">经营范围</td>
+          </tr>
+          <tr>
+            <td class="search-table-td">
+              <el-cascader
+                ref="nicid_ref"
+                class="search-table-input"
+                :options="nicid"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                collapse-tags
+                clearable
+                @change="getCheckedNodes"
+              />
+            </td>
+            <td class="search-table-td">
+              <el-cascader
+                ref="address_ref"
+                class="search-table-input"
+                :options="address"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                collapse-tags
+                clearable
+                @change="getCheckedNodes"
+              />
+            </td>
+            <td class="search-table-td">
+              <el-input
+                v-model="search_cond.basic_opscope"
+                class="search-table-input"
+                placeholder="支持模糊搜索 空格分割"
+                clearable
+              />
+            </td>
+          </tr>
+        </table>
+      </div>
       <el-button type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
         <div class="cond-word">已选(5)</div>
@@ -27,8 +70,10 @@
           <el-tag
             v-for="tag in tags"
             :key="tag.name"
-            closable
+            v-model="tagItem"
             :type="tag.type"
+            closable
+            @close="closeOption(tag.type)"
           >
             {{ tag.name }}
 
@@ -263,6 +308,10 @@
 <script>
 import Cond from '@/components/AdvancedSearch/components/Cond'
 import Drawer from '@/components/AdvancedSearch/components/Drawer'
+import { address } from '@/data/address'
+import { sonum } from '@/data/sonum'
+import { nicid } from '@/data/nicid'
+import {check} from "@/api/article";
 
 export default {
   name: 'ASIndex',
@@ -270,6 +319,7 @@ export default {
   props: {},
   data() {
     return {
+      loading: true,
       list: [],
       drawer_data: {
         entname: '',
@@ -291,7 +341,28 @@ export default {
         { name: '标签四', type: 'warning' },
         { name: '标签五', type: 'danger' }
       ],
-      optionCheckBox: []
+      optionCheckBox: [],
+      tagItem: [],
+      address: address,
+      sonum: sonum,
+      nicid: nicid,
+      search_cond: {
+        page: 1,
+        phone: localStorage.getItem('phone'),
+        basic_entname: '',
+        basic_person_name: '',
+        basic_dom: '',
+        basic_regcap: '',
+        basic_nicid: '',
+        basic_esdate: '',
+        basic_enttype: '',
+        basic_uniscid: '',
+        basic_ygrs: '',
+        basic_regionid: '',
+        jingying_vc_round: '',
+        basic_opscope: '',
+        basic_status: ''
+      }
     }
   },
   computed: {},
@@ -351,7 +422,19 @@ export default {
       this.show.cond_down = !this.show.cond_down
     },
     setValue(val) {
-      this.value = val
+      console.log(val)
+      if (typeof val === 'object' && val.length > 0) {
+        const kArr = val[0].split('-')
+        const key = kArr[0]
+        this.value[key] = []
+        val.forEach((v, k) => {
+          const iArr = v.split('-')
+          this.value[key][k] = iArr[1]
+        })
+      } else if (val.length > 0) {
+        const vArr = val.split('-')
+        this.value[vArr[0]] = [vArr[1]]
+      }
     },
     getDrawer(entname, shx) {
       localStorage.setItem('entName', entname)
@@ -362,21 +445,96 @@ export default {
     setDrawerType(type) {
       this.show.show_drawer = type
     },
-    handleChange_option(val) {
-      const itemTitle = val.path['9'].getElementsByClassName('title-wrapper').item(0).innerHTML
+    closeOption(type) {
+      this.$el.getElementsByClassName('el-checkbox is-checked').forEach((v) => {
+        v.getElementsByClassName('el-checkbox__original').forEach((val) => {
+          const vStr = val.getAttributeNode('value').value
+          if (type === vStr) {
+            v.click()
+          }
+        })
+      })
+      this.tags.forEach((tag, index) => {
+        if (tag.type === type) {
+          this.tags.splice(index, 1)
+        }
+      })
+    },
+    handleChange_option() {
+      console.log(this.value)
       this.tags = []
-      val.currentTarget.getElementsByClassName('el-checkbox__original').forEach((value) => {
-        const kidTitle = value.parentElement.parentElement.getElementsByClassName('el-checkbox__label').item(0).innerHTML
-        if (value.checked) {
-          this.tags.push({ name: itemTitle + '-' + kidTitle.replace(/<!---->/g, ""), type: value.value })
+      this.value.forEach((checkV, key) => {
+        this.list.forEach((val) => {
+          if (val.id === key){
+            const title = val.title
+          val.list.forEach((v) => {
+            checkV.forEach((cv) => {
+              const id = v.id + ''
+              console.log(cv + '--' + id + '--' + val.id + '--' + key)
+              if (cv === id) {
+                console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
+                this.tags.push({name: title + '-' + v.name, type: val.id + '-' + v.id})
+              }
+            })
+          })
         }
+        })
       })
-      val.currentTarget.getElementsByClassName('el-radio__original').forEach((value) => {
-        const kidTitle = value.parentElement.parentElement.getElementsByClassName('el-radio__label').item(0).innerHTML
-        if (value.checked) {
-          this.tags.push({ name: itemTitle + '-' + kidTitle.replace(/<!---->/g, ""), type: value.value })
-        }
-      })
+    },
+    getCheckedNodes() {
+      const regcap = this.$refs.regcap_ref.getCheckedNodes(true)
+      this.search_cond.basic_regcap = regcap[0] ? regcap[0].value : ''
+
+      let nicid = this.$refs.nicid_ref.getCheckedNodes(true)
+      if (nicid[0]) {
+        let nicid_str = ''
+        nicid.forEach(item => {
+          nicid_str += item.value + ','
+        })
+        nicid = nicid_str.trim()
+      } else {
+        nicid = ''
+      }
+      this.search_cond.basic_nicid = nicid
+
+      let vc_id = this.$refs.vc_round_ref.getCheckedNodes(true)
+      if (vc_id[0]) {
+        let vc_id_str = ''
+        vc_id.forEach(item => {
+          vc_id_str += item.value + ','
+        })
+        vc_id = vc_id_str.trim()
+      } else {
+        vc_id = ''
+      }
+      this.search_cond.jingying_vc_round = vc_id
+
+      let enttype = this.$refs.enttype_ref.getCheckedNodes(true)
+      if (enttype[0]) {
+        let enttype_str = ''
+        enttype.forEach(item => {
+          enttype_str += item.value + ','
+        })
+        enttype = enttype_str.trim()
+      } else {
+        enttype = ''
+      }
+      this.search_cond.basic_enttype = enttype
+
+      const sonum = this.$refs.sonum_ref.getCheckedNodes(true)
+      this.search_cond.basic_ygrs = sonum[0] ? sonum[0].value : ''
+
+      let address = this.$refs.address_ref.getCheckedNodes(true)
+      if (address[0]) {
+        let address_str = ''
+        address.forEach(item => {
+          address_str += item.value + ','
+        })
+        address = address_str.trim()
+      } else {
+        address = ''
+      }
+      this.search_cond.basic_regionid = address
     }
   }
 }
