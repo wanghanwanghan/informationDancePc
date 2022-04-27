@@ -5,7 +5,7 @@
         <el-select slot="prepend" v-model="search_type" placeholder="请选择">
           <el-option label="智能搜索" value="1" />
         </el-select>
-        <el-button slot="append" icon="el-icon-search" />
+        <el-button slot="append" icon="el-icon-search" @click="submitForm" />
       </el-input>
     </div>
     <div class="cond-wrapper">
@@ -21,13 +21,9 @@
         />
       </div>
       <div v-show="show.cond_down" class="cond-down">
-        <table class="search-table" cellspacing="15">
+        <table class="search-table" cellspacing="15" style="width: 90%;margin: 0% 1%">
           <tr class="search-table-tr">
             <td class="search-table-td bg-color">企业行业</td>
-            <td class="search-table-td bg-color">企业所属地区</td>
-            <td class="search-table-td bg-color">经营范围</td>
-          </tr>
-          <tr>
             <td class="search-table-td">
               <el-cascader
                 ref="nicid_ref"
@@ -40,6 +36,7 @@
                 @change="getCheckedNodes"
               />
             </td>
+            <td class="search-table-td bg-color">企业所属地区</td>
             <td class="search-table-td">
               <el-cascader
                 ref="address_ref"
@@ -52,6 +49,7 @@
                 @change="getCheckedNodes"
               />
             </td>
+            <td class="search-table-td bg-color">经营范围</td>
             <td class="search-table-td">
               <el-input
                 v-model="search_cond.basic_opscope"
@@ -65,7 +63,7 @@
       </div>
       <el-button type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
-        <div class="cond-word">已选(5)</div>
+        <div class="cond-word">已选({{ tags.length }})</div>
         <div class="cond-cond">
           <el-tag
             v-for="tag in tags"
@@ -91,7 +89,7 @@
         />
       </div>
       <el-divider content-position="center">查询结果</el-divider>
-      <div class="slide-div">
+      <div v-for="(item,index) in data" :key="index"  class="slide-div">
         <div class="search-res-info">
           <div class="logo-wrapper">
             <img
@@ -102,7 +100,7 @@
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer('安利（中国）日用品有限公司','ABABABABABABABABAB')">安利（中国）日用品有限公司</div>
+                <div class="ent-name" @click="getDrawer(item._source.name,item._source.property1)">{{item._source.name}}</div>
                 <div class="ent-label">
                   <el-tag size="mini">标签一</el-tag>
                   <el-tag size="mini" type="success">标签二</el-tag>
@@ -116,19 +114,19 @@
                       <div class="row-h">企业法人 :</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h under">相亲对象</div>
+                      <div class="row-h under">{{item._source.legal_person_name}}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">成立日期 :</div>
                     </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">2018-08-08</div>
+                    <el-col :span="4">
+                      <div class="row-h under">{{item._source.from_time}}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">注册资本 :</div>
                     </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">100万</div>
+                    <el-col :span="9">
+                      <div class="row-h under">{{item._source.reg_capital}}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -136,19 +134,19 @@
                       <div class="row-h">企业规模 :</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h under">50-99人</div>
+                      <div class="row-h under">{{item._source.tuan_dui_ren_shu}}人</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">企业网址 :</div>
                     </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">www.kengni.com</div>
+                    <el-col :span="4">
+                      <div class="row-h under">{{item._source.web}}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">国标行业 :</div>
                     </el-col>
-                    <el-col :span="6">
-                      <div class="row-h under">金融业 > 其他金融业</div>
+                    <el-col :span="10">
+                      <div class="row-h under">{{item._source.si_ji_fen_lei_full_name}}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -156,7 +154,7 @@
                       <div class="row-h">统一社会信用代码 :</div>
                     </el-col>
                     <el-col :span="100">
-                      <div class="row-h under">ABABABABABABABABABABABAB</div>
+                      <div class="row-h under">{{item._source.property1}}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -164,108 +162,7 @@
                       <div class="row-h">经营地址 :</div>
                     </el-col>
                     <el-col :span="100">
-                      <div class="row-h under">12312312312312312312312</div>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="3">
-                      <div class="row-h">基本信息 (99)</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h">工商详情 (99)</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h">招聘信息 (99)</div>
-                    </el-col>
-                  </el-row>
-                </div>
-              </div>
-              <div class="action-wrapper">
-                <el-badge :value="12" class="item">
-                  <el-button size="small" type="primary">领取线索</el-button>
-                </el-badge>
-              </div>
-            </div>
-            <div class="ent-desc-wrapper">
-              <i class="el-icon-lightning" />
-              <div>百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科</div>
-            </div>
-            <el-divider content-position="right" />
-          </div>
-        </div>
-        <div class="search-res-info">
-          <div class="logo-wrapper">
-            <img
-              class="logo"
-              src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500"
-            >
-          </div>
-          <div class="content-wrapper">
-            <div class="ent-info-wrapper">
-              <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer('北京百程国际旅游股份有限公司','ABABABABABABABABAB')">北京百程国际旅游股份有限公司</div>
-                <div class="ent-label">
-                  <el-tag size="mini">标签一</el-tag>
-                  <el-tag size="mini" type="success">标签二</el-tag>
-                  <el-tag size="mini" type="info">标签三</el-tag>
-                  <el-tag size="mini" type="warning">标签四</el-tag>
-                  <el-tag size="mini" type="danger">标签五</el-tag>
-                </div>
-                <div class="ent-other-wrapper">
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">企业法人 :</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h under">相亲对象</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">成立日期 :</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">2018-08-08</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">注册资本 :</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">100万</div>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">企业规模 :</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h under">50-99人</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">企业网址 :</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h under">www.kengni.com</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">国标行业 :</div>
-                    </el-col>
-                    <el-col :span="6">
-                      <div class="row-h under">金融业 > 其他金融业</div>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="4">
-                      <div class="row-h">统一社会信用代码 :</div>
-                    </el-col>
-                    <el-col :span="100">
-                      <div class="row-h under">ABABABABABABABABABABABAB</div>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">经营地址 :</div>
-                    </el-col>
-                    <el-col :span="100">
-                      <div class="row-h under">12312312312312312312312</div>
+                      <div class="row-h under">{{item._source.tong_xun_di_zhi}}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -311,7 +208,7 @@ import Drawer from '@/components/AdvancedSearch/components/Drawer'
 import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
-import {check} from "@/api/article";
+import { advancedSearch, getSearchOption } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'ASIndex',
@@ -320,6 +217,7 @@ export default {
   data() {
     return {
       loading: true,
+      data: [],
       list: [],
       drawer_data: {
         entname: '',
@@ -334,13 +232,14 @@ export default {
       search_type: '1',
       search_val: '',
       value: [],
-      tags: [
-        { name: '标签一', type: '' },
-        { name: '标签二', type: 'success' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'warning' },
-        { name: '标签五', type: 'danger' }
-      ],
+      tags: [],
+      // tags: [
+      //   { name: '标签一', type: '' },
+      //   { name: '标签二', type: 'success' },
+      //   { name: '标签三', type: 'info' },
+      //   { name: '标签四', type: 'warning' },
+      //   { name: '标签五', type: 'danger' }
+      // ],
       optionCheckBox: [],
       tagItem: [],
       address: address,
@@ -362,6 +261,17 @@ export default {
         jingying_vc_round: '',
         basic_opscope: '',
         basic_status: ''
+      },
+      query: {
+        phone: ''
+      },
+      searchQuery: {
+        phone: '',
+        searchText: '',
+        searchOption: '',
+        basic_nicid: '',
+        basic_opscope: '',
+        basic_regionid: ''
       }
     }
   },
@@ -384,17 +294,39 @@ export default {
       list.push({
         id: this.mt_rand_int(50),
         name: this.mt_rand_str(10),
-        type: this.mt_rand_int(50) > 20 ? 'radio' : '',
+        type: this.mt_rand_int(50) > 20 ? '' : '',
         title: this.mt_rand_str(10),
         list: temp
       })
     }
-    this.list = list
-
-    this.$http.post('api/v1/xd/sdfadfadfadfadf', {}).then(({
-      data: res
-    }) => {
-    }).catch((err) => {
+    // this.list = list
+    this.query.phone = localStorage.getItem('phone')
+    getSearchOption(this.query).then(res => {
+      const list = []
+      if (res.data.code === 200) {
+        console.log(res.data.result)
+        res.data.result.forEach((value) => {
+          var temp = []
+          console.log(value.data)
+          for (var i in value.data) {
+            temp.push({
+              id: i,
+              name: value.data[i]
+            })
+          }
+          // value.data.forEach((val, key) => {
+          //
+          // })
+          list.push({
+            id: value.pid,
+            name: value.desc,
+            title: value.desc,
+            type: '',
+            list: temp
+          })
+        })
+        this.list = list
+      }
     })
   },
   methods: {
@@ -421,8 +353,7 @@ export default {
     contrl_cond_down_show() {
       this.show.cond_down = !this.show.cond_down
     },
-    setValue(val) {
-      console.log(val)
+    setValue(val, id) {
       if (typeof val === 'object' && val.length > 0) {
         const kArr = val[0].split('-')
         const key = kArr[0]
@@ -434,6 +365,8 @@ export default {
       } else if (val.length > 0) {
         const vArr = val.split('-')
         this.value[vArr[0]] = [vArr[1]]
+      } else {
+        this.$delete(this.value, id)
       }
     },
     getDrawer(entname, shx) {
@@ -461,30 +394,27 @@ export default {
       })
     },
     handleChange_option() {
-      console.log(this.value)
+      // console.log(this.value)
       this.tags = []
       this.value.forEach((checkV, key) => {
         this.list.forEach((val) => {
-          if (val.id === key){
+          if (val.id === key) {
             const title = val.title
-          val.list.forEach((v) => {
-            checkV.forEach((cv) => {
-              const id = v.id + ''
-              console.log(cv + '--' + id + '--' + val.id + '--' + key)
-              if (cv === id) {
-                console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
-                this.tags.push({name: title + '-' + v.name, type: val.id + '-' + v.id})
-              }
+            val.list.forEach((v) => {
+              checkV.forEach((cv) => {
+                const id = v.id + ''
+                // console.log(cv + '--' + id + '--' + val.id + '--' + key)
+                if (cv === id) {
+                  // console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
+                  this.tags.push({ name: title + '-' + v.name, type: val.id + '-' + v.id })
+                }
+              })
             })
-          })
-        }
+          }
         })
       })
     },
     getCheckedNodes() {
-      const regcap = this.$refs.regcap_ref.getCheckedNodes(true)
-      this.search_cond.basic_regcap = regcap[0] ? regcap[0].value : ''
-
       let nicid = this.$refs.nicid_ref.getCheckedNodes(true)
       if (nicid[0]) {
         let nicid_str = ''
@@ -497,33 +427,6 @@ export default {
       }
       this.search_cond.basic_nicid = nicid
 
-      let vc_id = this.$refs.vc_round_ref.getCheckedNodes(true)
-      if (vc_id[0]) {
-        let vc_id_str = ''
-        vc_id.forEach(item => {
-          vc_id_str += item.value + ','
-        })
-        vc_id = vc_id_str.trim()
-      } else {
-        vc_id = ''
-      }
-      this.search_cond.jingying_vc_round = vc_id
-
-      let enttype = this.$refs.enttype_ref.getCheckedNodes(true)
-      if (enttype[0]) {
-        let enttype_str = ''
-        enttype.forEach(item => {
-          enttype_str += item.value + ','
-        })
-        enttype = enttype_str.trim()
-      } else {
-        enttype = ''
-      }
-      this.search_cond.basic_enttype = enttype
-
-      const sonum = this.$refs.sonum_ref.getCheckedNodes(true)
-      this.search_cond.basic_ygrs = sonum[0] ? sonum[0].value : ''
-
       let address = this.$refs.address_ref.getCheckedNodes(true)
       if (address[0]) {
         let address_str = ''
@@ -535,6 +438,35 @@ export default {
         address = ''
       }
       this.search_cond.basic_regionid = address
+    },
+    submitForm() {
+      // console.log(this.search_val)
+      // console.log(this.value)
+      // console.log(JSON.stringify(this.value))
+      // console.log(this.value)
+      // console.log(this.tags)
+      // console.log(this.search_cond)
+      var searchOption = []
+      this.value.forEach((v, key) => {
+        searchOption.push({
+          pid: key,
+          value:v
+        })
+      })
+      // console.log(searchOption)
+      // console.log(JSON.stringify(searchOption))
+      this.searchQuery.phone = localStorage.getItem('phone')
+      this.searchQuery.searchText = this.search_val
+      this.searchQuery.searchOption = JSON.stringify(searchOption)
+      this.searchQuery.basic_regionid = this.search_cond.basic_regionid
+      this.searchQuery.basic_nicid = this.search_cond.basic_nicid
+      this.searchQuery.basic_opscope = this.search_cond.basic_opscope
+      advancedSearch(this.searchQuery).then(res => {
+        if (res.data.code === 200) {
+          this.data = res.data.result
+          console.log(res.data)
+        }
+      })
     }
   }
 }
@@ -568,13 +500,13 @@ export default {
 
     .cond-down {
       width: 100%;
-      height: 300px;
+      height: 73px;
     }
 
     .cond-choice-wrapper {
       width: 100%;
       display: flex;
-      height: 40px;
+      //height: 40px;
       line-height: 40px;
 
       .cond-word {
@@ -586,7 +518,7 @@ export default {
 
       .cond-cond {
         flex: 1;
-        height: 40px;
+        //height: 40px;
         line-height: 40px;
 
         .el-tag {
@@ -666,7 +598,7 @@ export default {
             }
 
             font-size: 13px;
-            width: 70%;
+            width: 80%;
             height: 30px;
             line-height: 30px;
             display: flex;

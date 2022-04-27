@@ -92,3 +92,23 @@ export function refundToWallet(data) {
     data
   })
 }
+
+// 搜客搜索条件接口
+export function getSearchOption(data) {
+  return request({
+    url: '/api/v1/xd/getSearchOption',
+    method: 'post',
+    data
+  })
+}
+
+// 高级搜索条件接口
+export function advancedSearch(data) {
+  return request({
+    url: '/api/v1/xd/advancedSearch',
+    method: 'post',
+    data
+  })
+}
+
+

@@ -7,17 +7,14 @@
       <div class="cond-absolute" :class="show_more?'show':''">
         <el-form>
           <el-form-item>
-            <el-radio-group   v-model="radio_val" v-if="type ==='radio'" @change="changeSelect">
-              <el-radio  :label="id+'-'+item.id" v-for="item in list">{{ item.name }}</el-radio>
-            </el-radio-group>
-            <el-checkbox-group   v-model="checkList_val" v-else @change="changeSelect">
-              <el-checkbox  :label="id+'-'+item.id" v-for="item in list">{{ item.name }}</el-checkbox>
+            <el-checkbox-group v-model="checkList_val" @change="changeSelect(id)">
+              <el-checkbox v-for="item in list" :label="id+'-'+item.id">{{ item.name }}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <div class="more-wrapper" @click="more">更多</div>
+<!--    <div class="more-wrapper" @click="more">更多</div>-->
   </div>
 </template>
 
@@ -79,11 +76,7 @@ export default {
       this.show_more = !this.show_more
     },
     changeSelect(val) {
-      if (this.type === 'radio') {
-        this.$emit('set-value', this.radio_val)
-      } else {
-        this.$emit('set-value', this.checkList_val)
-      }
+      this.$emit('set-value', this.checkList_val, val)
     }
   }
 }
