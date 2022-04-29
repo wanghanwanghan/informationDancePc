@@ -11,14 +11,19 @@
       <BiaoQianInfo />
       <div class="nav-wrapper">
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="entHandleClick">
+
+
           <el-tab-pane label="基本信息" name="base">
-<!--            <transition>-->
-<!--            <keep-alive>-->
-<!--              <router-view v-if="Base">-->
-                <BaseInfo  v-if="Base"/>
-<!--              </router-view>-->
+<!--            <keep-alive :include="BaseInfo">-->
+<!--              <router-view v-if="Base"></router-view>-->
 <!--            </keep-alive>-->
-<!--              </transition>-->
+<!--&lt;!&ndash;            <transition>&ndash;&gt;-->
+<!--&lt;!&ndash;            <keep-alive>&ndash;&gt;-->
+<!--&lt;!&ndash;              <router-view v-if="Base">&ndash;&gt;-->
+                <BaseInfo  v-if="Base"/>
+<!--&lt;!&ndash;              </router-view>&ndash;&gt;-->
+<!--&lt;!&ndash;            </keep-alive>&ndash;&gt;-->
+<!--&lt;!&ndash;              </transition>&ndash;&gt;-->
           </el-tab-pane>
           <el-tab-pane  label="司法裁决" name="sifa">
 <!--            <transition>-->
