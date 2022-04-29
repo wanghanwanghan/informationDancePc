@@ -108,6 +108,7 @@ export default {
   methods: {
     handleClose(down) {
       this.activeName = 'base'
+      this.Base = true
       this.$emit('set-drawer-type', false)
     },
     entHandleClick(tab) {
