@@ -12,29 +12,29 @@
       <div class="nav-wrapper">
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="entHandleClick">
           <el-tab-pane label="基本信息" name="base">
-            <BaseInfo />
+<!--            <transition>-->
+<!--            <keep-alive>-->
+<!--              <router-view v-if="Base">-->
+                <BaseInfo  v-if="Base"/>
+<!--              </router-view>-->
+<!--            </keep-alive>-->
+<!--              </transition>-->
           </el-tab-pane>
-          <el-tab-pane label="司法裁决" name="sifa">
-            <SiFaInfo />
+          <el-tab-pane  label="司法裁决" name="sifa">
+<!--            <transition>-->
+<!--            <keep-alive>-->
+<!--              <router-view v-if="Sifa">-->
+                <SiFaInfo  v-if="Sifa"/>
+<!--              </router-view>-->
+<!--            </keep-alive>-->
+<!--              </transition>-->
           </el-tab-pane>
-          <el-tab-pane label="专业资质 荣誉称号" name="rych">
-            <RychInfo />
+          <el-tab-pane  label="专业资质 荣誉称号" name="rych">
+            <RychInfo v-if="Rych" />
           </el-tab-pane>
-<!--          <el-tab-pane label="专业资质 荣誉称号(瞪羚)" name="rychDl">-->
-<!--            <RychDlInfo />-->
-<!--          </el-tab-pane>-->
-<!--          <el-tab-pane label="专业资质(ISO)" name="rychISO">-->
-<!--            <RychISOInfo />-->
-<!--          </el-tab-pane>-->
-          <el-tab-pane label="主营产品" name="product">
-            <ProductInfo />
+          <el-tab-pane  label="主营产品" name="product">
+            <ProductInfo v-if="Product" />
           </el-tab-pane>
-          <!--          <el-tab-pane label="涉税信息" name="sheshui">-->
-          <!--            <SheShuiInfo />-->
-          <!--          </el-tab-pane>-->
-          <!--          <el-tab-pane label="知识产权" name="intellectual">-->
-          <!--            <IntellectualInfo/>-->
-          <!--          </el-tab-pane>-->
         </el-tabs>
       </div>
     </div>
@@ -45,11 +45,7 @@
 import BaseInfo from '@/components/AdvancedSearch/components/Base/BaseInfo'
 import SiFaInfo from '@/components/AdvancedSearch/components/SiFa/SiFaInfo'
 import ProductInfo from '@/components/AdvancedSearch/components/Product/ProductInfo'
-// import SheShuiInfo from '@/components/AdvancedSearch/components/SheShui/SheShuiInfo'
-// import IntellectualInfo from '@/components/AdvancedSearch/components/Intellectual/IntellectualInfo'
 import RychInfo from '@/components/AdvancedSearch/components/Rych/RychInfo'
-// import RychDlInfo from '@/components/AdvancedSearch/components/RychDl/RychDlInfo'
-// import RychISOInfo from '@/components/AdvancedSearch/components/RychISO/RychISOInfo'
 import { getBusinessScaleInfo } from '@/api/JudicialDecisions'
 import BiaoQianInfo from '@/components/AdvancedSearch/components/BiaoQianInfo'
 export default {
@@ -58,11 +54,7 @@ export default {
     BaseInfo,
     SiFaInfo,
     ProductInfo,
-    // SheShuiInfo,
-    // IntellectualInfo,
     RychInfo,
-    // RychDlInfo,
-    // RychISOInfo,
     BiaoQianInfo
   },
   props: {
@@ -89,7 +81,11 @@ export default {
         entname: '',
         phone: ''
       },
-      businessScale: ''
+      businessScale: '',
+      Base: true,
+      Sifa: false,
+      Rych: false,
+      Product: false
     }
   },
 
@@ -115,6 +111,19 @@ export default {
       this.$emit('set-drawer-type', false)
     },
     entHandleClick(tab) {
+      this.Product = false
+      this.Base = false
+      this.Sifa = false
+      this.Rych = false
+      if (tab.name === 'base' && this.Base === false) {
+        this.Base = true
+      } else if (tab.name === 'sifa' && this.Sifa === false) {
+        this.Sifa = true
+      } else if (tab.name === 'rych' && this.Rych === false) {
+        this.Rych = true
+      } else if (tab.name === 'product' && this.Product === false) {
+        this.Product = true
+      }
       localStorage.setItem('activeName', tab.name)
     }
   }

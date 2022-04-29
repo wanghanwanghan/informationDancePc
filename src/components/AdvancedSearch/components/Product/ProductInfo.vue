@@ -174,7 +174,7 @@ export default {
   methods: {
     getListAndoriod(val) {
       this.queryAndoriod.page = val
-      this.queryAndoriod.type = 'ios'
+      this.queryAndoriod.type = 'andoriod'
       this.queryAndoriod.xd_id = localStorage.getItem('xd_id')
       this.queryAndoriod.phone = localStorage.getItem('phone')
       getMainProducts(this.queryAndoriod).then(res => {
