@@ -17,6 +17,15 @@ export function getBasicDetails(data) {
     data
   })
 }
+
+// 获取基本信息 （老耿）
+export function getCompanyBasicInfo(data) {
+  return request({
+    url: '/api/v1/xd/getCompanyBasicInfo',
+    method: 'post',
+    data
+  })
+}
 // 获取股东信息
 export function getShareHolderInfo(data) {
   if (!data.pageSize) {

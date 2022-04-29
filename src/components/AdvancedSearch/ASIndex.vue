@@ -5,7 +5,7 @@
         <el-select slot="prepend" v-model="search_type" placeholder="请选择">
           <el-option label="智能搜索" value="1" />
         </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="submitForm" />
+        <el-button slot="append" icon="el-icon-search" @click="submit" />
       </el-input>
     </div>
     <div class="cond-wrapper">
@@ -80,13 +80,15 @@
       </div>
     </div>
     <div class="search-res-wrapper">
-      <div class="search-res-count">为您找到 2000+ 企业</div>
+      <div class="search-res-count">为您找到 {{paginate.total}}+ 企业</div>
       <div class="pagination-wrapper">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="1000"
-        />
+          <el-pagination
+            background
+            layout="total, prev, pager, next"
+            :total="paginate.total"
+            :page-size="20"
+            @current-change="pageChange">
+          </el-pagination>
       </div>
       <el-divider content-position="center">查询结果</el-divider>
       <div v-for="(item,index) in data" :key="index"  class="slide-div">
@@ -100,7 +102,7 @@
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer(item._source.name,item._source.property1)">{{item._source.name}}</div>
+                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{item._source.name}}</div>
                 <div class="ent-label">
                   <el-tag size="mini">标签一</el-tag>
                   <el-tag size="mini" type="success">标签二</el-tag>
@@ -108,7 +110,7 @@
                   <el-tag size="mini" type="warning">标签四</el-tag>
                   <el-tag size="mini" type="danger">标签五</el-tag>
                 </div>
-                <div class="ent-other-wrapper">
+                <div class="ent-other-wrapper" >
                   <el-row :gutter="10">
                     <el-col :span="2">
                       <div class="row-h">企业法人 :</div>
@@ -119,14 +121,14 @@
                     <el-col :span="2">
                       <div class="row-h">成立日期 :</div>
                     </el-col>
-                    <el-col :span="4">
+                    <el-col :span="5">
                       <div class="row-h under">{{item._source.from_time}}</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h">注册资本 :</div>
+                      <div class="row-h">企业网址 :</div>
                     </el-col>
-                    <el-col :span="9">
-                      <div class="row-h under">{{item._source.reg_capital}}</div>
+                    <el-col :span="4">
+                      <div class="row-h under">{{item._source.web}}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -137,10 +139,10 @@
                       <div class="row-h under">{{item._source.tuan_dui_ren_shu}}人</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h">企业网址 :</div>
+                      <div class="row-h">注册资本 :</div>
                     </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{item._source.web}}</div>
+                    <el-col :span="5">
+                      <div class="row-h under">{{item._source.reg_capital}}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">国标行业 :</div>
@@ -195,7 +197,7 @@
     </div>
     <Drawer
       :entname="drawer_data.entname"
-      :shx="drawer_data.shx"
+      :xd_id="drawer_data.xd_id"
       :drawer="show.show_drawer"
       @set-drawer-type="setDrawerType"
     />
@@ -209,6 +211,7 @@ import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
 import { advancedSearch, getSearchOption } from '@/api/EnterpriseBackground'
+import {getBusinessScaleInfo} from "@/api/JudicialDecisions";
 
 export default {
   name: 'ASIndex',
@@ -221,7 +224,7 @@ export default {
       list: [],
       drawer_data: {
         entname: '',
-        shx: ''
+        xd_id: 0
       },
       show: {
         cond_down: false,
@@ -266,12 +269,16 @@ export default {
         phone: ''
       },
       searchQuery: {
+        page: 1,
         phone: '',
         searchText: '',
         searchOption: '',
         basic_nicid: '',
         basic_opscope: '',
         basic_regionid: ''
+      },
+      paginate: {
+        total: 0
       }
     }
   },
@@ -281,6 +288,7 @@ export default {
     this.token = localStorage.getItem('token')
   },
   mounted() {
+    this.submitForm(1)
     const list = []
     for (let i = 0; i < this.mt_rand_int(50); i++) {
       const temp = []
@@ -304,10 +312,10 @@ export default {
     getSearchOption(this.query).then(res => {
       const list = []
       if (res.data.code === 200) {
-        console.log(res.data.result)
+        // console.log(res.data.result)
         res.data.result.forEach((value) => {
           var temp = []
-          console.log(value.data)
+          // console.log(value.data)
           for (var i in value.data) {
             temp.push({
               id: i,
@@ -369,10 +377,12 @@ export default {
         this.$delete(this.value, id)
       }
     },
-    getDrawer(entname, shx) {
+    getDrawer(entname, xd_id) {
+
       localStorage.setItem('entName', entname)
+      localStorage.setItem('xd_id', xd_id)
       this.drawer_data.entname = entname
-      this.drawer_data.shx = shx
+      this.drawer_data.xd_id = xd_id
       this.show.show_drawer = !this.show.show_drawer
     },
     setDrawerType(type) {
@@ -439,7 +449,13 @@ export default {
       }
       this.search_cond.basic_regionid = address
     },
-    submitForm() {
+    pageChange(index) {
+      this.submitForm(index)
+    },
+    submit(){
+      this.submitForm(1)
+    },
+    submitForm(page) {
       // console.log(this.search_val)
       // console.log(this.value)
       // console.log(JSON.stringify(this.value))
@@ -461,10 +477,12 @@ export default {
       this.searchQuery.basic_regionid = this.search_cond.basic_regionid
       this.searchQuery.basic_nicid = this.search_cond.basic_nicid
       this.searchQuery.basic_opscope = this.search_cond.basic_opscope
+      this.searchQuery.page = page
       advancedSearch(this.searchQuery).then(res => {
         if (res.data.code === 200) {
+          this.paginate = res.data.paging
           this.data = res.data.result
-          console.log(res.data)
+          // console.log(res.data)
         }
       })
     }
@@ -616,5 +634,8 @@ export default {
     }
 
   }
+}
+.row-h{
+  font-size: 15px
 }
 </style>

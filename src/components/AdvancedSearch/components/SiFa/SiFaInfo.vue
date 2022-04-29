@@ -7,9 +7,9 @@
         <div class="cont" style="overflow: scroll;height: 200px; ">
           <el-table :data="Ktgg" border style="width: 100%">
             <el-table-column
-              label="序号"
-              type="index"
-              width="50"
+              label="案号"
+              prop="caseno"
+              width="200"
             />
             <el-table-column
               prop="title"
@@ -17,17 +17,21 @@
               width="400"
             />
             <el-table-column
-              prop="body"
-              label="内容"
-              width="350"
+              prop="sdate"
+              label="发布日期"
+              width="100"
             />
             <el-table-column
-              prop="sortTimeString"
-              label="时间"
+              prop="courtname"
+              label="法院名称"
+            />
+            <el-table-column
+              prop="causename"
+              label="案由"
             />
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handlektggDetail(scope.row.entryId)">查看详情</el-button>
+                <el-button type="primary" size="mini" @click="handlektggDetail(scope.row.mid)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -51,27 +55,32 @@
             style="width: 100%"
           >
             <el-table-column
-              label="序号"
-              type="index"
-              width="50"
+              label="案号"
+              prop="caseno"
+              width="200"
             />
             <el-table-column
               prop="title"
               label="标题"
-              width="400"
+              width="450"
             />
             <el-table-column
-              prop="body"
-              label="内容"
-              width="350"
+              prop="sdate"
+              label="发布日期"
+              width="100"
             />
             <el-table-column
-              prop="sortTimeString"
-              label="时间"
+              prop="pdate"
+              label="裁定日期"
+              width="100"
+            />
+            <el-table-column
+              prop="procedure"
+              label="审理程序"
             />
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handlePjwsDetail(scope.row.entryId)">查看详情</el-button>
+                <el-button type="primary" size="mini" @click="handlePjwsDetail(scope.row.mid)">查看详情</el-button>
               </template>
 
             </el-table-column>
@@ -95,21 +104,48 @@
       <div class="box">
         <table>
           <tr>
-            <td>案号：</td><td>{{ktggDetail.caseNo}}}</td>
+            <td style="width:100px">案号：</td><td>{{ktggDetail.caseno}}</td>
           </tr>
           <tr>
-            <td>承办单位：</td><td>{{ ktggDetail.court }}</td>
+            <td>法院名称：</td><td>{{ ktggDetail.courtroom  }}</td>
           </tr>
           <tr>
-            <td>法庭：</td><td>{{ ktggDetail.courtroom }}</td>
+            <td>法官：</td><td>{{ ktggDetail.judge  }}</td>
           </tr>
           <tr>
-            <td>案由：</td><td>{{ caseCauseT }}</td>
+            <td>立案时间：</td><td>{{ktggDetail.sdate}}</td>
           </tr>
-          <tr v-for="(item,index) in ktggDetail.partys" :key="index">
-            <td>{{ item.partyTitleT }}：</td>
-            <td>{{ item.pname }}</td>
+          <tr>
+            <td>当事人(被告)：</td><td>{{ktggDetail.pname }}</td>
           </tr>
+          <tr>
+            <td>原告：</td><td>{{ktggDetail.plaintiff}}</td>
+          </tr>
+          <tr>
+            <td>法庭名称：</td><td>{{ktggDetail.courtroom}}</td>
+          </tr>
+          <tr>
+            <td>案由：</td><td>{{ktggDetail.causename}}</td>
+          </tr>
+          <tr>
+            <td>案由类型：</td><td>{{ktggDetail.causeaction}}</td>
+          </tr>
+          <tr>
+            <td>发布时间：</td><td>{{ktggDetail.ptime }}</td>
+          </tr>
+          <tr>
+            <td>组织者：</td><td>{{ktggDetail.organizer}}</td>
+          </tr>
+          <tr>
+            <td>原告被告文本：</td><td>{{ktggDetail.party }}</td>
+          </tr>
+          <tr>
+            <td>主体类型：</td><td>{{ktggDetail.ptype  }}</td>
+          </tr>
+          <tr>
+            <td>正文内容：</td><td>{{ktggDetail.content  }}</td>
+          </tr>
+
         </table>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -117,35 +153,10 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="cpwsTitle"
       :visible.sync="cpwsDialogVisible"
       z-index="100"
       width="50%">
-      <div class="box">
-        <table>
-          <tr>
-            <td style="width: 100px">案号：</td><td>{{cpwsDetail.caseNo}}}</td>
-          </tr>
-          <tr>
-            <td>承办单位：</td><td>{{ cpwsDetail.court }}</td>
-          </tr>
-          <tr>
-            <td>审判：</td><td>{{ cpwsDetail.judge }}</td>
-          </tr>
-          <tr>
-            <td>审判依据：</td><td>{{ cpwsDetail.yiju }}</td>
-          </tr>
-          <tr>
-            <td>审判结果：</td><td>{{ cpwsDetail.judgeResult }}</td>
-          </tr>
-          <tr>
-            <td>案由：</td><td>{{ cpwscaseCauseT }}</td>
-          </tr>
-          <tr v-for="(item,index) in cpwsDetail.partys" :key="index">
-            <td>{{ item.partyTitleT }}：</td>
-            <td>{{ item.pname }}</td>
-          </tr>
-        </table>
+      <div class="box" v-html=" cpwsDetail.content ">
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="cpwsDialogVisible = false">关 闭</el-button>
@@ -155,7 +166,12 @@
 </template>
 
 <script>
-import {getCpws, getCpwsDetail, getKtgg, getKtggDetail} from '@/api/JudicialDecisions'
+import {
+  getCpwsDetailXd,
+  getCpwsList,
+  getKtggDetailXd,
+  getKtggList
+} from '@/api/JudicialDecisions'
 
 export default {
   name: 'BusinessInfo',
@@ -202,12 +218,13 @@ export default {
         pay: 0
       },
       cpwsDetail: {},
+      cpwsRelated: {},
       cpwsQuery: {
         entName: '',
         phone: '',
         pageNo: 1,
         pageSize: 10,
-        id: '',
+        mid: '',
         pay: 0
       }
     }
@@ -217,13 +234,13 @@ export default {
     this.query.entName = this.query2.entName = this.query1.entName = this.entName = localStorage.getItem('entName')
     this.query.phone = this.query2.phone = this.query1.phone = this.phone = localStorage.getItem('phone')
     // 开庭公告
-    getKtgg(this.query).then(res => {
+    getKtggList(this.query).then(res => {
       // console.log(res)
       this.Ktgg = res.data.result
       this.totalKtgg = res.data.paging.total
     })
     // 判决文书
-    getCpws(this.query).then(res => {
+    getCpwsList(this.query).then(res => {
       // console.log(res)
       this.Cpws = res.data.result
       this.totalCpws = res.data.paging.total
@@ -240,7 +257,7 @@ export default {
       this.query.page = val
       this.query.entName = this.entName
       this.query.phone = this.phone
-      getKtgg(this.query).then(res => {
+      getKtggList(this.query).then(res => {
         // console.log(res)
         this.Ktgg = res.data.result
       })
@@ -251,85 +268,30 @@ export default {
       this.query.page = val
       this.query.entName = this.entName
       this.query.phone = this.phone
-      getCpws(this.query).then(res => {
+      getCpwsList(this.query).then(res => {
         this.Cpws = res.data.result
       })
     },
     handlektggDetail(id) {
       this.ktggQuery.entName = localStorage.getItem('entName')
-      this.ktggQuery.id = id
+      this.ktggQuery.mid = id
       this.ktggQuery.phone = localStorage.getItem('phone')
-      getKtggDetail(this.ktggQuery).then(res => {
-        if (res.data.code === 210) {
-          this.$confirm(res.data.msg, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.ktggQuery.pay = 1
-            getKtggDetail(this.ktggQuery).then(res => {
-              // console.log(res)
-              if (res.data.code === 220) {
-                this.$confirm('余额不足，是否前往充值？', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning'
-                }).then(() => {
-                  this.$router.push('/login')
-                  localStorage.setItem('activeName', 'third')
-                }).catch(() => {
-                  this.$router.go(-1)
-                })
-              }
-            })
-          }).catch(() => {
-            this.$router.go(-1)
-          })
-        } else {
-          this.ktggdialogVisible = true
-          this.ktggDetail = res.data.result[0]
-          this.ktggTitle = this.ktggDetail.title
-          this.caseCauseT = this.ktggDetail.partys[0].caseCauseT
-        }
+      getKtggDetailXd(this.ktggQuery).then(res => {
+        this.ktggdialogVisible = true
+        this.ktggDetail = res.data.result
+        this.ktggTitle = this.ktggDetail.title
+        this.caseCauseT = this.ktggDetail.partys[0].caseCauseT
       })
     },
     handlePjwsDetail(id) {
-
       this.cpwsQuery.entName = localStorage.getItem('entName')
-      this.cpwsQuery.id = id
+      this.cpwsQuery.mid = id
       this.cpwsQuery.phone = localStorage.getItem('phone')
-      getCpwsDetail(this.cpwsQuery).then(res => {
-        if (res.data.code === 210) {
-          this.$confirm(res.data.msg, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.cpwsQuery.pay = 1
-            getKtggDetail(this.cpwsQuery).then(res => {
-              // console.log(res)
-              if (res.data.code === 220) {
-                this.$confirm('余额不足，是否前往充值？', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning'
-                }).then(() => {
-                  this.$router.push('/login')
-                  localStorage.setItem('activeName', 'third')
-                }).catch(() => {
-                  this.$router.go(-1)
-                })
-              }
-            })
-          }).catch(() => {
-            this.$router.go(-1)
-          })
-        } else {
-          this.cpwsDialogVisible = true
-          this.cpwsDetail = res.data.result[0]
-          this.cpwsTitle = this.cpwsDetail.title
-          this.cpwscaseCauseT = this.cpwsDetail.partys[0].caseCauseT
-        }
+      getCpwsDetailXd(this.cpwsQuery).then(res => {
+        this.cpwsDialogVisible = true
+        this.cpwsDetail = res.data.result.basic_info
+        this.cpwsRelated = res.data.result.related
+        this.cpwsTitle = this.cpwsDetail.title
       })
     }
   }

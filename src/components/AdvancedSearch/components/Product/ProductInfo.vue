@@ -1,83 +1,139 @@
 <template>
   <div>
-    <div class="header" v-if="showBtn === true">
-      <el-button type="primary" @click="btnGetFeatures">付费查看企业 < 业务特征 > 分析结果列表</el-button>
-    </div>
-    <div class="example-img" v-if="showBtn === true">
-      <div>
-        <span style="font-size: 30px;color: red;font-weight: 800;text-align: center">数据样例</span>
+  <main class="et-main" style="overflow: scroll;height: 600px; ">
+  <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
+    <h3 style="margin-left:20px;">Andoriod</h3>
+    <div class="box2" style="overflow: scroll;height: 200px; ">
+      <div class="cont">
+        <el-table
+          :data="listAndoriod"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            align="center"
+            label="序号"
+            type="index"
+            width="50"
+          />
+          <el-table-column
+            align="center"
+            prop="appname"
+            label="APP名称"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="ENTNAME"
+            label="开发者/开发公司"
+            width="100"
+          />
+          <el-table-column
+            align="center"
+            prop="atype"
+            label="APP类别"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="language"
+            label="语言"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="appversion"
+            label="版本号"
+            width="180"
+          />
+          <el-table-column
+            align="center"
+            prop="systemre"
+            label="系统要求"
+          />
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="totalAndoriod"
+          @current-change="getListAndoriod"
+        />
       </div>
     </div>
-    <div class="box" style="overflow: scroll;height: 650px;">
-      <div v-if="!hasTop">
-        <div class="cont">
-          <el-table :data="list" border style="width: 100%">
-            <el-table-column prop="name" label="指标名称" align="center" width="200"/>
-            <el-table-column prop="score" label="评分值" align="center" width="80"/>
-            <el-table-column prop="pic" label="能力等级：强、较强、中等、较弱、弱" align="center">
-              <template slot-scope="scope">
-                <img :src="scope.row.pic" alt=""/>
-              </template>
-            </el-table-column>
-            <el-table-column prop="desc" label="评分说明" align="center" width="350">
-              <template slot-scope="scope">
-                <div style="text-align: left" v-html="scope.row.desc"></div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="remarks" v-if="!showBtn">
-          <p>备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑</p>
-          <p>1.按0分到100分划分，评分越高，企业规模增长的能力越强</p>
-          <p>2.通过分析与企业资产维度有关行为后的评估结果。主要反映企业的资产变化情况，供判断企业的整体规模与合作能力</p>
-          <p>3.区间对应关系</p>
-          <p>81~100分，强</p>
-          <p>61~80分，较强</p>
-          <p>41~60分，中等</p>
-          <p>21~40分，较弱</p>
-          <p>20分以下，弱</p>
-        </div>
+  </section>
+  <section  class="et-slide" style="min-height:100px;">
+    <h3 style="margin-left:20px;">IOS</h3>
+    <div class="box2" style="overflow: scroll;height: 200px; ">
+      <div class="cont">
+        <el-table
+          :data="listIOS"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            align="center"
+            label="序号"
+            type="index"
+            width="50"
+          />
+          <el-table-column
+            align="center"
+            prop="appname"
+            label="APP名称"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="ENTNAME"
+            label="开发者/开发公司"
+            width="100"
+          />
+          <el-table-column
+            align="center"
+            prop="atype"
+            label="APP类别"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="language"
+            label="语言"
+            width="200"
+          />
+          <el-table-column
+            align="center"
+            prop="appversion"
+            label="版本号"
+            width="180"
+          />
+          <el-table-column
+            align="center"
+            prop="systemre"
+            label="系统要求"
+          />
+        </el-table>
       </div>
-      <div v-if="hasTop">
-        <div class="cont">
-          <el-table :data="list" :span-method="objectSpanMethod" border
-                    style="width: 100%">
-            <el-table-column prop="name" label="指标名称" align="center" width="200"/>
-            <el-table-column prop="score" label="评分值" align="center" width="80"/>
-            <el-table-column prop="pic" label="能力等级：强、较强、中等、较弱、弱" align="center">
-              <template slot-scope="scope">
-                <img :src="scope.row.pic" alt=""/>
-              </template>
-            </el-table-column>
-            <el-table-column prop="desc" label="评分说明" align="center" width="350">
-              <template slot-scope="scope">
-                <div style="text-align: left" v-html="scope.row.desc"></div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="remarks" v-if="!showBtn">
-          <p>备注：以上主要基于多源异构信息、同类企业数据指标、数学算法、评估模型、企业经营理论，构建的企业智能商调评估逻辑</p>
-          <p>1.按0分到100分划分，评分越高，企业规模增长的能力越强</p>
-          <p>2.通过分析与企业资产维度有关行为后的评估结果。主要反映企业的资产变化情况，供判断企业的整体规模与合作能力</p>
-          <p>3.区间对应关系</p>
-          <p>81~100分，强</p>
-          <p>61~80分，较强</p>
-          <p>41~60分，中等</p>
-          <p>21~40分，较弱</p>
-          <p>20分以下，弱</p>
-          <p>4.行业TOP企业的评分指标为企业同业规模在前20家头部企业的平均评分</p>
-        </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="totalIOS"
+          @current-change="getListIOS"
+        />
       </div>
     </div>
+  </section>
+  </main>
   </div>
 </template>
 
 <script>
-import {getFeatures} from "@/api/EnterpriseBackground";
+import { getMainProducts } from '@/api/JudicialDecisions'
 
 export default {
-  name: "ProductInfo",
+  name: 'ProductInfo',
   components: {},
   // filters: {},
   props: {},
@@ -86,11 +142,24 @@ export default {
   // },
   data() {
     return {
-      query: {
-        entName: '',
+      queryAndoriod: {
+        page: 1,
+        pageSize: 10,
+        xd_id: '',
+        type: '',
         phone: ''
       },
-      list: [],
+      queryIOS: {
+        page: 1,
+        pageSize: 10,
+        xd_id: '',
+        type: '',
+        phone: ''
+      },
+      listAndoriod: [],
+      totalAndoriod: 0,
+      listIOS: [],
+      totalIOS: 0,
       showBtn: true,
       hasTop: false
     }
@@ -99,193 +168,37 @@ export default {
   computed: {},
   // watch: {},
   mounted() {
-    this.query.entName = localStorage.getItem('entName')
-    this.query.phone = localStorage.getItem('phone')
-    getFeatures(this.query).then(res => {
-      if (res.data.code === 200) {
-        this.showBtn = false
-        this.hasTop = res.data.msg === '有top'
-        this.list = this.handleData(res.data.result)
-      } else {
-        this.showBtn = true
-      }
-    })
+    this.getListAndoriod()
+    this.getListIOS()
   },
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex % 2 === 0) {
-        return 'warning-row'
-      } else {
-        return 'success-row'
-      }
-    },
-    btnGetFeatures() {
-      this.query.entName = localStorage.getItem('entName')
-      this.query.phone = localStorage.getItem('phone')
-      getFeatures(this.query).then(res => {
-        this.$confirm((res.data.msg), '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.query.entName = localStorage.getItem('entName')
-          this.query.phone = localStorage.getItem('phone')
-          this.query.pay = 1
-          getFeatures(this.query).then(res => {
-            if (res.data.code === 220) {
-              this.$confirm('余额不足，是否前往充值？', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                this.$router.push('/login')
-                localStorage.setItem('activeName', 'third')
-              }).catch(() => {
-                this.$router.go(0)
-              })
-            }
-            if (res.data.code === 200) {
-              this.showBtn = false
-              this.hasTop = res.data.msg === '有top'
-              this.list = this.handleData(res.data.result)
-            } else {
-              this.showBtn = true
-            }
-          })
-        }).catch(() => {
-        })
+    getListAndoriod(val) {
+      this.queryAndoriod.page = val
+      this.queryAndoriod.type = 'ios'
+      this.queryAndoriod.xd_id = localStorage.getItem('xd_id')
+      this.queryAndoriod.phone = localStorage.getItem('phone')
+      getMainProducts(this.queryAndoriod).then(res => {
+        if (res.data.code === 200) {
+          this.listAndoriod = res.data.result
+          this.totalAndoriod = res.data.paging.total
+        }
       })
     },
-    handleData(data) {
-      let tmpList = []
-      for (let key in data) {
-        let row = data[key]
-        let desc = '--'
-        switch (row.field) {
-          case 'ASSGROPROFIT_REL':
-            desc = '<p>1.按0分到100分划分，评分越高，企业营运能力越强</p><p>2.通过分析企业的各项资产利用效率以及产生利润行为的效率，评估企业营运能力。反映企业的竞争实力和发展能力</p>'
-            break
-          case 'DEBTL':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的财务杠杆越小经营风险越低</p><p>2.通过分析企业与资产负债有关行为后的结果。主要反映企业利用债权人资金进行经营活动的能力指标，也是反映债权人发放贷款的安全程度指标</p>'
-            break
-          case 'PROGRO':
-            desc = '<p>1.按0分到100分划分，评分越高，企业盈利实力越强</p><p>2.通过分析可为企业贡献利润有关行为后的评估结果。主要反映企业当前的盈利水平</p>'
-            break
-          case 'MAIBUSINC_yoy':
-            desc = '<p>1.按0分到100分划分，评分越高，企业发展与经营的增速越高</p><p>2.通过分析与企业营收能力有关行为后的评估结果。主要反映企业的成长速度，供判断企业的高成长性价值</p>'
-            break
-          case 'PROGRO_yoy':
-            desc = '<p>1.按0分到100分划分，评分越高，企业持续盈利能力越强</p><p>2.通过分析可为企业贡献净利润有关行为，以及对应行为同比增速后的评估结果。主要反映企业的盈利趋势，供判断企业今后一段时期的盈利能力</p>'
-            break
-          case 'DEBTL_H':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的主营业务稳定性越强</p><p>2.通过分析企业与主营业务经营、企业类型等有关行为后的结果。主要反映企业在核心业务领域的合作价值与健康度</p>'
-            break
-          case 'TOTEQU':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的资本保全状况越好，债权人的债务越有保障</p><p>2.通过分析企业与资本运营效益与安全状况有关行为后的结果。主要反映企业投资者投入企业资本的保全性和增长性</p>'
-            break
-          case 'PERCAPITA_C':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的人均收益能力越强，人效比越高</p><p>2.通过分析企业与营收产值及从业人员有关行为后的结果。主要反映企业人均劳效水平，供判断企业的数字化与管理化水平</p>'
-            break
-          case 'PERCAPITA_Y':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的人均盈利能力越强</p><p>2.通过分析企业与盈利及从业人员有关行为后的结果。主要反映企业单位人员的盈利水平，供判断企业的管理化与盈利能力的综合分析</p>'
-            break
-          case 'RATGRO':
-            desc = '<p>1.按0分到100分划分，评分越高，企业税收贡献能力越强</p><p>2.通过分析与企业纳税有关行为后的结果。主要反映企业的当前的纳税水平</p>'
-            break
-          case 'ASSETS':
-            desc = '<p>1.按0分到100分划分，评分越高，企业在投资收益方面能力越高</p><p>2.通过分析企业与资本效益有关行为后的结果。主要反映企业资本获得收益的水平，供间接判断企业的投资价值</p>'
-            break
-          case 'ATOL':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的销售能力越强,资产投资效益越好</p><p>2.通过分析企业与营收及资产有关行为后的结果。主要反映企业资产经营效率，供判断企业财务安全性及资产收益能力，以进行相应的投资决策参考</p>'
-            break
-          case 'ASSGRO_yoy':
-            desc = '<p>1.按0分到100分划分，评分越高，企业规模增长的能力越强</p><p>2.通过分析与企业资产维度有关行为后的评估结果。主要反映企业的资产变化情况，供判断企业的整体规模与合作能力</p>'
-            break
-          case 'TBR':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的税率越高纳税负担越重</p><p>2.通过分析企业纳税与营收有关行为后的结果。主要反映企业税负率的合理程度</p>'
-            break
-          case 'RepaymentAbility':
-            desc = '<p>1.按0分到100分划分，评分越高，企业对债权人的还款能力越强</p><p>2.通过分析企业资产健康、资产保值及人均创收有关行为后的结果。主要反映企业偿还债务的能力，供判断其授信与借款能力</p>'
-            break
-          case 'GuaranteeAbility':
-            desc = '<p>1.按0分到100分划分，评分越高，企业的对外担保能力越强</p><p>2.通过分析企业抵质押 出质及企业类型等经营行为后的结果。主要反映企业在外部担保合作的能力，供判断担保合作可行性</p>'
-            break
-          default:
-            continue
+    getListIOS(val) {
+      this.queryIOS.page = val
+      this.queryIOS.type = 'ios'
+      this.queryIOS.xd_id = localStorage.getItem('xd_id')
+      this.queryIOS.phone = localStorage.getItem('phone')
+      getMainProducts(this.queryAndoriod).then(res => {
+        if (res.data.code === 200) {
+          this.listIOS = res.data.result
+          this.totalIOS = res.data.paging.total
         }
-        if (row.topPic) {
-          tmpList.push({
-            name: row.name,
-            score: row.score,
-            desc: desc,
-            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.pic
-          })
-          tmpList.push({
-            name: '行业TOP企业的' + row.name,
-            score: row.topScore,
-            desc: desc,
-            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.topPic
-          })
-        } else {
-          tmpList.push({
-            name: row.name,
-            score: row.score,
-            desc: desc,
-            pic: 'https://api.meirixindong.com/Static/Image/ReportImage/Temp/' + row.pic
-          })
-        }
-      }
-      return tmpList
-    },
-    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 3) {
-        if (rowIndex % 2 === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1
-          }
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          }
-        }
-      }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-table .warning-row {
-  background: oldlace;
-}
-
-::v-deep .el-table .success-row {
-  background: #f0f9eb;
-}
-
-.header {
-  width: 94%;
-  margin: 40px;
-}
-
-.example-img {
-  width: 90%;
-  margin-left: 15px;
-
-  span {
-    margin-left: 20px;
-  }
-}
-
-.cont {
-  width: 94%;
-  border: 1px solid #EBEBEB;
-}
-
-.remarks {
-  margin-left: 40px;
-  margin-bottom: 100px;
-}
 </style>

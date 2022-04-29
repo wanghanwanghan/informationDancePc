@@ -10,10 +10,26 @@ export function getKtgg(data) {
     data
   })
 }
+// 开庭公告 -- 西南
+export function getKtggList(data) {
+  return request({
+    url: '/api/v1/xd/getKtggList',
+    method: 'post',
+    data
+  })
+}
 // 开庭公告详情
 export function getKtggDetail(data) {
   return request({
     url: '/api/v1/fh/getKtggDetail',
+    method: 'post',
+    data
+  })
+}
+// 开庭公告详情 -- 西南
+export function getKtggDetailXd(data) {
+  return request({
+    url: '/api/v1/xd/getKtggDetail',
     method: 'post',
     data
   })
@@ -26,10 +42,28 @@ export function getCpws(data) {
     data
   })
 }
+
+// 判决文书 -- 西南
+export function getCpwsList(data) {
+  return request({
+    url: 'api/v1/xd/getCpwsList',
+    method: 'post',
+    data
+  })
+}
 // 判决文书详情
 export function getCpwsDetail(data) {
   return request({
     url: '/api/v1/fh/getCpwsDetail',
+    method: 'post',
+    data
+  })
+}
+
+// 判决文书详情 -- 西南
+export function getCpwsDetailXd(data) {
+  return request({
+    url: 'api/v1/xd/getCpwsDetail',
     method: 'post',
     data
   })
@@ -138,3 +172,55 @@ export function editoneSaid(data) {
     data
   })
 }
+
+// 获取专业资质/荣誉称号(高新)
+export function getHighTecQualifications(data) {
+  return request({
+    url: '/api/v1/xd/getHighTecQualifications',
+    method: 'post',
+    data
+  })
+}
+// 获取专业资质/荣誉称号(瞪羚)
+export function getDengLingQualifications(data) {
+  return request({
+    url: '/api/v1/xd/getDengLingQualifications',
+    method: 'post',
+    data
+  })
+}
+// 获取专业资质(ISO)
+export function getIsoQualifications(data) {
+  return request({
+    url: '/api/v1/xd/getIsoQualifications',
+    method: 'post',
+    data
+  })
+}
+// 获取企业规模信息
+export function getEmploymenInfo(data) {
+  return request({
+    url: '/api/v1/xd/getEmploymenInfo',
+    method: 'post',
+    data
+  })
+}
+
+// 获取企业的营收规模
+export function getBusinessScaleInfo(data) {
+  return request({
+    url: '/api/v1/xd/getBusinessScaleInfo',
+    method: 'post',
+    data
+  })
+}
+
+// 获取主营产品
+export function getMainProducts(data) {
+  return request({
+    url: '/api/v1/xd/getMainProducts',
+    method: 'post',
+    data
+  })
+}
+

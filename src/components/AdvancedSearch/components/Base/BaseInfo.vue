@@ -4,59 +4,42 @@
     <div v-if=" list !== '' || list !== null" class="cont">
       <table>
         <tr>
-          <td class="type1">法人代表</td>
-          <td class="type2">{{ list.OperName }}</td>
-          <td>企业名称</td>
-          <td>{{ list.Name }}</td>
-          <td>公司类型</td>
-          <td class="type3">{{ list.EconKind }}</td>
+          <td class="type1">法人代表:</td>
+          <td>{{ list.legal_person_name }}</td>
+          <td class="type2">企业名称:</td>
+          <td>{{ list.name }}</td>
         </tr>
         <tr>
-          <td>统一社会信用代码</td>
-          <td>{{ list.CreditCode }}</td>
-          <td>注册资本（万元）</td>
-          <td>{{ list.RegistCapi }}</td>
-          <td>成立日期</td>
-          <td class="type3">{{ list.TermStart.slice(0, 10) }}</td>
+          <td>营业状态:</td>
+          <td>{{ list.reg_status }}</td>
+          <td>统一社会信用代码:</td>
+          <td>{{ list.property1 }}</td>
         </tr>
         <tr>
-          <td>营业期限</td>
-          <td>{{ list.TermStart }}至{{ list.TeamEnd === '--' ? '无固定期限' : list.TeamEnd }}</td>
-          <td>登记机关</td>
-          <td>{{ list.BelongOrg }}</td>
-          <td>核准日期</td>
-          <td class="type3">{{ list.CheckDate.slice(0, 10) }}</td>
+          <td>公司类型:</td>
+          <td>{{ list.company_org_type }}</td>
+          <td>注册资本（万元）:</td>
+          <td>{{ list.reg_capital }}</td>
         </tr>
         <tr>
-          <td>注册地址</td>
-          <td colspan="3" class="type3">{{ list.Address }}</td>
-          <td>行业</td>
-          <td class="type3">{{ INDUSTRY }}</td>
+          <td>成立日期:</td>
+          <td>{{ list.from_time }}</td>
+          <td>营业期限:</td>
+          <td>{{ list.from_time }}至{{ list.to_time === '0000-00-00 00:00:00' ? '无固定期限' : list.to_time }}</td>
         </tr>
         <tr>
-          <td>经营范围</td>
-          <td colspan="5" class="type3">{{ list.Scope }}</td>
+          <td>核准日期:</td>
+          <td>{{ list.approved_time }}</td>
+          <td>登记机关:</td>
+          <td>{{ list.reg_institute }}</td>
         </tr>
-        <tr v-show="isShowVendincDesc">
-          <td class="type4">规模类型</td>
-          <td colspan="4" class="type3 type4">
-            {{ list.VENDINC.desc.split('，')[0] }}
-            <el-tooltip
-              class="item"
-              effect="light"
-              content="说明：通过对主板、创业板、新三板等各类大中小型企业公开财务规模指标的规范化处理，
-                              建立了对应企业规模类型的各类企业行为因素关系，在剔除不显著行为因素的同时提取显著行为因素重新进行回归分析，
-                              建立了由企业行为因素通过专有编码分析反应至普适化企业群体规模的分析模型，
-                              最终得到了适用于绝大部分企业规模参考的分析标签结果。
-                              结果仅供参考，在任何情况下本公司不保证真实性、准确性和时效性，不作为任何决策的唯一、实质性参考依据。"
-              placement="bottom"
-            >
-              <i
-                style="color: #409eff;cursor: pointer"
-                class="el-icon-info"
-              />
-            </el-tooltip>
-          </td>
+        <tr>
+          <td>注册地址:</td>
+          <td colspan="3">{{ list.reg_location }}</td>
+        </tr>
+        <tr>
+          <td>经营范围:</td>
+          <td colspan="3">{{ list.business_scope }}</td>
         </tr>
       </table>
     </div>
@@ -64,7 +47,7 @@
 </template>
 
 <script>
-import { getBasicDetails } from '@/api/EnterpriseBackground'
+import { getCompanyBasicInfo } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'BaseInfo',
@@ -79,20 +62,13 @@ export default {
   },
   mounted() {
     // window.addEventListener('scroll', this.initHeight)
-    this.query.entName = localStorage.getItem('entName')
+    // console.log(localStorage.getItem('xd_id'))
+    this.query.xd_id = localStorage.getItem('xd_id')
     this.query.phone = localStorage.getItem('phone')
     // 基本信息
-    getBasicDetails(this.query).then(res => {
-      this.list = res.data.result[0]
-      if (Object.keys(this.list.VENDINC).length > 0 && this.list.VENDINC.desc !== '未找到') {
-        this.isShowVendincDesc = true
-      }
-      for (const key in this.list) {
-        if (key === 'CreditCode') {
-          // console.log(this.list[key])
-          localStorage.setItem('CreditCode', this.list[key])
-        }
-      }
+    getCompanyBasicInfo(this.query).then(res => {
+      // console.log(res.data)
+      this.list = res.data.result
     })
   }
 }
@@ -120,7 +96,7 @@ export default {
         width: 150px
       }
       .type2 {
-        width: 200px
+        width: 150px
       }
       .type3 {
       // colspan:'4'
