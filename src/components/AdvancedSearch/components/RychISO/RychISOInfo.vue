@@ -9,7 +9,7 @@
             width="95"
           />
           <el-table-column
-            label="证书编号cert_num"
+            label="证书编号"
             prop="cert_num"
             width="180"
           />
