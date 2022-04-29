@@ -20,12 +20,12 @@
           <el-tab-pane label="专业资质 荣誉称号" name="rych">
             <RychInfo />
           </el-tab-pane>
-          <el-tab-pane label="专业资质 荣誉称号(瞪羚)" name="rychDl">
-            <RychDlInfo />
-          </el-tab-pane>
-          <el-tab-pane label="专业资质(ISO)" name="rychISO">
-            <RychISOInfo />
-          </el-tab-pane>
+<!--          <el-tab-pane label="专业资质 荣誉称号(瞪羚)" name="rychDl">-->
+<!--            <RychDlInfo />-->
+<!--          </el-tab-pane>-->
+<!--          <el-tab-pane label="专业资质(ISO)" name="rychISO">-->
+<!--            <RychISOInfo />-->
+<!--          </el-tab-pane>-->
           <el-tab-pane label="主营产品" name="product">
             <ProductInfo />
           </el-tab-pane>
@@ -48,8 +48,8 @@ import ProductInfo from '@/components/AdvancedSearch/components/Product/ProductI
 // import SheShuiInfo from '@/components/AdvancedSearch/components/SheShui/SheShuiInfo'
 // import IntellectualInfo from '@/components/AdvancedSearch/components/Intellectual/IntellectualInfo'
 import RychInfo from '@/components/AdvancedSearch/components/Rych/RychInfo'
-import RychDlInfo from '@/components/AdvancedSearch/components/RychDl/RychDlInfo'
-import RychISOInfo from '@/components/AdvancedSearch/components/RychISO/RychISOInfo'
+// import RychDlInfo from '@/components/AdvancedSearch/components/RychDl/RychDlInfo'
+// import RychISOInfo from '@/components/AdvancedSearch/components/RychISO/RychISOInfo'
 import { getBusinessScaleInfo } from '@/api/JudicialDecisions'
 import BiaoQianInfo from '@/components/AdvancedSearch/components/BiaoQianInfo'
 export default {
@@ -61,8 +61,8 @@ export default {
     // SheShuiInfo,
     // IntellectualInfo,
     RychInfo,
-    RychDlInfo,
-    RychISOInfo,
+    // RychDlInfo,
+    // RychISOInfo,
     BiaoQianInfo
   },
   props: {
@@ -111,6 +111,7 @@ export default {
   },
   methods: {
     handleClose(down) {
+      this.activeName = 'base'
       this.$emit('set-drawer-type', false)
     },
     entHandleClick(tab) {
