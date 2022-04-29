@@ -112,10 +112,6 @@ export default {
       this.$emit('set-drawer-type', false)
     },
     entHandleClick(tab) {
-      this.Product = false
-      this.Base = false
-      this.Sifa = false
-      this.Rych = false
       if (tab.name === 'base' && this.Base === false) {
         this.Base = true
       } else if (tab.name === 'sifa' && this.Sifa === false) {
