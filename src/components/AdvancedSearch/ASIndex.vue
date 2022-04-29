@@ -96,7 +96,7 @@
           <div class="logo-wrapper">
             <img
               class="logo"
-              src="https://img1.baidu.com/it/u=4275492597,3128508246&fm=253&fmt=auto&app=138&f=JPEG?w=529&h=500"
+              src="https://fakeimg.pl/200x200/?text=LOGO"
             >
           </div>
           <div class="content-wrapper">
