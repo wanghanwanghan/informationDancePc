@@ -121,9 +121,9 @@
           <el-tab-pane label="呼叫中心" name="cs">
             <CsIndex/>
           </el-tab-pane>
-          <el-tab-pane label="高级搜索" name="as">
-            <ASIndex/>
-          </el-tab-pane>
+<!--          <el-tab-pane label="高级搜索" name="as">-->
+<!--            <ASIndex/>-->
+<!--          </el-tab-pane>-->
         </el-tabs>
       </div>
     </div>

@@ -11,33 +11,16 @@
       <BiaoQianInfo />
       <div class="nav-wrapper">
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="entHandleClick">
-
-
-          <el-tab-pane label="基本信息" name="base">
-<!--            <keep-alive :include="BaseInfo">-->
-<!--              <router-view v-if="Base"></router-view>-->
-<!--            </keep-alive>-->
-<!--&lt;!&ndash;            <transition>&ndash;&gt;-->
-<!--&lt;!&ndash;            <keep-alive>&ndash;&gt;-->
-<!--&lt;!&ndash;              <router-view v-if="Base">&ndash;&gt;-->
-                <BaseInfo  v-if="Base"/>
-<!--&lt;!&ndash;              </router-view>&ndash;&gt;-->
-<!--&lt;!&ndash;            </keep-alive>&ndash;&gt;-->
-<!--&lt;!&ndash;              </transition>&ndash;&gt;-->
+          <el-tab-pane label="工商信息" name="base">
+            <BaseInfo v-if="Base" />
           </el-tab-pane>
-          <el-tab-pane  label="司法裁决" name="sifa">
-<!--            <transition>-->
-<!--            <keep-alive>-->
-<!--              <router-view v-if="Sifa">-->
-                <SiFaInfo  v-if="Sifa"/>
-<!--              </router-view>-->
-<!--            </keep-alive>-->
-<!--              </transition>-->
+          <el-tab-pane label="司法裁决" name="sifa">
+            <SiFaInfo v-if="Sifa" />
           </el-tab-pane>
-          <el-tab-pane  label="专业资质 荣誉称号" name="rych">
+          <el-tab-pane label="专业资质 荣誉称号" name="rych">
             <RychInfo v-if="Rych" />
           </el-tab-pane>
-          <el-tab-pane  label="主营产品" name="product">
+          <el-tab-pane label="业务/商品" name="product">
             <ProductInfo v-if="Product" />
           </el-tab-pane>
         </el-tabs>
@@ -106,7 +89,7 @@ export default {
     this.query.entname = this.entname
     this.query.phone = localStorage.getItem('phone')
     getBusinessScaleInfo(this.query).then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       this.businessScale = res.data.result.label
     })
   },

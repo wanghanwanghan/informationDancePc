@@ -26,6 +26,16 @@ export function getCompanyBasicInfo(data) {
     data
   })
 }
+
+// 获取股东信息 （老耿）
+export function getInvestorInfo(data) {
+  return request({
+    url: '/api/v1/xd/getInvestorInfo',
+    method: 'post',
+    data
+  })
+}
+
 // 获取股东信息
 export function getShareHolderInfo(data) {
   if (!data.pageSize) {
@@ -115,6 +125,14 @@ export function getSearchOption(data) {
 export function advancedSearch(data) {
   return request({
     url: '/api/v1/xd/advancedSearch',
+    method: 'post',
+    data
+  })
+}
+// 保存用户搜索历史
+export function saveSearchHistroy(data) {
+  return request({
+    url: '/api/v1/xd/saveSearchHistroy',
     method: 'post',
     data
   })

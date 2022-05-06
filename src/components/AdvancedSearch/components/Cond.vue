@@ -14,7 +14,7 @@
         </el-form>
       </div>
     </div>
-<!--    <div class="more-wrapper" @click="more">更多</div>-->
+    <div class="more-wrapper" @click="more">更多</div>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div style="padding-left: 20px">
-    <el-tag size="mini" type="success" class="biaoqian" >营收规模:{{ businessScale }}</el-tag>
-    <el-tag size="mini" class="biaoqian">企业规模:{{employmen}}</el-tag>
+    <el-tag size="mini" type="success" class="biaoqian" >企业规模:{{ businessScale }}</el-tag>
+    <el-tag size="mini" class="biaoqian">团队规模:{{employmen}}</el-tag>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
       employmen: '',
       query: {
         entname: '',
-        phone: ''
+        phone: '',
+        xd_id: ''
       }
     }
   },

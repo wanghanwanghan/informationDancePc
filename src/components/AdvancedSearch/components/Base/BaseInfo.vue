@@ -1,7 +1,8 @@
 <template>
+  <div>
   <div class="box1">
     <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
-    <div v-if=" list !== '' || list !== null" class="cont">
+    <div v-else-if=" list !== '' || list !== null" class="cont">
       <table>
         <tr>
           <td class="type1">法人代表:</td>
@@ -44,16 +45,63 @@
       </table>
     </div>
   </div>
+  <h3 style="margin-left:20px;">股东信息（{{ totalGd }}）</h3>
+    <div class="box2">
+      <!-- 变更信息 -->
+      <div class="cont" style="overflow: scroll;height: 200px; ">
+        <el-table
+          :data="Cpws"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            label="案号"
+            prop="caseno"
+            width="200"
+          />
+          <el-table-column
+            prop="title"
+            label="标题"
+            width="450"
+          />
+          <el-table-column
+            prop="sdate"
+            label="发布日期"
+            width="100"
+          />
+          <el-table-column
+            prop="pdate"
+            label="裁定日期"
+            width="100"
+          />
+          <el-table-column
+            prop="procedure"
+            label="审理程序"
+          />
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="totalGd"
+          @current-change="handleChangeGd"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { getCompanyBasicInfo } from '@/api/EnterpriseBackground'
+import { getCompanyBasicInfo, getInvestorInfo } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'BaseInfo',
   data() {
     return {
       list: '',
+      gudonglList: '',
+      totalGd: 0,
       query: {
         entName: '',
         phone: ''
@@ -69,6 +117,11 @@ export default {
     getCompanyBasicInfo(this.query).then(res => {
       // console.log(res.data)
       this.list = res.data.result
+    })
+    getInvestorInfo(this.query).then(res => {
+      // console.log(res.data)
+      this.gudonglList = res.data.result
+      this.totalGd = res.data.paging.total
     })
   }
 }

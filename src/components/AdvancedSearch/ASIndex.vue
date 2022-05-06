@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <div class="search-wrapper">
-      <el-input v-model="search_val" placeholder="请输入搜索内容" class="input-with-select">
+      <el-input id="search_input" v-model="search_val" placeholder="请根据企业名称，经营范围，业务商品等关键词内容搜索" class="input-with-select">
         <el-select slot="prepend" v-model="search_type" placeholder="请选择">
           <el-option label="智能搜索" value="1" />
         </el-select>
@@ -23,7 +23,7 @@
       <div v-show="show.cond_down" class="cond-down">
         <table class="search-table" cellspacing="15" style="width: 90%;margin: 0% 1%">
           <tr class="search-table-tr">
-            <td class="search-table-td bg-color">企业行业</td>
+            <td class="search-table-td bg-color">国标行业</td>
             <td class="search-table-td">
               <el-cascader
                 ref="nicid_ref"
@@ -61,7 +61,7 @@
           </tr>
         </table>
       </div>
-      <el-button type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
+      <el-button type="primary" @click="contrl_cond_down_show" id="gengduo">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
         <div class="cond-word">已选({{ tags.length }})</div>
         <div class="cond-cond">
@@ -77,21 +77,22 @@
 
           </el-tag>
         </div>
+        <div ><el-button style="background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam" >保存选择条件</el-button></div>
       </div>
     </div>
     <div class="search-res-wrapper">
-      <div class="search-res-count">为您找到 {{paginate.total}}+ 企业</div>
+      <div class="search-res-count">为您找到 {{ paginate.total }}+ 企业</div>
       <div class="pagination-wrapper">
-          <el-pagination
-            background
-            layout="total, prev, pager, next"
-            :total="paginate.total"
-            :page-size="20"
-            @current-change="pageChange">
-          </el-pagination>
+        <el-pagination
+          background
+          layout=" prev, pager, next"
+          :total="paginate.total"
+          :page-size="20"
+          @current-change="BasePageChange"
+        />
       </div>
       <el-divider content-position="center">查询结果</el-divider>
-      <div v-for="(item,index) in data" :key="index"  class="slide-div">
+      <div v-for="(item,index) in data" :key="index" class="slide-div">
         <div class="search-res-info">
           <div class="logo-wrapper">
             <img
@@ -102,33 +103,33 @@
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{item._source.name}}</div>
+                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{ item._source.name }}</div>
                 <div class="ent-label">
-                  <el-tag size="mini">标签一</el-tag>
-                  <el-tag size="mini" type="success">标签二</el-tag>
+                  <el-tag size="mini">企业规模:{{ item._source.businessScale }}</el-tag>
+                  <el-tag size="mini" type="success">团队规模:{{ item._source.employmen }}</el-tag>
                   <el-tag size="mini" type="info">标签三</el-tag>
                   <el-tag size="mini" type="warning">标签四</el-tag>
                   <el-tag size="mini" type="danger">标签五</el-tag>
                 </div>
-                <div class="ent-other-wrapper" >
+                <div class="ent-other-wrapper">
                   <el-row :gutter="10">
                     <el-col :span="2">
                       <div class="row-h">企业法人 :</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h under">{{item._source.legal_person_name}}</div>
+                      <div class="row-h under">{{ item._source.legal_person_name }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">成立日期 :</div>
                     </el-col>
                     <el-col :span="5">
-                      <div class="row-h under">{{item._source.from_time}}</div>
+                      <div class="row-h under">{{ item._source.from_time }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">企业网址 :</div>
                     </el-col>
                     <el-col :span="4">
-                      <div class="row-h under">{{item._source.web}}</div>
+                      <div class="row-h under">{{ item._source.web }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -136,19 +137,19 @@
                       <div class="row-h">企业规模 :</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h under">{{item._source.tuan_dui_ren_shu}}人</div>
+                      <div class="row-h under">{{ item._source.tuan_dui_ren_shu }}人</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">注册资本 :</div>
                     </el-col>
                     <el-col :span="5">
-                      <div class="row-h under">{{item._source.reg_capital}}</div>
+                      <div class="row-h under">{{ item._source.reg_capital }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">国标行业 :</div>
                     </el-col>
                     <el-col :span="10">
-                      <div class="row-h under">{{item._source.si_ji_fen_lei_full_name}}</div>
+                      <div class="row-h under">{{ item._source.si_ji_fen_lei_full_name }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -156,7 +157,7 @@
                       <div class="row-h">统一社会信用代码 :</div>
                     </el-col>
                     <el-col :span="100">
-                      <div class="row-h under">{{item._source.property1}}</div>
+                      <div class="row-h under">{{ item._source.property1 }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -164,12 +165,12 @@
                       <div class="row-h">经营地址 :</div>
                     </el-col>
                     <el-col :span="100">
-                      <div class="row-h under">{{item._source.tong_xun_di_zhi}}</div>
+                      <div class="row-h under">{{ item._source.tong_xun_di_zhi }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
                     <el-col :span="3">
-                      <div class="row-h">基本信息 (99)</div>
+                      <div class="row-h">工商信息 (99)</div>
                     </el-col>
                     <el-col :span="3">
                       <div class="row-h">工商详情 (99)</div>
@@ -182,13 +183,13 @@
               </div>
               <div class="action-wrapper">
                 <el-badge :value="12" class="item">
-                  <el-button size="small" type="primary">领取线索</el-button>
+                  <el-button size="small" type="primary">客户触达</el-button>
                 </el-badge>
               </div>
             </div>
             <div class="ent-desc-wrapper">
               <i class="el-icon-lightning" />
-              <div>百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科，百度百科</div>
+              <div>{{item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):''}}...</div>
             </div>
             <el-divider content-position="right" />
           </div>
@@ -210,8 +211,8 @@ import Drawer from '@/components/AdvancedSearch/components/Drawer'
 import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
-import { advancedSearch, getSearchOption } from '@/api/EnterpriseBackground'
-import {getBusinessScaleInfo} from "@/api/JudicialDecisions";
+import {advancedSearch, getSearchOption, saveSearchHistroy} from '@/api/EnterpriseBackground'
+import { getBusinessScaleInfo, getEmploymenInfo } from '@/api/JudicialDecisions'
 
 export default {
   name: 'ASIndex',
@@ -336,6 +337,11 @@ export default {
         this.list = list
       }
     })
+    var searchDiv = document.getElementById('search_input').nextElementSibling
+    searchDiv.style.backgroundColor = '#409EFF'
+    searchDiv.style.paddingLeft = '40px'
+    searchDiv.style.paddingRight = '40px'
+    searchDiv.getElementsByClassName('el-icon-search')[0].style.color = 'white'
   },
   methods: {
     mt_rand_int(length) {
@@ -360,6 +366,7 @@ export default {
     },
     contrl_cond_down_show() {
       this.show.cond_down = !this.show.cond_down
+      document.getElementById('gengduo').style.display = 'none'
     },
     setValue(val, id) {
       if (typeof val === 'object' && val.length > 0) {
@@ -378,7 +385,6 @@ export default {
       }
     },
     getDrawer(entname, xd_id) {
-
       localStorage.setItem('entName', entname)
       localStorage.setItem('xd_id', xd_id)
       this.drawer_data.entname = entname
@@ -449,24 +455,18 @@ export default {
       }
       this.search_cond.basic_regionid = address
     },
-    pageChange(index) {
+    BasePageChange(index) {
       this.submitForm(index)
     },
-    submit(){
+    submit() {
       this.submitForm(1)
     },
     submitForm(page) {
-      // console.log(this.search_val)
-      // console.log(this.value)
-      // console.log(JSON.stringify(this.value))
-      // console.log(this.value)
-      // console.log(this.tags)
-      // console.log(this.search_cond)
       var searchOption = []
       this.value.forEach((v, key) => {
         searchOption.push({
           pid: key,
-          value:v
+          value: v
         })
       })
       // console.log(searchOption)
@@ -478,11 +478,39 @@ export default {
       this.searchQuery.basic_nicid = this.search_cond.basic_nicid
       this.searchQuery.basic_opscope = this.search_cond.basic_opscope
       this.searchQuery.page = page
+      // console.log(12)
       advancedSearch(this.searchQuery).then(res => {
         if (res.data.code === 200) {
           this.paginate = res.data.paging
-          this.data = res.data.result
-          // console.log(res.data)
+          var dataV = res.data.result
+          // dataV.forEach((val, key) => {
+          //   console.log(val._source.name)
+          //   var biaoQianQuery = {}
+          //   biaoQianQuery.entname = val._source.name
+          //   biaoQianQuery.phone = localStorage.getItem('phone')
+          //   biaoQianQuery.xd_id = val._source.xd_id
+          //   console.log(biaoQianQuery)
+          //   getBusinessScaleInfo(biaoQianQuery).then(resv => {
+          //     if (resv.data.code === 200) {
+          //       dataV[key]._source.businessScale = resv.data.result.label
+          //     }
+          //   })
+          //   getEmploymenInfo(biaoQianQuery).then(resv2 => {
+          //     if (resv2.data.code === 200) {
+          //       dataV[key]._source.employmen = resv2.data.result.num
+          //     }
+          //   })
+          // })
+          this.data = dataV
+
+          console.log(this.data)
+        }
+      })
+    },
+    saveParam() {
+      saveSearchHistroy(this.searchQuery).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success('保存成功')
         }
       })
     }
@@ -638,4 +666,10 @@ export default {
 .row-h{
   font-size: 15px
 }
+//#search_input{
+  .el-input-group__append{
+    background-color: blue;
+
+  }
+//}
 </style>
