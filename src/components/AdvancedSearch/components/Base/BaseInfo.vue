@@ -49,36 +49,36 @@
     <div class="box2">
       <!-- 变更信息 -->
       <div class="cont" style="overflow: scroll;height: 200px; ">
-        <el-table
-          :data="Cpws"
-          border
-          style="width: 100%"
-        >
-          <el-table-column
-            label="案号"
-            prop="caseno"
-            width="200"
-          />
-          <el-table-column
-            prop="title"
-            label="标题"
-            width="450"
-          />
-          <el-table-column
-            prop="sdate"
-            label="发布日期"
-            width="100"
-          />
-          <el-table-column
-            prop="pdate"
-            label="裁定日期"
-            width="100"
-          />
-          <el-table-column
-            prop="procedure"
-            label="审理程序"
-          />
-        </el-table>
+<!--        <el-table-->
+<!--          :data="Cpws"-->
+<!--          border-->
+<!--          style="width: 100%"-->
+<!--        >-->
+<!--          <el-table-column-->
+<!--            label="案号"-->
+<!--            prop="caseno"-->
+<!--            width="200"-->
+<!--          />-->
+<!--          <el-table-column-->
+<!--            prop="title"-->
+<!--            label="标题"-->
+<!--            width="450"-->
+<!--          />-->
+<!--          <el-table-column-->
+<!--            prop="sdate"-->
+<!--            label="发布日期"-->
+<!--            width="100"-->
+<!--          />-->
+<!--          <el-table-column-->
+<!--            prop="pdate"-->
+<!--            label="裁定日期"-->
+<!--            width="100"-->
+<!--          />-->
+<!--          <el-table-column-->
+<!--            prop="procedure"-->
+<!--            label="审理程序"-->
+<!--          />-->
+<!--        </el-table>-->
       </div>
       <div class="pagination">
         <el-pagination
