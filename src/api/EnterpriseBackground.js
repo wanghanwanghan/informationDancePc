@@ -36,6 +36,14 @@ export function getInvestorInfo(data) {
   })
 }
 
+// 获取企业曾用名（老耿）
+export function getNamesInfo(data) {
+  return request({
+    url: '/api/v1/xd/getNamesInfo',
+    method: 'post',
+    data
+  })
+}
 // 获取股东信息
 export function getShareHolderInfo(data) {
   if (!data.pageSize) {

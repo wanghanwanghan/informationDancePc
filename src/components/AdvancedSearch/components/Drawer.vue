@@ -7,7 +7,9 @@
     :with-header="false"
   >
     <div class="bg">
-      <div class="title-wrapper">{{ entname }}</div>
+<!--      <div class="title-wrapper">{{ entname }}-->
+<!--        <span :title="name" style="padding-left: 25px;font-size: 14px;color: #409EFF;cursor: pointer;">曾用名</span>-->
+<!--      </div>-->
       <BiaoQianInfo />
       <div class="nav-wrapper">
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="entHandleClick">
@@ -36,6 +38,7 @@ import ProductInfo from '@/components/AdvancedSearch/components/Product/ProductI
 import RychInfo from '@/components/AdvancedSearch/components/Rych/RychInfo'
 import { getBusinessScaleInfo } from '@/api/JudicialDecisions'
 import BiaoQianInfo from '@/components/AdvancedSearch/components/BiaoQianInfo'
+import { getNamesInfo } from '@/api/EnterpriseBackground'
 export default {
   name: 'Drawer',
   components: {

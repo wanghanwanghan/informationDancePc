@@ -7,6 +7,7 @@
         </el-select>
         <el-button slot="append" icon="el-icon-search" @click="submit" />
       </el-input>
+      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam">保存选择条件</el-button>
     </div>
     <div class="cond-wrapper">
       <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
@@ -29,6 +30,19 @@
                 ref="nicid_ref"
                 class="search-table-input"
                 :options="nicid"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                collapse-tags
+                clearable
+                @change="getCheckedNodes"
+              />
+            </td>
+            <td class="search-table-td bg-color">战略新兴产业</td>
+            <td class="search-table-td">
+              <el-cascader
+                ref="jlxxcy_ref"
+                class="search-table-input"
+                :options="jlxxcy"
                 :props="{multiple: true}"
                 :show-all-levels="false"
                 collapse-tags
@@ -61,7 +75,7 @@
           </tr>
         </table>
       </div>
-      <el-button type="primary" @click="contrl_cond_down_show" id="gengduo">更多筛选项目</el-button>
+      <el-button id="gengduo" type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
         <div class="cond-word">已选({{ tags.length }})</div>
         <div class="cond-cond">
@@ -77,7 +91,6 @@
 
           </el-tag>
         </div>
-        <div ><el-button style="background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam" >保存选择条件</el-button></div>
       </div>
     </div>
     <div class="search-res-wrapper">
@@ -105,7 +118,7 @@
               <div class="info-wrapper">
                 <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{ item._source.name }}</div>
                 <div class="ent-label">
-                  <el-tag size="mini">企业规模:{{ item._source.businessScale }}</el-tag>
+                  <el-tag v-if="item._source.ying_shou_gui_mo!==''" size="mini">{{ item._source.ying_shou_gui_mo }}</el-tag>
                   <el-tag size="mini" type="success">团队规模:{{ item._source.employmen }}</el-tag>
                   <el-tag size="mini" type="info">标签三</el-tag>
                   <el-tag size="mini" type="warning">标签四</el-tag>
@@ -153,11 +166,17 @@
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
-                    <el-col :span="4">
+                    <el-col :span="3">
                       <div class="row-h">统一社会信用代码 :</div>
                     </el-col>
-                    <el-col :span="100">
+                    <el-col :span="8">
                       <div class="row-h under">{{ item._source.property1 }}</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">经营状态 :</div>
+                    </el-col>
+                    <el-col :span="2">
+                      <div class="row-h under">{{ item._source.reg_status }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
@@ -168,17 +187,17 @@
                       <div class="row-h under">{{ item._source.tong_xun_di_zhi }}</div>
                     </el-col>
                   </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="3">
-                      <div class="row-h">工商信息 (99)</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h">工商详情 (99)</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h">招聘信息 (99)</div>
-                    </el-col>
-                  </el-row>
+<!--                  <el-row :gutter="10">-->
+<!--                    <el-col :span="3">-->
+<!--                      <div class="row-h" style="cursor: pointer;" @click="getDrawer(item._source.name,item._source.xd_id)">工商信息</div>-->
+<!--                    </el-col>-->
+<!--                    <el-col :span="3">-->
+<!--                      <div class="row-h" style="cursor: pointer;">业务/商品</div>-->
+<!--                    </el-col>-->
+<!--                    <el-col :span="3">-->
+<!--                      <div class="row-h" style="cursor: pointer;">招聘信息 (99)</div>-->
+<!--                    </el-col>-->
+<!--                  </el-row>-->
                 </div>
               </div>
               <div class="action-wrapper">
@@ -189,7 +208,7 @@
             </div>
             <div class="ent-desc-wrapper">
               <i class="el-icon-lightning" />
-              <div>{{item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):''}}...</div>
+              <div>{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):'' }}...</div>
             </div>
             <el-divider content-position="right" />
           </div>
@@ -211,8 +230,8 @@ import Drawer from '@/components/AdvancedSearch/components/Drawer'
 import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
-import {advancedSearch, getSearchOption, saveSearchHistroy} from '@/api/EnterpriseBackground'
-import { getBusinessScaleInfo, getEmploymenInfo } from '@/api/JudicialDecisions'
+import { jlxxcy } from '@/data/jlxxcy'
+import { advancedSearch, getSearchOption, saveSearchHistroy } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'ASIndex',
@@ -220,6 +239,7 @@ export default {
   props: {},
   data() {
     return {
+      name: '',
       loading: true,
       data: [],
       list: [],
@@ -249,6 +269,7 @@ export default {
       address: address,
       sonum: sonum,
       nicid: nicid,
+      jlxxcy: jlxxcy,
       search_cond: {
         page: 1,
         phone: localStorage.getItem('phone'),
@@ -262,6 +283,7 @@ export default {
         basic_uniscid: '',
         basic_ygrs: '',
         basic_regionid: '',
+        basic_jlxxcyid: '',
         jingying_vc_round: '',
         basic_opscope: '',
         basic_status: ''
@@ -276,7 +298,8 @@ export default {
         searchOption: '',
         basic_nicid: '',
         basic_opscope: '',
-        basic_regionid: ''
+        basic_regionid: '',
+        basic_jlxxcyid: '',
       },
       paginate: {
         total: 0
@@ -313,10 +336,8 @@ export default {
     getSearchOption(this.query).then(res => {
       const list = []
       if (res.data.code === 200) {
-        // console.log(res.data.result)
         res.data.result.forEach((value) => {
           var temp = []
-          // console.log(value.data)
           for (var i in value.data) {
             temp.push({
               id: i,
@@ -454,6 +475,17 @@ export default {
         address = ''
       }
       this.search_cond.basic_regionid = address
+      let jlxxcy = this.$refs.jlxxcy_ref.getCheckedNodes(true)
+      if (jlxxcy[0]) {
+        let jlxxcy_str = ''
+        jlxxcy.forEach(item => {
+          jlxxcy_str += item.value + ','
+        })
+        jlxxcy = jlxxcy_str.trim()
+      } else {
+        jlxxcy = ''
+      }
+      this.search_cond.basic_jlxxcyid = jlxxcy
     },
     BasePageChange(index) {
       this.submitForm(index)
@@ -475,6 +507,7 @@ export default {
       this.searchQuery.searchText = this.search_val
       this.searchQuery.searchOption = JSON.stringify(searchOption)
       this.searchQuery.basic_regionid = this.search_cond.basic_regionid
+      this.searchQuery.basic_jlxxcyid = this.search_cond.basic_jlxxcyid
       this.searchQuery.basic_nicid = this.search_cond.basic_nicid
       this.searchQuery.basic_opscope = this.search_cond.basic_opscope
       this.searchQuery.page = page
@@ -502,8 +535,6 @@ export default {
           //   })
           // })
           this.data = dataV
-
-          console.log(this.data)
         }
       })
     },
@@ -533,7 +564,9 @@ export default {
       background-color: #fff;
     }
   }
-
+  .input-with-select{
+    width:90%;
+  }
   .cond-wrapper {
     display: flex;
     flex-direction: column;

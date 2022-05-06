@@ -214,6 +214,14 @@ export function getBusinessScaleInfo(data) {
     data
   })
 }
+// 获取企业tag
+export function getTagInfo(data) {
+  return request({
+    url: '/api/v1/xd/getTagInfo',
+    method: 'post',
+    data
+  })
+}
 
 // 获取主营产品
 export function getMainProducts(data) {

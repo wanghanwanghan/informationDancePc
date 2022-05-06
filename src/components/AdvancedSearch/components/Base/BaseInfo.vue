@@ -1,84 +1,92 @@
 <template>
   <div>
-  <div class="box1">
-    <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
-    <div v-else-if=" list !== '' || list !== null" class="cont">
-      <table>
-        <tr>
-          <td class="type1">法人代表:</td>
-          <td>{{ list.legal_person_name }}</td>
-          <td class="type2">企业名称:</td>
-          <td>{{ list.name }}</td>
-        </tr>
-        <tr>
-          <td>营业状态:</td>
-          <td>{{ list.reg_status }}</td>
-          <td>统一社会信用代码:</td>
-          <td>{{ list.property1 }}</td>
-        </tr>
-        <tr>
-          <td>公司类型:</td>
-          <td>{{ list.company_org_type }}</td>
-          <td>注册资本（万元）:</td>
-          <td>{{ list.reg_capital }}</td>
-        </tr>
-        <tr>
-          <td>成立日期:</td>
-          <td>{{ list.from_time }}</td>
-          <td>营业期限:</td>
-          <td>{{ list.from_time }}至{{ list.to_time === '0000-00-00 00:00:00' ? '无固定期限' : list.to_time }}</td>
-        </tr>
-        <tr>
-          <td>核准日期:</td>
-          <td>{{ list.approved_time }}</td>
-          <td>登记机关:</td>
-          <td>{{ list.reg_institute }}</td>
-        </tr>
-        <tr>
-          <td>注册地址:</td>
-          <td colspan="3">{{ list.reg_location }}</td>
-        </tr>
-        <tr>
-          <td>经营范围:</td>
-          <td colspan="3">{{ list.business_scope }}</td>
-        </tr>
-      </table>
+    <div class="box1">
+      <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
+      <div v-else-if=" list !== '' || list !== null" class="cont">
+        <table>
+          <tr>
+            <td class="type1">法人代表:</td>
+            <td>{{ list.legal_person_name }}</td>
+            <td class="type2">企业名称:</td>
+            <td>{{ list.name }}</td>
+          </tr>
+          <tr>
+            <td>营业状态:</td>
+            <td>{{ list.reg_status }}</td>
+            <td>统一社会信用代码:</td>
+            <td>{{ list.property1 }}</td>
+          </tr>
+          <tr>
+            <td>公司类型:</td>
+            <td>{{ list.company_org_type }}</td>
+            <td>注册资本（万元）:</td>
+            <td>{{ list.reg_capital }}</td>
+          </tr>
+          <tr>
+            <td>成立日期:</td>
+            <td>{{ list.from_time }}</td>
+            <td>营业期限:</td>
+            <td>{{ list.from_time }}至{{ list.to_time === '0000-00-00 00:00:00' ? '无固定期限' : list.to_time }}</td>
+          </tr>
+          <tr>
+            <td>核准日期:</td>
+            <td>{{ list.approved_time }}</td>
+            <td>登记机关:</td>
+            <td>{{ list.reg_institute }}</td>
+          </tr>
+          <tr>
+            <td>注册地址:</td>
+            <td colspan="3">{{ list.reg_location }}</td>
+          </tr>
+          <tr>
+            <td>经营范围:</td>
+            <td colspan="3">{{ list.business_scope }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-  <h3 style="margin-left:20px;">股东信息（{{ totalGd }}）</h3>
+    <h3 style="margin-left:20px;">股东信息（{{ totalGd }}）</h3>
     <div class="box2">
       <!-- 变更信息 -->
       <div class="cont" style="overflow: scroll;height: 200px; ">
-<!--        <el-table-->
-<!--          :data="Cpws"-->
-<!--          border-->
-<!--          style="width: 100%"-->
-<!--        >-->
-<!--          <el-table-column-->
-<!--            label="案号"-->
-<!--            prop="caseno"-->
-<!--            width="200"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            prop="title"-->
-<!--            label="标题"-->
-<!--            width="450"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            prop="sdate"-->
-<!--            label="发布日期"-->
-<!--            width="100"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            prop="pdate"-->
-<!--            label="裁定日期"-->
-<!--            width="100"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            prop="procedure"-->
-<!--            label="审理程序"-->
-<!--          />-->
-<!--        </el-table>-->
+        <el-table
+          :data="gudonglList"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            label="姓名"
+            prop="name"
+            width="100"
+          />
+          <el-table-column
+            prop="investor_type"
+            label="股东类型"
+            width="100"
+          />
+          <el-table-column
+            prop="certNo"
+            label="证照/证件号码"
+            width="100"
+          />
+          <el-table-column
+            prop="certName"
+            label="证照/证件类型"
+            width="100"
+          />
+          <el-table-column
+            prop="capitalStr"
+            label="认缴资金"
+          />
+          <el-table-column
+            prop="capitalActlStr"
+            label="实缴资金"
+          />
+          <el-table-column
+            prop="amount"
+            label="投资金额"
+          />
+        </el-table>
       </div>
       <div class="pagination">
         <el-pagination
@@ -100,6 +108,7 @@ export default {
   data() {
     return {
       list: '',
+      name: '',
       gudonglList: '',
       totalGd: 0,
       query: {
@@ -120,9 +129,36 @@ export default {
     })
     getInvestorInfo(this.query).then(res => {
       // console.log(res.data)
-      this.gudonglList = res.data.result
+      var gudonglList = res.data.result
+      gudonglList.forEach((val, key) => {
+        var capitalActl = ''
+        var capital = ''
+        val.capitalActlData.forEach((v, k) => {
+          if (capitalActl.length < 1) {
+            capitalActl = v.amomon
+          } else {
+            capitalActl = capitalActl + ',' + v.amomon
+          }
+        })
+        val.capitalData.forEach((v, k) => {
+          if (capital.length < 1) {
+            capital = v.amomon
+          } else {
+            capital = capital + ',' + v.amomon
+          }
+        })
+        gudonglList[key].capitalActlStr = capitalActl
+        gudonglList[key].capitalStr = capital
+      })
+      this.gudonglList = gudonglList
+      console.log(this.gudonglList)
       this.totalGd = res.data.paging.total
     })
+  },
+  methods: {
+    handleChangeGd(){
+
+    }
   }
 }
 </script>
