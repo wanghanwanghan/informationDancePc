@@ -22,7 +22,7 @@
         />
       </div>
       <div v-show="show.cond_down" class="cond-down">
-        <table class="search-table" cellspacing="15" style="width: 100%;padding-left: 12px;">
+        <table class="search-table" cellspacing="15" style="width: 100%;padding-left: 20px;">
           <tr class="search-table-tr">
             <td class="search-table-td bg-color">国标行业</td>
             <td class="search-table-td">
