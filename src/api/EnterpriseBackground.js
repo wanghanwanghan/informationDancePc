@@ -36,6 +36,15 @@ export function getInvestorInfo(data) {
   })
 }
 
+// 获取企业主要成员 （老耿）
+export function getStaffInfo(data) {
+  return request({
+    url: '/api/v1/xd/getStaffInfo',
+    method: 'post',
+    data
+  })
+}
+
 // 获取企业曾用名（老耿）
 export function getNamesInfo(data) {
   return request({

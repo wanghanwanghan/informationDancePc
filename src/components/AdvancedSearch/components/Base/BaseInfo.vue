@@ -1,5 +1,5 @@
-<template>
-  <div>
+<template  style="overflow: scroll ">
+  <div style="overflow: scroll;height: 600px; ">
     <div class="box1">
       <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
       <div v-else-if=" list !== '' || list !== null" class="cont">
@@ -97,11 +97,39 @@
         />
       </div>
     </div>
+    <h3 style="margin-left:20px;">主要成员（{{ StaffInfoTotal }}）</h3>
+    <div class="box2">
+      <!-- 变更信息 -->
+      <div class="cont" style="overflow: scroll;height: 200px; ">
+        <el-table
+          :data="StaffInfoList"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            label="职位"
+            prop="staff_type_name"
+          />
+          <el-table-column
+            prop="name"
+            label="姓名"
+          />
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="StaffInfoTotal"
+          @current-change="handleChangeGd"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { getCompanyBasicInfo, getInvestorInfo } from '@/api/EnterpriseBackground'
+import { getCompanyBasicInfo, getInvestorInfo, getStaffInfo } from '@/api/EnterpriseBackground'
 
 export default {
   name: 'BaseInfo',
@@ -110,6 +138,8 @@ export default {
       list: '',
       name: '',
       gudonglList: '',
+      StaffInfoList: '',
+      StaffInfoTotal: 0,
       totalGd: 0,
       query: {
         entName: '',
@@ -126,6 +156,12 @@ export default {
     getCompanyBasicInfo(this.query).then(res => {
       // console.log(res.data)
       this.list = res.data.result
+    })
+    getStaffInfo(this.query).then(res => {
+      if (res.data.code === 200) {
+        this.StaffInfoList = res.data.result
+        this.StaffInfoTotal = res.data.paging.total
+      }
     })
     getInvestorInfo(this.query).then(res => {
       // console.log(res.data)
@@ -156,7 +192,7 @@ export default {
     })
   },
   methods: {
-    handleChangeGd(){
+    handleChangeGd() {
 
     }
   }

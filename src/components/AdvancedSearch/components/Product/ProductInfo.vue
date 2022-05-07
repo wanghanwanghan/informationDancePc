@@ -1,131 +1,131 @@
 <template>
   <div>
-  <main class="et-main" style="overflow: scroll;height: 600px; ">
-  <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
-    <h3 style="margin-left:20px;">Andoriod</h3>
-    <div class="box2" style="overflow: scroll;height: 200px; ">
-      <div class="cont">
-        <el-table
-          :data="listAndoriod"
-          border
-          style="width: 100%"
-        >
-          <el-table-column
-            align="center"
-            label="序号"
-            type="index"
-            width="50"
-          />
-          <el-table-column
-            align="center"
-            prop="appname"
-            label="APP名称"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="ENTNAME"
-            label="开发者/开发公司"
-            width="100"
-          />
-          <el-table-column
-            align="center"
-            prop="atype"
-            label="APP类别"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="language"
-            label="语言"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="appversion"
-            label="版本号"
-            width="180"
-          />
-          <el-table-column
-            align="center"
-            prop="systemre"
-            label="系统要求"
-          />
-        </el-table>
-      </div>
-      <div class="pagination">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="totalAndoriod"
-          @current-change="getListAndoriod"
-        />
-      </div>
-    </div>
-  </section>
-  <section  class="et-slide" style="min-height:100px;">
-    <h3 style="margin-left:20px;">IOS</h3>
-    <div class="box2" style="overflow: scroll;height: 200px; ">
-      <div class="cont">
-        <el-table
-          :data="listIOS"
-          border
-          style="width: 100%"
-        >
-          <el-table-column
-            align="center"
-            label="序号"
-            type="index"
-            width="50"
-          />
-          <el-table-column
-            align="center"
-            prop="appname"
-            label="APP名称"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="ENTNAME"
-            label="开发者/开发公司"
-            width="100"
-          />
-          <el-table-column
-            align="center"
-            prop="atype"
-            label="APP类别"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="language"
-            label="语言"
-            width="200"
-          />
-          <el-table-column
-            align="center"
-            prop="appversion"
-            label="版本号"
-            width="180"
-          />
-          <el-table-column
-            align="center"
-            prop="systemre"
-            label="系统要求"
-          />
-        </el-table>
-      </div>
-      <div class="pagination">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="totalIOS"
-          @current-change="getListIOS"
-        />
-      </div>
-    </div>
-  </section>
-  </main>
+    <main class="et-main" style="overflow: scroll;height: 600px; ">
+      <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
+        <h3 style="margin-left:20px;">Android</h3>
+        <div class="box2" style="overflow: scroll;height: 200px; ">
+          <div class="cont">
+            <el-table
+              :data="listAndoriod"
+              border
+              style="width: 100%"
+            >
+              <el-table-column
+                align="center"
+                label="序号"
+                type="index"
+                width="50"
+              />
+              <el-table-column
+                align="center"
+                prop="appname"
+                label="APP名称"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="ENTNAME"
+                label="开发者/开发公司"
+                width="100"
+              />
+              <el-table-column
+                align="center"
+                prop="atype"
+                label="APP类别"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="language"
+                label="语言"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="appversion"
+                label="版本号"
+                width="180"
+              />
+              <el-table-column
+                align="center"
+                prop="systemre"
+                label="系统要求"
+              />
+            </el-table>
+          </div>
+          <div class="pagination">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="totalAndoriod"
+              @current-change="getListAndoriod"
+            />
+          </div>
+        </div>
+      </section>
+      <section class="et-slide" style="min-height:100px;">
+        <h3 style="margin-left:20px;">IOS</h3>
+        <div class="box2" style="overflow: scroll;height: 200px; ">
+          <div class="cont">
+            <el-table
+              :data="listIOS"
+              border
+              style="width: 100%"
+            >
+              <el-table-column
+                align="center"
+                label="序号"
+                type="index"
+                width="50"
+              />
+              <el-table-column
+                align="center"
+                prop="appname"
+                label="APP名称"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="ENTNAME"
+                label="开发者/开发公司"
+                width="100"
+              />
+              <el-table-column
+                align="center"
+                prop="atype"
+                label="APP类别"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="language"
+                label="语言"
+                width="200"
+              />
+              <el-table-column
+                align="center"
+                prop="appversion"
+                label="版本号"
+                width="180"
+              />
+              <el-table-column
+                align="center"
+                prop="systemre"
+                label="系统要求"
+              />
+            </el-table>
+          </div>
+          <div class="pagination">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="totalIOS"
+              @current-change="getListIOS"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
 

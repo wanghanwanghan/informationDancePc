@@ -22,7 +22,7 @@
         />
       </div>
       <div v-show="show.cond_down" class="cond-down">
-        <table class="search-table" cellspacing="15" style="width: 90%;margin: 0% 1%">
+        <table class="search-table" cellspacing="15" style="width: 100%;">
           <tr class="search-table-tr">
             <td class="search-table-td bg-color">国标行业</td>
             <td class="search-table-td">
@@ -118,11 +118,7 @@
               <div class="info-wrapper">
                 <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{ item._source.name }}</div>
                 <div class="ent-label">
-                  <el-tag v-if="item._source.ying_shou_gui_mo!==''" size="mini">{{ item._source.ying_shou_gui_mo }}</el-tag>
-                  <el-tag size="mini" type="success">团队规模:{{ item._source.employmen }}</el-tag>
-                  <el-tag size="mini" type="info">标签三</el-tag>
-                  <el-tag size="mini" type="warning">标签四</el-tag>
-                  <el-tag size="mini" type="danger">标签五</el-tag>
+                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini" >{{ v }}</el-tag>
                 </div>
                 <div class="ent-other-wrapper">
                   <el-row :gutter="10">
@@ -166,16 +162,16 @@
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
-                    <el-col :span="3">
+                    <el-col :span="4">
                       <div class="row-h">统一社会信用代码 :</div>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="7">
                       <div class="row-h under">{{ item._source.property1 }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">经营状态 :</div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="6">
                       <div class="row-h under">{{ item._source.reg_status }}</div>
                     </el-col>
                   </el-row>
@@ -243,6 +239,7 @@ export default {
       loading: true,
       data: [],
       list: [],
+      tagStyleMap: ['', 'success', 'info', 'warning', 'danger', '', 'success', 'info', 'warning'],
       drawer_data: {
         entname: '',
         xd_id: 0
