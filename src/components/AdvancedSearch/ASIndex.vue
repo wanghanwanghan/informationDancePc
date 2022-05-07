@@ -22,7 +22,7 @@
         />
       </div>
       <div v-show="show.cond_down" class="cond-down">
-        <table class="search-table" cellspacing="15" style="width: 100%;">
+        <table class="search-table" cellspacing="15" style="width: 100%;padding-left: 12px;">
           <tr class="search-table-tr">
             <td class="search-table-td bg-color">国标行业</td>
             <td class="search-table-td">
@@ -197,7 +197,7 @@
                 </div>
               </div>
               <div class="action-wrapper">
-                <el-badge :value="12" class="item">
+                <el-badge  class="item">
                   <el-button size="small" type="primary">客户触达</el-button>
                 </el-badge>
               </div>

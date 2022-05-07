@@ -1,9 +1,9 @@
 <template>
   <div>
-    <main class="et-main" style="overflow: scroll;height: 600px; ">
+    <main class="et-main" style="overflow: scroll;height: 630px; ">
       <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
         <h3 style="margin-left:20px;">Android</h3>
-        <div class="box2" style="overflow: scroll;height: 200px; ">
+        <div class="box2" style="overflow: scroll;height: 230px; ">
           <div class="cont">
             <el-table
               :data="listAndoriod"
@@ -65,7 +65,7 @@
       </section>
       <section class="et-slide" style="min-height:100px;">
         <h3 style="margin-left:20px;">IOS</h3>
-        <div class="box2" style="overflow: scroll;height: 200px; ">
+        <div class="box2" style="overflow: scroll;height: 240px; ">
           <div class="cont">
             <el-table
               :data="listIOS"
@@ -168,8 +168,8 @@ export default {
   computed: {},
   // watch: {},
   mounted() {
-    this.getListAndoriod()
-    this.getListIOS()
+    this.getListAndoriod(1)
+    this.getListIOS(1)
   },
   methods: {
     getListAndoriod(val) {
@@ -189,7 +189,7 @@ export default {
       this.queryIOS.type = 'ios'
       this.queryIOS.xd_id = localStorage.getItem('xd_id')
       this.queryIOS.phone = localStorage.getItem('phone')
-      getMainProducts(this.queryAndoriod).then(res => {
+      getMainProducts(this.queryIOS).then(res => {
         if (res.data.code === 200) {
           this.listIOS = res.data.result
           this.totalIOS = res.data.paging.total

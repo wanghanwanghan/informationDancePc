@@ -121,7 +121,7 @@
           background
           layout="prev, pager, next"
           :total="StaffInfoTotal"
-          @current-change="handleChangeGd"
+          @current-change="handleChangeS"
         />
       </div>
     </div>
@@ -144,6 +144,18 @@ export default {
       query: {
         entName: '',
         phone: ''
+      },
+      queryS: {
+        page: 1,
+        pageSize: 10,
+        entName: '',
+        phone: ''
+      },
+      queryGd: {
+        entName: '',
+        page: 1,
+        pageSize: 10,
+        phone: ''
       }
     }
   },
@@ -157,43 +169,58 @@ export default {
       // console.log(res.data)
       this.list = res.data.result
     })
-    getStaffInfo(this.query).then(res => {
-      if (res.data.code === 200) {
-        this.StaffInfoList = res.data.result
-        this.StaffInfoTotal = res.data.paging.total
-      }
-    })
-    getInvestorInfo(this.query).then(res => {
-      // console.log(res.data)
-      var gudonglList = res.data.result
-      gudonglList.forEach((val, key) => {
-        var capitalActl = ''
-        var capital = ''
-        val.capitalActlData.forEach((v, k) => {
-          if (capitalActl.length < 1) {
-            capitalActl = v.amomon
-          } else {
-            capitalActl = capitalActl + ',' + v.amomon
-          }
-        })
-        val.capitalData.forEach((v, k) => {
-          if (capital.length < 1) {
-            capital = v.amomon
-          } else {
-            capital = capital + ',' + v.amomon
-          }
-        })
-        gudonglList[key].capitalActlStr = capitalActl
-        gudonglList[key].capitalStr = capital
-      })
-      this.gudonglList = gudonglList
-      console.log(this.gudonglList)
-      this.totalGd = res.data.paging.total
-    })
+    this.getStaffInfoList(1)
+    this.getGdList(1)
   },
   methods: {
-    handleChangeGd() {
-
+    getStaffInfoList(val) {
+      this.queryS.page = val
+      this.queryS.xd_id = localStorage.getItem('xd_id')
+      this.queryS.phone = localStorage.getItem('phone')
+      getStaffInfo(this.queryS).then(res => {
+        if (res.data.code === 200) {
+          this.StaffInfoList = res.data.result
+          this.StaffInfoTotal = res.data.paging.total
+        }
+      })
+    },
+    handleChangeS(val){
+      this.getStaffInfoList(val)
+    },
+    handleChangeGd(val) {
+      this.getGdList(val)
+    },
+    getGdList(val) {
+      this.queryGd.page = val
+      this.queryGd.xd_id = localStorage.getItem('xd_id')
+      this.queryGd.phone = localStorage.getItem('phone')
+      getInvestorInfo(this.queryGd).then(res => {
+        // console.log(res.data)
+        var gudonglList = res.data.result
+        gudonglList.forEach((val, key) => {
+          var capitalActl = ''
+          var capital = ''
+          val.capitalActlData.forEach((v, k) => {
+            if (capitalActl.length < 1) {
+              capitalActl = v.amomon
+            } else {
+              capitalActl = capitalActl + ',' + v.amomon
+            }
+          })
+          val.capitalData.forEach((v, k) => {
+            if (capital.length < 1) {
+              capital = v.amomon
+            } else {
+              capital = capital + ',' + v.amomon
+            }
+          })
+          gudonglList[key].capitalActlStr = capitalActl
+          gudonglList[key].capitalStr = capital
+        })
+        this.gudonglList = gudonglList
+        console.log(this.gudonglList)
+        this.totalGd = res.data.paging.total
+      })
     }
   }
 }
