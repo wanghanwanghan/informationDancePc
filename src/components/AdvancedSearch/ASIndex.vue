@@ -399,7 +399,7 @@ export default {
         const vArr = val.split('-')
         this.value[vArr[0]] = [vArr[1]]
       } else {
-        this.$delete(this.value, id)
+        this.value[id] = []
       }
     },
     getDrawer(entname, xd_id) {
@@ -437,9 +437,9 @@ export default {
             val.list.forEach((v) => {
               checkV.forEach((cv) => {
                 const id = v.id + ''
-                // console.log(cv + '--' + id + '--' + val.id + '--' + key)
+                console.log(cv + '--' + id + '--' + val.id + '--' + key)
                 if (cv === id) {
-                  // console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
+                  console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
                   this.tags.push({ name: title + '-' + v.name, type: val.id + '-' + v.id })
                 }
               })

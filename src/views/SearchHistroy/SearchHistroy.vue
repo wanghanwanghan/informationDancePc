@@ -1,24 +1,19 @@
 <template>
   <div>
     <div class="cont">
-
       <div class="panel panel-info myShadowFather" style="margin-top: 60px">
         <el-page-header content="搜索记录" @back="goBack" />
         <el-table :data="Rlist" border fit highlight-current-row style="width: 100%;margin-top:20px;">
-
-          <el-table-column  align="center" label="手机号">
+          <el-table-column align="center" label="手机号">
             <template slot-scope="{row}">
               <span>{{ row.post_data_arr.phone }}</span>
             </template>
           </el-table-column>
-
-          <el-table-column  align="center" label="查询内容">
+          <el-table-column align="center" label="查询内容">
             <template slot-scope="{row}">
               <span>{{ row.post_data }}</span>
             </template>
           </el-table-column>
-
-
           <el-table-column align="center" label="创建时间">
             <template slot-scope="{row}">
               <span>{{ row.created_at | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
@@ -38,7 +33,7 @@
   </div>
 </template>
 <script>
-import {getSearchHistory, list} from '@/api/article'
+import { getSearchHistory } from '@/api/article'
 import { parseTime } from '@/utils/index'
 export default {
   name: 'SearchHistroy',
