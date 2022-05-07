@@ -23,6 +23,12 @@
             <span>审核进度</span>
           </div>
         </router-link>
+        <router-link to="/SearchHistroy">
+          <div class="list">
+            <span>筛选条件</span>
+          </div>
+        </router-link>
+
         <div class="list" style="display: flex;justify-content:space-between;">
           <span>客服</span><span style="color:#409EFF;margin-right:30px">400 068 7266</span>
         </div>

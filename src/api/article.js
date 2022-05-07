@@ -199,6 +199,15 @@ export function list(data) {
   })
 }
 
+// 智能搜索的搜索记录
+export function getSearchHistory(data) {
+  return request({
+    url: '/api/v1/xd/getSearchHistory',
+    method: 'post',
+    data
+  })
+}
+
 // 充值金额
 export function goods(data) {
   return request({
