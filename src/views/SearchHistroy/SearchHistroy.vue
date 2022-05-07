@@ -9,9 +9,9 @@
               <span>{{ row.post_data_arr.phone }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="查询内容">
+          <el-table-column align="center" label="名称">
             <template slot-scope="{row}">
-              <span>{{ row.post_data }}</span>
+              <span>{{ row.query }}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="创建时间">
