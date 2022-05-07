@@ -26,6 +26,22 @@ export function getCompanyBasicInfo(data) {
     data
   })
 }
+// 获取Es里企业信息
+export function getEsBasicInfo(data) {
+  return request({
+    url: '/api/v1/xd/getEsBasicInfo',
+    method: 'post',
+    data
+  })
+}
+// 获取商品列表
+export function getShangPinInfo(data) {
+  return request({
+    url: '/api/v1/xd/getShangPinInfo',
+    method: 'post',
+    data
+  })
+}
 
 // 获取股东信息 （老耿）
 export function getInvestorInfo(data) {

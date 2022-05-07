@@ -7,7 +7,7 @@
         </el-select>
         <el-button slot="append" icon="el-icon-search" @click="submit" />
       </el-input>
-      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam">保存选择条件</el-button>
+      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam">保存筛选条件</el-button>
     </div>
     <div class="cond-wrapper">
       <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
