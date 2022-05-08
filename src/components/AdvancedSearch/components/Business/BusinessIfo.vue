@@ -4,7 +4,7 @@
       <!--    <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>-->
       <div class="cont" >
         公司简介:
-            <div   style="overflow: scroll; height: 500px;padding: 0px 20px; ">{{ list.gong_si_jian_jie }}</div>
+            <div   style="overflow: scroll; height: 500px;padding: 0px 20px; "><span style="padding-left: 30px"></span>{{ list.gong_si_jian_jie }}</div>
       </div>
     </div>
     <div class="box2" >
