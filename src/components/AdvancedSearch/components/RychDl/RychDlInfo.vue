@@ -61,7 +61,7 @@ export default {
       this.query.phone = localStorage.getItem('phone')
       this.query.xd_id = localStorage.getItem('xd_id')
       getDengLingQualifications(this.query).then(res => {
-        console.log(res)
+        // console.log(res)
         this.list = res.data.result
       })
     }

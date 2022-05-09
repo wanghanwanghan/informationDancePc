@@ -1,4 +1,4 @@
-<template  style="overflow: scroll ">
+<template style="overflow: scroll ">
   <div style="overflow: scroll;height: 600px; ">
     <div class="box1">
       <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
@@ -57,22 +57,10 @@
           <el-table-column
             label="姓名"
             prop="name"
-            width="100"
-          />
-          <el-table-column
-            prop="investor_type"
-            label="股东类型"
-            width="100"
           />
           <el-table-column
             prop="certNo"
             label="证照/证件号码"
-            width="100"
-          />
-          <el-table-column
-            prop="certName"
-            label="证照/证件类型"
-            width="100"
           />
           <el-table-column
             prop="capitalStr"
@@ -160,8 +148,6 @@ export default {
     }
   },
   mounted() {
-    // window.addEventListener('scroll', this.initHeight)
-    // console.log(localStorage.getItem('xd_id'))
     this.query.xd_id = localStorage.getItem('xd_id')
     this.query.phone = localStorage.getItem('phone')
     // 基本信息
@@ -184,7 +170,7 @@ export default {
         }
       })
     },
-    handleChangeS(val){
+    handleChangeS(val) {
       this.getStaffInfoList(val)
     },
     handleChangeGd(val) {
@@ -195,38 +181,41 @@ export default {
       this.queryGd.xd_id = localStorage.getItem('xd_id')
       this.queryGd.phone = localStorage.getItem('phone')
       getInvestorInfo(this.queryGd).then(res => {
-        // console.log(res.data)
-        var gudonglList = res.data.result
-        gudonglList.forEach((val, key) => {
-          var capitalActl = ''
-          var capital = ''
-          val.capitalActlData.forEach((v, k) => {
-            if (capitalActl.length < 1) {
-              capitalActl = v.amomon
-            } else {
-              capitalActl = capitalActl + ',' + v.amomon
-            }
+        if(res.data.code === 200) {
+          var gudonglList = res.data.result
+          gudonglList.forEach((val, key) => {
+            var capitalActl = ''
+            var capital = ''
+            val.capitalActlData.forEach((v) => {
+              if (capitalActl.length < 1) {
+                capitalActl = v.amomon
+              } else {
+                capitalActl = capitalActl + ',' + v.amomon
+              }
+            })
+            val.capitalData.forEach((v, k) => {
+              if (capital.length < 1) {
+                capital = v.amomon
+              } else {
+                capital = capital + ',' + v.amomon
+              }
+            })
+            gudonglList[key].capitalActlStr = capitalActl
+            gudonglList[key].capitalStr = capital
           })
-          val.capitalData.forEach((v, k) => {
-            if (capital.length < 1) {
-              capital = v.amomon
-            } else {
-              capital = capital + ',' + v.amomon
-            }
-          })
-          gudonglList[key].capitalActlStr = capitalActl
-          gudonglList[key].capitalStr = capital
-        })
-        this.gudonglList = gudonglList
-        console.log(this.gudonglList)
-        this.totalGd = res.data.paging.total
+          this.gudonglList = gudonglList
+          this.totalGd = res.data.paging.total
+        }
       })
     }
   }
 }
 </script>
 
-<style  lang="scss"  scoped>
+<style  lang="scss" >
+.cell ,.el-table thead {
+  color: black;
+}
 .box1 {
   width: 100%;
   .cont {
@@ -245,7 +234,7 @@ export default {
         padding: 8px 6px;
       }
       .type1 {
-        width: 150px
+        width: 90px
       }
       .type2 {
         width: 150px
@@ -260,4 +249,5 @@ export default {
     }
   }
 }
+
 </style>

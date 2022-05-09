@@ -171,4 +171,13 @@ export function saveSearchHistroy(data) {
   })
 }
 
+// 保存商机 领取商机
+export function saveOpportunity(data) {
+  return request({
+    url: '/api/v1/xd/saveOpportunity',
+    method: 'post',
+    data
+  })
+}
+
 

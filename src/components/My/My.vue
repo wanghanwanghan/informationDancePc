@@ -25,7 +25,7 @@
         </router-link>
         <router-link to="/SearchHistroy">
           <div class="list">
-            <span>筛选条件</span>
+            <span>搜客记录</span>
           </div>
         </router-link>
 
@@ -95,7 +95,7 @@ export default {
               message: '修改成功!'
             })
           } else {
-            console.log(res.data)
+            // console.log(res.data)
           }
         })
       } else {

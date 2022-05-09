@@ -4,11 +4,6 @@
       <div class="panel panel-info myShadowFather" style="margin-top: 60px">
         <el-page-header content="搜索记录" @back="goBack" />
         <el-table :data="Rlist" border fit highlight-current-row style="width: 100%;margin-top:20px;">
-          <el-table-column align="center" label="手机号">
-            <template slot-scope="{row}">
-              <span>{{ row.post_data_arr.phone }}</span>
-            </template>
-          </el-table-column>
           <el-table-column align="center" label="名称">
             <template slot-scope="{row}">
               <span>{{ row.query }}</span>

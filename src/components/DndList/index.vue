@@ -299,7 +299,7 @@ export default {
       // console.log(response.result.file)
       this.arr.push(response.result.file)
       this.query1.filename = this.arr.toString()
-      console.log(this.query1.filename)
+      // console.log(this.query1.filename)
       this.func()
     },
     func() {
@@ -593,10 +593,10 @@ export default {
       }
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      // console.log(file, fileList)
     },
     handlePreview(file) {
-      console.log(file)
+      // console.log(file)
     }
   }
 }

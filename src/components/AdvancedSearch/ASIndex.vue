@@ -34,20 +34,21 @@
                 :show-all-levels="false"
                 collapse-tags
                 clearable
-                @change="getCheckedNodes"
+                @change="getCheckedNodesNicid"
               />
             </td>
             <td class="search-table-td bg-color">战略新兴产业</td>
             <td class="search-table-td">
               <el-cascader
                 ref="jlxxcy_ref"
+                :key="CheckedNodesKey"
                 class="search-table-input"
                 :options="jlxxcy"
                 :props="{multiple: true}"
                 :show-all-levels="false"
                 collapse-tags
                 clearable
-                @change="getCheckedNodes"
+                @change="getCheckedNodesJlxxcyid"
               />
             </td>
             <td class="search-table-td bg-color">企业所属地区</td>
@@ -60,7 +61,8 @@
                 :show-all-levels="false"
                 collapse-tags
                 clearable
-                @change="getCheckedNodes"
+                @change="getCheckedNodesRegionid"
+                @close="closeAddressCheckedNodes"
               />
             </td>
             <td class="search-table-td bg-color">经营范围</td>
@@ -118,7 +120,7 @@
               <div class="info-wrapper">
                 <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{ item._source.name }}</div>
                 <div class="ent-label">
-                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini" >{{ v }}</el-tag>
+                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini">{{ v }}</el-tag>
                 </div>
                 <div class="ent-other-wrapper">
                   <el-row :gutter="10">
@@ -177,34 +179,33 @@
                   </el-row>
                   <el-row :gutter="10">
                     <el-col :span="2">
-                      <div class="row-h">经营地址 :</div>
+                      <div class="row-h">注册地址 :</div>
                     </el-col>
                     <el-col :span="100">
                       <div class="row-h under">{{ item._source.tong_xun_di_zhi }}</div>
                     </el-col>
                   </el-row>
-<!--                  <el-row :gutter="10">-->
-<!--                    <el-col :span="3">-->
-<!--                      <div class="row-h" style="cursor: pointer;" @click="getDrawer(item._source.name,item._source.xd_id)">工商信息</div>-->
-<!--                    </el-col>-->
-<!--                    <el-col :span="3">-->
-<!--                      <div class="row-h" style="cursor: pointer;">业务/商品</div>-->
-<!--                    </el-col>-->
-<!--                    <el-col :span="3">-->
-<!--                      <div class="row-h" style="cursor: pointer;">招聘信息 (99)</div>-->
-<!--                    </el-col>-->
-<!--                  </el-row>-->
+                  <!--                  <el-row :gutter="10">-->
+                  <!--                    <el-col :span="3">-->
+                  <!--                      <div class="row-h" style="cursor: pointer;" @click="getDrawer(item._source.name,item._source.xd_id)">工商信息</div>-->
+                  <!--                    </el-col>-->
+                  <!--                    <el-col :span="3">-->
+                  <!--                      <div class="row-h" style="cursor: pointer;">业务/商品</div>-->
+                  <!--                    </el-col>-->
+                  <!--                    <el-col :span="3">-->
+                  <!--                      <div class="row-h" style="cursor: pointer;">招聘信息 (99)</div>-->
+                  <!--                    </el-col>-->
+                  <!--                  </el-row>-->
                 </div>
               </div>
               <div class="action-wrapper">
-                <el-badge  class="item">
-                  <el-button size="small" type="primary">客户触达</el-button>
+                <el-badge class="item">
+                  <el-button size="small" type="primary" @click="doSaveOpportunity(item._source.xd_id)">客户触达</el-button>
                 </el-badge>
               </div>
             </div>
             <div class="ent-desc-wrapper">
-              <i class="el-icon-lightning" />
-              <div>{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):'' }}...</div>
+              <div>公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):'' }}...</div>
             </div>
             <el-divider content-position="right" />
           </div>
@@ -227,7 +228,7 @@ import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
 import { jlxxcy } from '@/data/jlxxcy'
-import { advancedSearch, getSearchOption, saveSearchHistroy } from '@/api/EnterpriseBackground'
+import {advancedSearch, getSearchOption, saveOpportunity, saveSearchHistroy} from '@/api/EnterpriseBackground'
 
 export default {
   name: 'ASIndex',
@@ -235,6 +236,7 @@ export default {
   props: {},
   data() {
     return {
+      CheckedNodesKey: '',
       name: '',
       loading: true,
       data: [],
@@ -296,7 +298,7 @@ export default {
         basic_nicid: '',
         basic_opscope: '',
         basic_regionid: '',
-        basic_jlxxcyid: '',
+        basic_jlxxcyid: ''
       },
       paginate: {
         total: 0
@@ -437,9 +439,9 @@ export default {
             val.list.forEach((v) => {
               checkV.forEach((cv) => {
                 const id = v.id + ''
-                console.log(cv + '--' + id + '--' + val.id + '--' + key)
+                // console.log(cv + '--' + id + '--' + val.id + '--' + key)
                 if (cv === id) {
-                  console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
+                  // console.log(cv + '-/-' + id + '-/-' + val.id + '-/-' + key)
                   this.tags.push({ name: title + '-' + v.name, type: val.id + '-' + v.id })
                 }
               })
@@ -448,41 +450,67 @@ export default {
         })
       })
     },
-    getCheckedNodes() {
-      let nicid = this.$refs.nicid_ref.getCheckedNodes(true)
-      if (nicid[0]) {
-        let nicid_str = ''
-        nicid.forEach(item => {
-          nicid_str += item.value + ','
-        })
-        nicid = nicid_str.trim()
-      } else {
-        nicid = ''
+    closeAddressCheckedNodes() {
+      this.search_cond.basic_regionid = ''
+    },
+    closejlxxcyCheckedNodes() {
+      this.search_cond.basic_jlxxcyid = ''
+      // console.log(this.search_cond.basic_jlxxcyid)
+    },
+    closeNicidCheckedNodes() {
+      this.search_cond.basic_nicid = ''
+    },
+    getCheckedNodesNicid(val) {
+      this.search_cond.basic_nicid = ''
+      if (val.length > 0) {
+        let nicid = this.$refs.nicid_ref.getCheckedNodes(true)
+        if (nicid[0]) {
+          let nicid_str = ''
+          nicid.forEach(item => {
+            nicid_str += item.value + ','
+          })
+          nicid = nicid_str.trim()
+        } else {
+          nicid = ''
+        }
+        this.search_cond.basic_nicid = nicid
       }
-      this.search_cond.basic_nicid = nicid
-
-      let address = this.$refs.address_ref.getCheckedNodes(true)
-      if (address[0]) {
-        let address_str = ''
-        address.forEach(item => {
-          address_str += item.value + ','
-        })
-        address = address_str.trim()
-      } else {
-        address = ''
+    },
+    getCheckedNodesRegionid(val) {
+      this.search_cond.basic_regionid = ''
+      if (val.length > 0) {
+        let address = this.$refs.address_ref.getCheckedNodes(true)
+        if (address[0]) {
+          let address_str = ''
+          address.forEach(item => {
+            address_str += item.value + ','
+          })
+          address = address_str.trim()
+        } else {
+          address = ''
+        }
+        this.search_cond.basic_regionid = address
       }
-      this.search_cond.basic_regionid = address
-      let jlxxcy = this.$refs.jlxxcy_ref.getCheckedNodes(true)
-      if (jlxxcy[0]) {
-        let jlxxcy_str = ''
-        jlxxcy.forEach(item => {
-          jlxxcy_str += item.value + ','
-        })
-        jlxxcy = jlxxcy_str.trim()
-      } else {
-        jlxxcy = ''
+    },
+    getCheckedNodesJlxxcyid(val) {
+      this.search_cond.basic_jlxxcyid = ''
+      if (val.length > 0) {
+        // console.log(val)
+        let jlxxcy = this.$refs.jlxxcy_ref.getCheckedNodes(true)
+        if (jlxxcy[0]) {
+          let jlxxcy_str = ''
+          jlxxcy.forEach(item => {
+            if (item.checked) {
+              jlxxcy_str += item.value + ','
+            }
+          })
+          jlxxcy = jlxxcy_str.trim()
+        } else {
+          jlxxcy = ''
+        }
+        this.search_cond.basic_jlxxcyid = jlxxcy
       }
-      this.search_cond.basic_jlxxcyid = jlxxcy
+      console.log(this.search_cond.basic_jlxxcyid)
     },
     BasePageChange(index) {
       this.submitForm(index)
@@ -536,9 +564,22 @@ export default {
       })
     },
     saveParam() {
+      this.searchQuery.query_name = '搜客记录'
       saveSearchHistroy(this.searchQuery).then(res => {
         if (res.data.code === 200) {
-          this.$message.success('保存成功')
+          this.$message.success('保存成功，您可以去（我的-搜客记录）中查看')
+        } else {
+          this.$message.success('保存失败')
+        }
+      })
+    },
+    doSaveOpportunity(xd_id) {
+      var query = { xd_ids: xd_id, phone: localStorage.getItem('phone') }
+      saveOpportunity(query).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success('保存商机成功')
+        } else {
+          this.$message.success('保存商机失败')
         }
       })
     }
@@ -696,10 +737,9 @@ export default {
 .row-h{
   font-size: 15px
 }
-//#search_input{
   .el-input-group__append{
     background-color: blue;
 
   }
-//}
+
 </style>

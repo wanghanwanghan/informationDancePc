@@ -61,7 +61,7 @@ export default {
         // console.log(res.data)
         this.spList = res.data.result
         this.totalSp = res.data.paging.total
-        console.log(this.totalSp)
+        // console.log(this.totalSp)
       })
     }
   }
