@@ -153,7 +153,7 @@ export default {
   },
   mounted() {
     this.getList(1)
-    this.getListDL(1)
+    this.getListISO(1)
   },
   methods: {
     getList(val) {
