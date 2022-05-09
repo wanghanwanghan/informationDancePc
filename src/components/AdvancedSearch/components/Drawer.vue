@@ -6,14 +6,14 @@
     :visible.sync="drawer"
     :with-header="false"
   >
-    <div class="bg">
+    <div class="bg">{{baseNum}}
       <!--      <div class="title-wrapper">{{ entname }}-->
       <!--        <span :title="name" style="padding-left: 25px;font-size: 14px;color: #409EFF;cursor: pointer;">曾用名</span>-->
       <!--      </div>-->
       <BiaoQianInfo />
       <div class="nav-wrapper">
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="entHandleClick">
-          <el-tab-pane label="工商信息" name="base">
+          <el-tab-pane label="工商信息(  )" name="base">
             <BaseInfo v-if="Base" />
           </el-tab-pane>
           <el-tab-pane label="业务/商品" name="business">
@@ -80,7 +80,8 @@ export default {
       Sifa: true,
       Rych: true,
       Product: true,
-      Business: true
+      Business: true,
+      baseNum: ''
     }
   },
 
@@ -93,6 +94,7 @@ export default {
     } else {
       this.activeName = this.$route.query.activeName
     }
+    this.baseNum = localStorage.getItem('baseNum')
   },
   methods: {
     handleClose(down) {

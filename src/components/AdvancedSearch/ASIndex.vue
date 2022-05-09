@@ -7,7 +7,7 @@
         </el-select>
         <el-button slot="append" icon="el-icon-search" @click="submit" />
       </el-input>
-      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParam">保存筛选条件</el-button>
+      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParamDialog">保存筛选条件</el-button>
     </div>
     <div class="cond-wrapper">
       <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
@@ -218,6 +218,17 @@
       :drawer="show.show_drawer"
       @set-drawer-type="setDrawerType"
     />
+    <el-dialog
+      title="请输入记录名称"
+      :visible="dialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <input id="saveParamName" class="el-input__inner" />
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="saveParam">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -236,6 +247,7 @@ export default {
   props: {},
   data() {
     return {
+      dialogVisible: false,
       CheckedNodesKey: '',
       name: '',
       loading: true,
@@ -563,11 +575,15 @@ export default {
         }
       })
     },
+    saveParamDialog() {
+      this.dialogVisible = true
+    },
     saveParam() {
-      this.searchQuery.query_name = '搜客记录'
+      this.searchQuery.query_name = document.getElementById('saveParamName').value
       saveSearchHistroy(this.searchQuery).then(res => {
         if (res.data.code === 200) {
           this.$message.success('保存成功，您可以去（我的-搜客记录）中查看')
+          this.dialogVisible = false
         } else {
           this.$message.success('保存失败')
         }
@@ -582,6 +598,9 @@ export default {
           this.$message.success('保存商机失败')
         }
       })
+    },
+    handleClose() {
+      this.dialogVisible = false
     }
   }
 }
