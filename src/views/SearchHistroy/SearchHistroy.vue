@@ -14,6 +14,11 @@
               <span>{{ row.created_at | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
             </template>
           </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="deleteLog(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -28,7 +33,7 @@
   </div>
 </template>
 <script>
-import { getSearchHistory } from '@/api/article'
+import { delSearchHistory, getSearchHistory } from '@/api/article'
 import { parseTime } from '@/utils/index'
 export default {
   name: 'SearchHistroy',
@@ -69,6 +74,15 @@ export default {
 
     goBack() {
       this.$router.go(-1)
+    },
+    deleteLog(id) {
+      var query = { id: id, phone: localStorage.getItem('phone') }
+      delSearchHistory(query).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success('删除成功')
+          location.reload()
+        }
+      })
     }
   }
 }

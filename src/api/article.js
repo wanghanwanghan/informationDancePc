@@ -208,6 +208,15 @@ export function getSearchHistory(data) {
   })
 }
 
+// 删除搜索记录
+export function delSearchHistory(data) {
+  return request({
+    url: '/api/v1/xd/delSearchHistory',
+    method: 'post',
+    data
+  })
+}
+
 // 充值金额
 export function goods(data) {
   return request({

@@ -1,6 +1,6 @@
 <template style="height:100%">
   <div class="table-wrapper"  style="overflow: scroll;height: 100%; ">
-    <h3 style="margin-left:20px;">高新技术</h3>
+    <h3 style="margin-left:20px;">高新技术({{total}})</h3>
     <div class="box2">
       <div class="cont" style="overflow: scroll;height: 200px; ">
         <el-table :data="list" border style="width: 100%">
@@ -65,7 +65,7 @@
 <!--        />-->
 <!--      </div>-->
 <!--    </div>-->
-    <h3 style="margin-left:20px;">ISO</h3>
+    <h3 style="margin-left:20px;">ISO({{totalISO}})</h3>
     <div class="box2">
       <div class="cont" style="overflow: scroll;height: 200px; ">
         <el-table :data="listISO" border style="width: 100%">
@@ -166,6 +166,7 @@ export default {
         // console.log(res)
         // var state_code_map = []
         this.list = res.data.result
+        this.total = res.data.paging.total
         // this.list.forEach((v,k)=>{
         //   this.list[k].state_name = v.state_code
         // })
@@ -190,6 +191,7 @@ export default {
       getIsoQualifications(this.queryISO).then(res => {
         // console.log(res)
         this.listISO = res.data.result
+        this.totalISO = res.data.paging.total
       })
     }
   }

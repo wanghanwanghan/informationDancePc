@@ -69,6 +69,15 @@ export function getNamesInfo(data) {
     data
   })
 }
+
+// 获取搜客抽屉中的的数据数量
+export function getCountInfo(data) {
+  return request({
+    url: '/api/v1/xd/getCountInfo',
+    method: 'post',
+    data
+  })
+}
 // 获取股东信息
 export function getShareHolderInfo(data) {
   if (!data.pageSize) {

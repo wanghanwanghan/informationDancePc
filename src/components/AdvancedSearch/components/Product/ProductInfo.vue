@@ -2,7 +2,7 @@
   <div>
     <main class="et-main" style="overflow: scroll;height: 630px; ">
       <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
-        <h3 style="margin-left:20px;">Android</h3>
+        <h3 style="margin-left:20px;">Android({{totalAndoriod}})</h3>
         <div class="box2" style="overflow: scroll;height: 230px; ">
           <div class="cont">
             <el-table
@@ -64,7 +64,7 @@
         </div>
       </section>
       <section class="et-slide" style="min-height:100px;">
-        <h3 style="margin-left:20px;">IOS</h3>
+        <h3 style="margin-left:20px;">IOS({{totalIOS}})</h3>
         <div class="box2" style="overflow: scroll;height: 240px; ">
           <div class="cont">
             <el-table
