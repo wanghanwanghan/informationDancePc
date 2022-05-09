@@ -4,20 +4,20 @@
       <!--    <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>-->
       <div class="cont" >
         公司简介:
-            <div   style="overflow: scroll; height: 500px;padding: 0px 20px; "><span style="padding-left: 30px"></span>{{ list.gong_si_jian_jie }}</div>
+            <div   style="overflow: scroll; height: 450px;padding: 0px 20px; "><span style="padding-left: 30px"></span>{{ list.gong_si_jian_jie }}</div>
       </div>
     </div>
-    <div class="box2" >
+    <div class="box2" style="margin-top: 20px">
       <!-- 变更信息 -->
       <div class="cont" >
-        商品类型：<span v-for="(v) of spList" style="padding: 0px 10px;" >{{v.name}}</span>
+        商品类型：<span v-for="(v) of spList" style="padding: 0px 10px;" >{{v.name}},</span>
       </div>
-      <div class="pagination" v-if="totalSp>20">
+      <div class="pagination" v-if="totalSp>100">
         <el-pagination
           background
           layout="prev, pager, next"
           :total="totalSp"
-          page-size="20"
+          page-size="100"
           @current-change="handleChange"
         />
       </div>
@@ -38,7 +38,7 @@ export default {
         xd_id: '',
         phone: '',
         page: 1,
-        size: 20
+        size: 100
       },
       spList: ''
     }
