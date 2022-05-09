@@ -1,6 +1,6 @@
 <template>
   <div class="title-wrapper" style="height: 65px; padding-top: 15px;line-height: 25px;/* padding-left: 20px; */">{{ entname }}
-    <span v-if="tag" :title="name" style="padding-left: 25px;font-size: 14px;color: #409EFF;cursor: pointer;">曾用名</span>
+    <span v-if="name" :title="name" style="padding-left: 25px;font-size: 14px;color: #409EFF;cursor: pointer;">曾用名</span>
     <div>
       <el-tag v-for="(item,key) of tag" :type="tagStyleMap[key]" size="mini" class="biaoqian">{{ item }}</el-tag>
     </div>

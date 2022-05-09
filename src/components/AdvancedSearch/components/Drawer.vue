@@ -77,10 +77,10 @@ export default {
       },
       businessScale: '',
       Base: true,
-      Sifa: false,
-      Rych: false,
-      Product: false,
-      Business: false
+      Sifa: true,
+      Rych: true,
+      Product: true,
+      Business: true
     }
   },
 
