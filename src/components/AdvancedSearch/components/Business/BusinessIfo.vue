@@ -2,9 +2,9 @@
   <div style="height: 600px; ">
     <div class="box1">
       <!--    <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>-->
-      <div class="cont">
+      <div class="cont" style="overflow: scroll; min-height: 100px;max-height:430px;">
         公司简介:
-        <div style="overflow: scroll; min-height: 100px;max-height:430px;padding: 0px 20px; line-height: 30px;" v-for="(val) of list.gong_si_jian_jie_data_arr"><span style="padding-left: 30px" />{{ val }}</div>
+        <div style="padding: 0px 20px; line-height: 30px;" v-for="(val) of list.gong_si_jian_jie_data_arr"><span style="padding-left: 30px" />{{ val }}</div>
       </div>
     </div>
     <div class="box2" style="margin-top: 20px;">
