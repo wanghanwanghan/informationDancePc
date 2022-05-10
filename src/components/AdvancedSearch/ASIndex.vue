@@ -17,6 +17,7 @@
           :key="index"
           :type="item.type"
           :title="item.title"
+          :desc="item.desc"
           :list="item.list"
           @set-value="setValue"
         />
@@ -32,6 +33,7 @@
                 :options="nicid"
                 :props="{multiple: true}"
                 :show-all-levels="false"
+                :filterable="true"
                 collapse-tags
                 clearable
                 @change="getCheckedNodesNicid"
@@ -46,6 +48,7 @@
                 :options="jlxxcy"
                 :props="{multiple: true}"
                 :show-all-levels="false"
+                :filterable="true"
                 collapse-tags
                 clearable
                 @change="getCheckedNodesJlxxcyid"
@@ -59,6 +62,7 @@
                 :options="address"
                 :props="{multiple: true}"
                 :show-all-levels="false"
+                :filterable="true"
                 collapse-tags
                 clearable
                 @change="getCheckedNodesRegionid"
@@ -70,7 +74,7 @@
               <el-input
                 v-model="search_cond.basic_opscope"
                 class="search-table-input"
-                placeholder="支持模糊搜索 空格分割"
+                placeholder="支持模糊搜索"
                 clearable
               />
             </td>
@@ -118,7 +122,7 @@
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)">{{ item._source.name }}</div>
+                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)" v-html="item._source.showName">{{ item._source.showName }}</div>
                 <div class="ent-label">
                   <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini">{{ v }}</el-tag>
                 </div>
@@ -200,12 +204,12 @@
               </div>
               <div class="action-wrapper">
                 <el-badge class="item">
-                  <el-button size="small" type="primary" @click="doSaveOpportunity(item._source.xd_id)">客户触达</el-button>
+                  <el-button size="small" type="primary" @click="doSaveOpportunity(item._source.xd_id,item._source.name)">客户触达</el-button>
                 </el-badge>
               </div>
             </div>
             <div class="ent-desc-wrapper">
-              <div>公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,70):'' }}...</div>
+              <div v-html="item._source.gong_si_jian_jie.slice(0,65)">公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,65):'' }}...</div>
             </div>
             <el-divider content-position="right" />
           </div>
@@ -222,12 +226,45 @@
       title="请输入记录名称"
       :visible="dialogVisible"
       width="50%"
-      :before-close="handleClose">
-      <input id="saveParamName" class="el-input__inner" />
+      :before-close="handleClose"
+    >
+      <input id="saveParamName" class="el-input__inner">
       <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveParam">确 定</el-button>
-        </span>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveParam">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="商机"
+      :visible="dialogEntLianXi"
+      width="50%"
+      :before-close="handleClose"
+    >
+      <el-table :data="EntLianXiList" border style="width: 100%">
+        <el-table-column
+          label="区号"
+          prop="quhao"
+        />
+        <el-table-column
+          label="联系类型"
+          prop="lianxitype"
+        />
+        <el-table-column
+          label="电话/邮箱"
+          prop="lianxi"
+        />
+      </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="total, prev, pager, next"
+          :total="totalEntLianXi"
+          @current-change="handleChangeEntLianXi"
+        />
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogEntLianXi = false">关闭</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -239,7 +276,13 @@ import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
 import { jlxxcy } from '@/data/jlxxcy'
-import {advancedSearch, getSearchOption, saveOpportunity, saveSearchHistroy} from '@/api/EnterpriseBackground'
+import {
+  advancedSearch,
+  getEntLianXi,
+  getSearchOption,
+  saveOpportunity,
+  saveSearchHistroy
+} from '@/api/EnterpriseBackground'
 
 export default {
   name: 'ASIndex',
@@ -248,12 +291,17 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      dialogEntLianXi: false,
+      EntLianXiList: [],
+      EntLianXiEtnName: '',
+      EntLianXiEtnId: '',
+      totalEntLianXi: 0,
       CheckedNodesKey: '',
       name: '',
       loading: true,
       data: [],
       list: [],
-      tagStyleMap: ['', 'success', 'info', 'warning', 'danger', '', 'success', 'info', 'warning'],
+      tagStyleMap: ['', 'success', 'warning', 'danger', '', 'success', 'warning', '', 'success', 'warning'],
       drawer_data: {
         entname: '',
         xd_id: 0
@@ -324,24 +372,6 @@ export default {
   },
   mounted() {
     this.submitForm(1)
-    const list = []
-    for (let i = 0; i < this.mt_rand_int(50); i++) {
-      const temp = []
-      for (let j = 0; j < this.mt_rand_int(50); j++) {
-        temp.push({
-          id: this.mt_rand_int(50),
-          name: this.mt_rand_str(10)
-        })
-      }
-
-      list.push({
-        id: this.mt_rand_int(50),
-        name: this.mt_rand_str(10),
-        type: this.mt_rand_int(50) > 20 ? '' : '',
-        title: this.mt_rand_str(10),
-        list: temp
-      })
-    }
     // this.list = list
     this.query.phone = localStorage.getItem('phone')
     getSearchOption(this.query).then(res => {
@@ -352,7 +382,8 @@ export default {
           for (var i in value.data) {
             temp.push({
               id: i,
-              name: value.data[i]
+              desc: value.data[i].detail,
+              name: value.data[i].cname
             })
           }
           // value.data.forEach((val, key) => {
@@ -550,10 +581,18 @@ export default {
       this.searchQuery.page = page
       // console.log(12)
       advancedSearch(this.searchQuery).then(res => {
+        var searchText = document.getElementById('search_input').value
+        localStorage.setItem('searchText', searchText)
         if (res.data.code === 200) {
           this.paginate = res.data.paging
           var dataV = res.data.result
-          // dataV.forEach((val, key) => {
+          dataV.forEach((val, key) => {
+            if (searchText.length > 0) {
+              dataV[key]._source.showName = val._source.name.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
+              dataV[key]._source.gong_si_jian_jie = val._source.gong_si_jian_jie.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
+            } else {
+              dataV[key]._source.showName = val._source.name
+            }
           //   console.log(val._source.name)
           //   var biaoQianQuery = {}
           //   biaoQianQuery.entname = val._source.name
@@ -570,7 +609,7 @@ export default {
           //       dataV[key]._source.employmen = resv2.data.result.num
           //     }
           //   })
-          // })
+          })
           this.data = dataV
         }
       })
@@ -589,18 +628,36 @@ export default {
         }
       })
     },
-    doSaveOpportunity(xd_id) {
+    doSaveOpportunity(xd_id, name) {
+      this.EntLianXiEtnId = xd_id
+      this.EntLianXiEtnName = name
       var query = { xd_ids: xd_id, phone: localStorage.getItem('phone') }
       saveOpportunity(query).then(res => {
         if (res.data.code === 200) {
-          this.$message.success('保存商机成功')
+          // this.$message.success('保存商机成功')
+          this.dialogEntLianXi = true
+          getEntLianXi({ entId: xd_id, phone: localStorage.getItem('phone'), entName: name, page: 1, size: 10 }).then(res => {
+            if (res.data.code === 200) {
+              this.EntLianXiList = res.data.result
+              this.totalEntLianXi = res.data.paging.total
+            }
+          })
         } else {
-          this.$message.success('保存商机失败')
+          // this.$message.success('保存商机失败')
+        }
+      })
+    },
+    handleChangeEntLianXi(val) {
+      getEntLianXi({ entId: this.EntLianXiEtnId, phone: localStorage.getItem('phone'), entName: this.EntLianXiEtnName, page: val, size: 10 }).then(res => {
+        if (res.data.code === 200) {
+          this.EntLianXiList = res.data.result
         }
       })
     },
     handleClose() {
       this.dialogVisible = false
+      this.dialogEntLianXi = false
+      this.EntLianXiList = []
     }
   }
 }

@@ -189,4 +189,13 @@ export function saveOpportunity(data) {
   })
 }
 
+// 触达商机
+export function getEntLianXi(data) {
+  return request({
+    url: '/api/v1/xd/getEntLianXi',
+    method: 'post',
+    data
+  })
+}
+
 

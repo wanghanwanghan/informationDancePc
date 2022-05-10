@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      tagStyleMap: ['', 'success', 'info', 'warning', 'danger', '', 'success', 'info', 'warning'],
+      tagStyleMap: ['', 'success', 'warning', 'danger', '', 'success', 'warning', '', 'success', 'warning'],
       name: '',
       businessScale: '',
       employmen: '',
@@ -67,7 +67,7 @@ export default {
       numData: '',
       gongShangNum: '工商信息(0)',
       businessNum: '业务/商品(0)',
-      rychNum: '专业资质 荣誉称号(0)',
+      rychNum: '荣誉资质(0)',
       AppNum: 'App(0)'
     }
   },
@@ -115,7 +115,7 @@ export default {
       if (res.data.code === 200) {
         this.gongShangNum = '工商信息(' + res.data.result.gong_shang + ')'
         this.businessNum = '业务/商品(' + res.data.result.shang_pin + ')'
-        this.rychNum = '专业资质 荣誉称号(' + res.data.result.rong_yu + ')'
+        this.rychNum = '荣誉资质(' + res.data.result.rong_yu + ')'
         this.AppNum = 'App(' + res.data.result.app + ')'
       }
     })

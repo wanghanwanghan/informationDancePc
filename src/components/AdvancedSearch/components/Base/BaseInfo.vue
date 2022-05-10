@@ -40,7 +40,7 @@
           </tr>
           <tr>
             <td>经营范围:</td>
-            <td colspan="3">{{ list.business_scope }}</td>
+            <td colspan="3" v-html="list.business_scope">{{ list.business_scope }}</td>
           </tr>
         </table>
       </div>
@@ -154,6 +154,10 @@ export default {
     getCompanyBasicInfo(this.query).then(res => {
       // console.log(res.data)
       this.list = res.data.result
+      var searchText = localStorage.getItem('searchText')
+      if (searchText.length > 0) {
+        this.list.business_scope = this.list.business_scope.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
+      }
     })
     this.getStaffInfoList(1)
     this.getGdList(1)
@@ -181,7 +185,7 @@ export default {
       this.queryGd.xd_id = localStorage.getItem('xd_id')
       this.queryGd.phone = localStorage.getItem('phone')
       getInvestorInfo(this.queryGd).then(res => {
-        if(res.data.code === 200) {
+        if (res.data.code === 200) {
           var gudonglList = res.data.result
           gudonglList.forEach((val, key) => {
             var capitalActl = ''

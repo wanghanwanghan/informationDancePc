@@ -1,6 +1,6 @@
 <template>
   <div class="bg-wrapper">
-    <div class="title-wrapper">
+    <div class="title-wrapper"  style="cursor: pointer">
       {{ title }}
     </div>
     <div class="cond-wrapper">
@@ -8,7 +8,7 @@
         <el-form>
           <el-form-item>
             <el-checkbox-group v-model="checkList_val" @change="changeSelect(id)">
-              <el-checkbox v-for="item in list" :label="id+'-'+item.id">{{ item.name }}</el-checkbox>
+              <el-checkbox v-for="item in list" :label="id+'-'+item.id" :title="item.desc">{{ item.name }}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
         </el-form>

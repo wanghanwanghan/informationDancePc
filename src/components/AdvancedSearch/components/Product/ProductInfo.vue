@@ -12,12 +12,6 @@
             >
               <el-table-column
                 align="center"
-                label="序号"
-                type="index"
-                width="50"
-              />
-              <el-table-column
-                align="center"
                 prop="appname"
                 label="APP名称"
                 width="200"
@@ -72,12 +66,6 @@
               border
               style="width: 100%"
             >
-              <el-table-column
-                align="center"
-                label="序号"
-                type="index"
-                width="50"
-              />
               <el-table-column
                 align="center"
                 prop="appname"
