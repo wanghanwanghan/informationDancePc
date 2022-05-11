@@ -2,7 +2,7 @@
   <div>
     <main class="et-main" style="overflow: scroll;height: 630px; ">
       <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
-        <h3 style="margin-left:20px;">Android({{totalAndoriod}})</h3>
+        <h3 style="margin-left:20px;">Android({{ totalAndoriod }})</h3>
         <div class="box2" style="overflow: scroll;height: 230px; ">
           <div class="cont">
             <el-table
@@ -10,6 +10,16 @@
               border
               style="width: 100%"
             >
+              <el-table-column
+                align="center"
+                prop="pic"
+                label="LOGO"
+                width="200"
+              >
+                <template slot-scope="scope">
+                  <span v-html="scope.row.pic" />
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 prop="appname"
@@ -58,7 +68,7 @@
         </div>
       </section>
       <section class="et-slide" style="min-height:100px;">
-        <h3 style="margin-left:20px;">IOS({{totalIOS}})</h3>
+        <h3 style="margin-left:20px;">IOS({{ totalIOS }})</h3>
         <div class="box2" style="overflow: scroll;height: 240px; ">
           <div class="cont">
             <el-table
@@ -66,6 +76,16 @@
               border
               style="width: 100%"
             >
+              <el-table-column
+                align="center"
+                prop="pic"
+                label="LOGO"
+                width="200"
+              >
+                <template slot-scope="scope">
+                  <span v-html="scope.row.pic" />
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 prop="appname"
@@ -168,6 +188,13 @@ export default {
       getMainProducts(this.queryAndoriod).then(res => {
         if (res.data.code === 200) {
           this.listAndoriod = res.data.result
+          this.listAndoriod.forEach((v, k) => {
+            if (v.pic.length > 0) {
+              this.listAndoriod[k].pic = '<img class="logo" src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="https://fakeimg.pl/200x200/?text=LOGO" />'
+            } else {
+              this.listAndoriod[k].pic = '<img class="logo" src="https://fakeimg.pl/200x200/?text=LOGO" />'
+            }
+          })
           this.totalAndoriod = res.data.paging.total
         }
       })
@@ -180,6 +207,13 @@ export default {
       getMainProducts(this.queryIOS).then(res => {
         if (res.data.code === 200) {
           this.listIOS = res.data.result
+          this.listIOS.forEach((v, k) => {
+            if (v.pic.length > 0) {
+              this.listIOS[k].pic = '<img class="logo" src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="https://fakeimg.pl/200x200/?text=LOGO" />'
+            } else {
+              this.listIOS[k].pic = '<img class="logo" src="https://fakeimg.pl/200x200/?text=LOGO" />'
+            }
+          })
           this.totalIOS = res.data.paging.total
         }
       })

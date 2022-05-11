@@ -117,7 +117,7 @@
             <img
               class="logo"
               src="https://fakeimg.pl/200x200/?text=LOGO"
-            >
+            />
           </div>
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
