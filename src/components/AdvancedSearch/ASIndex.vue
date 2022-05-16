@@ -43,7 +43,6 @@
             <td class="search-table-td">
               <el-cascader
                 ref="jlxxcy_ref"
-                :key="CheckedNodesKey"
                 class="search-table-input"
                 :options="jlxxcy"
                 :props="{multiple: true}"
@@ -52,6 +51,20 @@
                 collapse-tags
                 clearable
                 @change="getCheckedNodesJlxxcyid"
+              />
+            </td>
+            <td class="search-table-td bg-color">数字经济及其核心产业</td>
+            <td class="search-table-td">
+              <el-cascader
+                ref="szjj_ref"
+                class="search-table-input"
+                :options="szjj"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                :filterable="true"
+                collapse-tags
+                clearable
+                @change="getCheckedNodesSzjjid"
               />
             </td>
             <td class="search-table-td bg-color">企业所属地区</td>
@@ -276,6 +289,7 @@ import { address } from '@/data/address'
 import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
 import { jlxxcy } from '@/data/jlxxcy'
+import { szjj } from '@/data/szjj'
 import {
   advancedSearch,
   getEntLianXi,
@@ -326,6 +340,7 @@ export default {
       optionCheckBox: [],
       tagItem: [],
       address: address,
+      szjj:szjj,
       sonum: sonum,
       nicid: nicid,
       jlxxcy: jlxxcy,
@@ -343,6 +358,7 @@ export default {
         basic_ygrs: '',
         basic_regionid: '',
         basic_jlxxcyid: '',
+        basic_szjjid: '',
         jingying_vc_round: '',
         basic_opscope: '',
         basic_status: ''
@@ -358,6 +374,7 @@ export default {
         basic_nicid: '',
         basic_opscope: '',
         basic_regionid: '',
+        basic_szjjid: '',
         basic_jlxxcyid: ''
       },
       paginate: {
@@ -553,7 +570,25 @@ export default {
         }
         this.search_cond.basic_jlxxcyid = jlxxcy
       }
-      console.log(this.search_cond.basic_jlxxcyid)
+    },
+    getCheckedNodesSzjjid(val) {
+      this.search_cond.basic_szjjid = ''
+      if (val.length > 0) {
+        // console.log(val)
+        let szjj = this.$refs.szjj_ref.getCheckedNodes(true)
+        if (szjj[0]) {
+          let szjj_str = ''
+          szjj.forEach(item => {
+            if (item.checked) {
+              szjj_str += item.value + ','
+            }
+          })
+          szjj = szjj_str.trim()
+        } else {
+          szjj = ''
+        }
+        this.search_cond.basic_szjjid = szjj
+      }
     },
     BasePageChange(index) {
       this.submitForm(index)
@@ -576,6 +611,7 @@ export default {
       this.searchQuery.searchOption = JSON.stringify(searchOption)
       this.searchQuery.basic_regionid = this.search_cond.basic_regionid
       this.searchQuery.basic_jlxxcyid = this.search_cond.basic_jlxxcyid
+      this.searchQuery.basic_szjjid = this.search_cond.basic_szjjid
       this.searchQuery.basic_nicid = this.search_cond.basic_nicid
       this.searchQuery.basic_opscope = this.search_cond.basic_opscope
       this.searchQuery.page = page

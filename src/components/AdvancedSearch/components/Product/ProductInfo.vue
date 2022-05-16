@@ -189,11 +189,11 @@ export default {
         if (res.data.code === 200) {
           this.listAndoriod = res.data.result
           this.listAndoriod.forEach((v, k) => {
-            if (v.pic.length > 0) {
-              this.listAndoriod[k].pic = '<img class="logo" src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="https://fakeimg.pl/200x200/?text=LOGO" />'
-            } else {
-              this.listAndoriod[k].pic = '<img class="logo" src="https://fakeimg.pl/200x200/?text=LOGO" />'
+            var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
+            if (v.pic !== null && v.pic.length > 0) {
+              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
             }
+            this.listAndoriod[k].pic = img
           })
           this.totalAndoriod = res.data.paging.total
         }
@@ -208,11 +208,11 @@ export default {
         if (res.data.code === 200) {
           this.listIOS = res.data.result
           this.listIOS.forEach((v, k) => {
-            if (v.pic.length > 0) {
-              this.listIOS[k].pic = '<img class="logo" src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="https://fakeimg.pl/200x200/?text=LOGO" />'
-            } else {
-              this.listIOS[k].pic = '<img class="logo" src="https://fakeimg.pl/200x200/?text=LOGO" />'
+            var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
+            if (v.pic !== null && v.pic.length > 0) {
+              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
             }
+            this.listIOS[k].pic = img
           })
           this.totalIOS = res.data.paging.total
         }
