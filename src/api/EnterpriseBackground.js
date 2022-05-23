@@ -198,4 +198,11 @@ export function getEntLianXi(data) {
   })
 }
 
-
+// 车险信息
+export function getCarsInsurance(data) {
+  return request({
+    url: '/api/v1/gzyl/getCarsInsurance',
+    method: 'post',
+    data
+  })
+}

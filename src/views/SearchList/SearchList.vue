@@ -4,14 +4,15 @@
       title="提示"
       :visible.sync="supervisor_dialog"
       width="32%"
-      :style="{'text-align': 'center'}">
+      :style="{'text-align': 'center'}"
+    >
       <span style="color: red;font-size: 15px;">请选择要监控的风险分类</span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="supervisor_dialog = false">取消</el-button>
-    <el-button type="primary" @click="doMonitor('重点对象')">重点对象</el-button>
-    <el-button type="primary" @click="doMonitor('合作方')">合作方</el-button>
-    <el-button type="primary" @click="doMonitor('全部')">全部</el-button>
-  </span>
+        <el-button @click="supervisor_dialog = false">取消</el-button>
+        <el-button type="primary" @click="doMonitor('重点对象')">重点对象</el-button>
+        <el-button type="primary" @click="doMonitor('合作方')">合作方</el-button>
+        <el-button type="primary" @click="doMonitor('全部')">全部</el-button>
+      </span>
     </el-dialog>
     <div class="nav">
       <el-col :span="4">
@@ -25,7 +26,7 @@
       <el-col :span="10" style="margin-left: 40px">
         <div class="search">
           <el-input v-model="input" placeholder="请输入内容" class="input-with-select" @change="sousuo">
-            <el-button slot="append" icon="el-icon-search" @click="sousuo"/>
+            <el-button slot="append" icon="el-icon-search" @click="sousuo" />
           </el-input>
         </div>
       </el-col>
@@ -34,7 +35,7 @@
       <div v-for="(item,index) in list" :key="index" class="cont-list">
         <div class="left">
           <div class="name">
-            <h2 @click="toDetail(item.Name)">{{ item.Name }}</h2>
+            <h2 @click="toDetail(item.Name,item.CreditCode)">{{ item.Name }}</h2>
             <el-tag type="success" style="margin: 11px 0 4px 13px;">{{ item.Status }}</el-tag>
           </div>
           <div class="desc">
@@ -48,6 +49,7 @@
           <div v-if="item.supervisor === 1" class="jkong1">正在监控</div>
           <div v-if="item.supervisor === 2" class="jkong2" @click="toMonitor(item.Name)">点击续费</div>
           <div class="sqing" @click="outerVisibles(item.Name,item.CreditCode)">申请报告</div>
+          <div class="vin_souquan" @click="vinSouQuan(item.Name,item.CreditCode,item.OperName)">上传VIN授权</div>
         </div>
       </div>
     </div>
@@ -65,7 +67,7 @@
       >
         <div>
           <div class="editor-container">
-            <dnd-list :list1="list1" :list2="list2" list1-title="List" list2-title="Article pool"/>
+            <dnd-list :list1="list1" :list2="list2" list1-title="List" list2-title="Article pool" />
           </div>
         </div>
       </el-dialog>
@@ -83,21 +85,47 @@
     >
       <div>
         <div class="editor-container">
-          <dndj-list :list3="list3" :list4="list4" list3-title="List" list4-title="Article pool"/>
+          <dndj-list :list3="list3" :list4="list4" list3-title="List" list4-title="Article pool" />
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="reportJpdf = false">取 消</el-button>
       </div>
     </el-dialog>
+    <el-dialog
+      width="600px"
+      title="VIN授权"
+      :visible.sync="vinQouQuanType"
+      append-to-body
+    >
+      <div class="reportBox">
+        <el-form :model="vinFrom">
 
+          <el-form-item label="法人身份证" :label-width="formLabelWidth">
+            <el-input v-model="vinFrom.idCard" />
+          </el-form-item>
+          <div v-for="item of vinFrom.vin" class="editor-container">
+            <el-form-item label="VIN" :label-width="formLabelWidth">
+              <el-input v-model="item.vin" />
+            </el-form-item>
+          </div>
+          <el-form-item label="" :label-width="formLabelWidth">
+            <el-button type="primary" @click="addVinSouQuan">添加VIN</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="Reporttype = false">取 消</el-button>
+        <el-button type="primary" @click="vinFromSubmit">确 定</el-button>
+      </span>
+    </el-dialog>
     <!-- 尽调版（需授权，请下载授权书）word -->
     <el-dialog
       title="上传图片"
       :visible.sync="reportJword"
       width="50%"
     >
-      <IndexWord/>
+      <IndexWord />
       <span slot="footer" class="dialog-footer">
         <el-button @click="reportJword = false">取 消</el-button>
         <el-button type="primary" @click="reportJW">确 定</el-button>
@@ -123,7 +151,7 @@
       :visible.sync="dia"
       width="50%"
     >
-      <UploadPic/>
+      <UploadPic />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dia = false">取 消</el-button>
         <el-button type="primary" @click="tijiao">确 定</el-button>
@@ -230,7 +258,7 @@
         <!--        </div>-->
       </div>
       <span slot="footer" class="dialog-footer">
-<!--        <el-button type="primary" @click="setAuth">确 定</el-button>-->
+        <!--        <el-button type="primary" @click="setAuth">确 定</el-button>-->
         <el-button @click="ReportSq = false">取 消</el-button>
       </span>
     </el-dialog>
@@ -275,7 +303,7 @@ import {
   authBookC,
   authBook,
   createDeepEasy,
-  getAuthentication, createTwoTable
+  getAuthentication, createTwoTable, getCarAuthFile
 } from '@/api/article'
 
 var token = localStorage.getItem('token')
@@ -392,6 +420,7 @@ export default {
         pay: 0
       },
       Reporttype: false,
+      vinQouQuanType: false,
       ReportQyslb: false,
       query3: {
         phone: '',
@@ -499,7 +528,16 @@ export default {
         email: '',
         type: 'xd',
         pay: false
-      }
+      },
+      vinFrom: {
+        entName: '',
+        entCode: '',
+        operName: '',
+        phone: '',
+        idCard: '',
+        vin: []
+      },
+      formLabelWidth: '100px'
     }
   },
   created() {
@@ -533,12 +571,13 @@ export default {
         this.list = res.data.result
       })
     },
-    toDetail(e) {
+    toDetail(e, CreditCode) {
       // console.log(e,111)
       const entName = e
       localStorage.setItem('entName', e)
+      localStorage.setItem('CreditCode', CreditCode)
 
-      let routeUrl = this.$router.resolve({
+      const routeUrl = this.$router.resolve({
         path: '/qybj',
         query: {
           entName: entName
@@ -546,19 +585,27 @@ export default {
       })
       window.open(routeUrl.href, '_blank')
 
-      //this.$router.push({
+      // this.$router.push({
       //  // name: 'entName',
       //  // path: '/dashboard',
       //  path: '/qybj',
       //  params: {
       //    entName: entName
       //  }
-      //})
+      // })
     },
     outerVisibles(e, code) {
       localStorage.setItem('reportName', e)
       localStorage.setItem('CreditCode', code)
       this.Reporttype = true
+    },
+    vinSouQuan(e, code, operName) {
+      this.vinQouQuanType = true
+      this.vinFrom.vin = []
+      this.vinFrom.entName = e
+      this.vinFrom.entCode = code
+      this.vinFrom.operName = operName
+      this.vinFrom.vin.push({ vin: '' })
     },
     innerVisibles(e) {
       this.reportName = localStorage.getItem('reportName')
@@ -624,9 +671,9 @@ export default {
       })
     },
     setAuth() {
-      let entName = localStorage.getItem('reportName')
-      let phone = localStorage.getItem('phone')
-      let CreditCode = localStorage.getItem('CreditCode')
+      const entName = localStorage.getItem('reportName')
+      const phone = localStorage.getItem('phone')
+      const CreditCode = localStorage.getItem('CreditCode')
       getAuthentication({ entName, phone, 'code': CreditCode }).then(res => {
         if (res.data.code === 200) {
           window.location.href = res.data.result
@@ -1271,7 +1318,7 @@ export default {
         }
       })
     },
-    //税务版
+    // 税务版
     toSwb() {
       this.ReportSwb = true
     },
@@ -1364,6 +1411,30 @@ export default {
     },
     down() {
       window.open(`https://api.meirixindong.com/Static/AuthBookModel/auth.zip`, '_blank')
+    },
+    addVinSouQuan() {
+      this.vinFrom.vin.push({ vin: '' })
+    },
+    vinFromSubmit() {
+      this.vinFrom.phone = localStorage.getItem('phone')
+      console.log(this.vinFrom.vin)
+      var vinStr = ''
+      if (this.vinFrom.vin.length > 1) {
+        this.vinFrom.vin.forEach((v, k) => {
+          if (vinStr.length > 0) {
+            vinStr = vinStr + ',VIN ' + this.vinFrom.vin[k].vin
+          } else {
+            vinStr = 'VIN ' + this.vinFrom.vin[k].vin
+          }
+        })
+      } else {
+        vinStr = 'VIN ' + this.vinFrom.vin[0].vin
+      }
+      this.vinFrom.vinStr = vinStr
+      getCarAuthFile(this.vinFrom).then(res => {
+        this.$message.success('成功')
+        console.log(res)
+      })
     }
   }
 }
@@ -1466,7 +1537,15 @@ export default {
           border-radius: 5px;
           margin-right: 15px;
         }
-
+        .vin_souquan{
+          cursor: pointer;
+          height: 28px;
+          background: #3389CA;
+          color: #FFFFFF;
+          padding: 5px 18px;
+          border-radius: 5px;
+          margin-left: 10px;
+        }
         .sqing {
           cursor: pointer;
           height: 28px;

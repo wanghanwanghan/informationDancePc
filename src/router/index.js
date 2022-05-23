@@ -360,6 +360,26 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/CarInsurance',
+    component: Layout,
+    redirect: '/CarInsurance/CarInsurance',
+    name: 'CarInsurance',
+    meta: {
+      title: '车险信息',
+      icon: 'excel'
+    },
+    children: [
+      {
+        path: 'CarInsurance',
+        component: () => import('@/views/CarInsurance/CarInsurance'),
+        name: 'CarInsurance',
+        meta: {
+          title: '车险信息'
+        }
+      }
+    ]
+  },
+  {
     path: '/AssetClues',
     component: Layout,
     redirect: '/AssetClues/LandAssets',

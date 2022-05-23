@@ -432,3 +432,12 @@ export function directUrl(data) {
   })
 }
 
+// vin授权
+export function getCarAuthFile(data) {
+  return request({
+    url: 'api/v1/dzq/getCarAuthFile',
+    method: 'post',
+    data
+  })
+}
+
