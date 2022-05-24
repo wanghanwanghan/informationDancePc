@@ -126,12 +126,8 @@
       <el-divider content-position="center">查询结果</el-divider>
       <div v-for="(item,index) in data" :key="index" class="slide-div">
         <div class="search-res-info">
-          <div class="logo-wrapper">
-            <img
-              class="logo"
-              src="https://fakeimg.pl/200x200/?text=LOGO"
-            />
-          </div>
+          <div class="logo-wrapper" v-html="item._source.logo" />
+
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
@@ -629,6 +625,11 @@ export default {
             } else {
               dataV[key]._source.showName = val._source.name
             }
+            var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
+            if (val._source.logo !== null && val._source.logo.length > 0) {
+              img = '<img style="width:140px;height:140px" src="' + 'https://img-mrxd.oss-cn-beijing.aliyuncs.com/ent-logo' + val._source.logo + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
+            }
+            dataV[key]._source.logo = img
           //   console.log(val._source.name)
           //   var biaoQianQuery = {}
           //   biaoQianQuery.entname = val._source.name
