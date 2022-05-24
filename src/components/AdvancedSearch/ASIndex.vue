@@ -67,6 +67,8 @@
                 @change="getCheckedNodesSzjjid"
               />
             </td>
+          </tr>
+          <tr>
             <td class="search-table-td bg-color">企业所属地区</td>
             <td class="search-table-td">
               <el-cascader
@@ -745,7 +747,8 @@ export default {
 
     .cond-down {
       width: 100%;
-      height: 73px;
+      min-height: 73px;
+      max-height: 150px;
     }
 
     .cond-choice-wrapper {
