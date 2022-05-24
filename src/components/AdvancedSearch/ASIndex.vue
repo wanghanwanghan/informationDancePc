@@ -140,13 +140,13 @@
                     <el-col :span="2">
                       <div class="row-h">企业法人 :</div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="4">
                       <div class="row-h under">{{ item._source.legal_person_name }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">成立日期 :</div>
                     </el-col>
-                    <el-col :span="5">
+                    <el-col :span="4">
                       <div class="row-h under">{{ item._source.from_time }}</div>
                     </el-col>
                     <el-col :span="2">
@@ -160,33 +160,33 @@
                     <el-col :span="2">
                       <div class="row-h">企业规模 :</div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="4">
                       <div class="row-h under">{{ item._source.tuan_dui_ren_shu }}人</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">注册资本 :</div>
                     </el-col>
-                    <el-col :span="5">
+                    <el-col :span="4">
                       <div class="row-h under">{{ item._source.reg_capital }}</div>
                     </el-col>
                     <el-col :span="2">
-                      <div class="row-h">国标行业 :</div>
+                      <div class="row-h">email :</div>
                     </el-col>
-                    <el-col :span="10">
-                      <div class="row-h under">{{ item._source.si_ji_fen_lei_full_name }}</div>
+                    <el-col :span="5">
+                      <div class="row-h under">{{ item._source.last_email }}</div>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10">
                     <el-col :span="4">
                       <div class="row-h">统一社会信用代码 :</div>
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="8">
                       <div class="row-h under">{{ item._source.property1 }}</div>
                     </el-col>
                     <el-col :span="2">
                       <div class="row-h">经营状态 :</div>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="10">
                       <div class="row-h under">{{ item._source.reg_status }}</div>
                     </el-col>
                   </el-row>
@@ -194,10 +194,25 @@
                     <el-col :span="2">
                       <div class="row-h">注册地址 :</div>
                     </el-col>
-                    <el-col :span="100">
+                    <el-col :span="10">
                       <div class="row-h under">{{ item._source.tong_xun_di_zhi }}</div>
                     </el-col>
+                    <el-col :span="2">
+                      <div class="row-h">经营地址 :</div>
+                    </el-col>
+                    <el-col :span="10">
+                      <div class="row-h under">{{ item._source.last_postal_address }}</div>
+                    </el-col>
                   </el-row>
+                  <el-row :gutter="10">
+                    <el-col :span="2">
+                      <div class="row-h">国标行业 :</div>
+                    </el-col>
+                    <el-col :span="100">
+                      <div class="row-h under">{{ item._source.si_ji_fen_lei_full_name }}</div>
+                    </el-col>
+                  </el-row>
+
                   <!--                  <el-row :gutter="10">-->
                   <!--                    <el-col :span="3">-->
                   <!--                      <div class="row-h" style="cursor: pointer;" @click="getDrawer(item._source.name,item._source.xd_id)">工商信息</div>-->
@@ -336,7 +351,7 @@ export default {
       optionCheckBox: [],
       tagItem: [],
       address: address,
-      szjj:szjj,
+      szjj: szjj,
       sonum: sonum,
       nicid: nicid,
       jlxxcy: jlxxcy,
