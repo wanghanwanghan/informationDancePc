@@ -6,9 +6,9 @@
         <table>
           <tr>
             <td class="type1">法人代表:</td>
-            <td>{{ list.legal_person_name }}</td>
-            <td class="type2">企业名称:</td>
-            <td>{{ list.name }}</td>
+            <td class="type2">{{ list.legal_person_name }}</td>
+            <td class="type1">企业名称:</td>
+            <td class="type2">{{ list.name }}</td>
           </tr>
           <tr>
             <td>营业状态:</td>
@@ -36,7 +36,13 @@
           </tr>
           <tr>
             <td>注册地址:</td>
-            <td colspan="3">{{ list.reg_location }}</td>
+            <td >{{ list.reg_location }}</td>
+            <td>经营地址:</td>
+            <td >{{ list.last_postal_address }}</td>
+          </tr>
+          <tr>
+            <td>邮箱:</td>
+            <td colspan="3" >{{ list.last_email }}</td>
           </tr>
           <tr>
             <td>经营范围:</td>
@@ -238,10 +244,10 @@ export default {
         padding: 8px 6px;
       }
       .type1 {
-        width: 90px
+        width: 150px
       }
       .type2 {
-        width: 150px
+        width: 350px
       }
       .type3 {
       // colspan:'4'
