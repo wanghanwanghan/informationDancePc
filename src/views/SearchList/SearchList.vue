@@ -49,7 +49,7 @@
           <div v-if="item.supervisor === 1" class="jkong1">正在监控</div>
           <div v-if="item.supervisor === 2" class="jkong2" @click="toMonitor(item.Name)">点击续费</div>
           <div class="sqing" @click="outerVisibles(item.Name,item.CreditCode)">申请报告</div>
-          <div class="vin_souquan" @click="vinSouQuan(item.Name,item.CreditCode,item.OperName)">上传VIN授权</div>
+<!--          <div class="vin_souquan" @click="vinSouQuan(item.Name,item.CreditCode,item.OperName)">上传VIN授权</div>-->
         </div>
       </div>
     </div>

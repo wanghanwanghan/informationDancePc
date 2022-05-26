@@ -231,6 +231,7 @@
               <div class="action-wrapper">
                 <el-badge class="item">
                   <el-button size="small" type="primary" @click="doSaveOpportunity(item._source.xd_id,item._source.name)">客户触达</el-button>
+                  <el-button size="small" type="primary" @click="uploadVin(item._source.xd_id,item._source.name)">上传VIN</el-button>
                 </el-badge>
               </div>
             </div>
@@ -292,6 +293,36 @@
         <el-button type="primary" @click="dialogEntLianXi = false">关闭</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      width="600px"
+      title="VIN授权"
+      :visible.sync="vinQouQuanType"
+      append-to-body
+    >
+      <div class="reportBox">
+
+        <el-upload
+          class="upload-demo upload-ext"
+          drag
+          action="https://api.meirixindong.com/api/v1/xd/addCarInsuranceInfo"
+          :data="{phone,token,entId:this.vinData.entId}"
+          :headers="myHeaders"
+          :show-file-list="false"
+          :on-remove="handleRemove"
+          :on-success="uploadSuccess"
+          multiple
+        >
+          <i class="el-icon-upload" />
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip" style="font-size: 20px">
+            <a href="https://api.meirixindong.com/Static/vin_template.xlsx" download="模版文件.xlsx">模版下载</a>
+          </div>
+        </el-upload>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="vinQouQuanType = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -319,6 +350,7 @@ export default {
     return {
       dialogVisible: false,
       dialogEntLianXi: false,
+      vinQouQuanType: false,
       EntLianXiList: [],
       EntLianXiEtnName: '',
       EntLianXiEtnId: '',
@@ -328,6 +360,10 @@ export default {
       loading: true,
       data: [],
       list: [],
+      vinData: {
+        entId: '',
+        entName: ''
+      },
       tagStyleMap: ['', 'success', 'warning', 'danger', '', 'success', 'warning', '', 'success', 'warning'],
       drawer_data: {
         entname: '',
@@ -339,6 +375,7 @@ export default {
       },
       phone: '',
       token: '',
+      myHeaders: { Authorization: localStorage.getItem('token') },
       search_type: '1',
       search_val: '',
       value: [],
@@ -701,6 +738,11 @@ export default {
         }
       })
     },
+    uploadVin(xd_id, name) {
+      this.vinData.entId = xd_id
+      this.vinData.entName = name
+      this.vinQouQuanType = true
+    },
     handleChangeEntLianXi(val) {
       getEntLianXi({ entId: this.EntLianXiEtnId, phone: localStorage.getItem('phone'), entName: this.EntLianXiEtnName, page: val, size: 10 }).then(res => {
         if (res.data.code === 200) {
@@ -712,6 +754,19 @@ export default {
       this.dialogVisible = false
       this.dialogEntLianXi = false
       this.EntLianXiList = []
+    },
+    uploadSuccess(res) {
+      if (res.code === 200) {
+        this.$message.success('vin数据上传成功')
+      } else {
+        this.$message.success('vin数据上传失败，'+res.msg)
+      }
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    handleRemove(file, fileList) {
+      this.fileList = []
     }
   }
 }

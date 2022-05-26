@@ -20,6 +20,9 @@
         <el-tab-pane :label="AppNum" name="product">
           <ProductInfo v-if="Product" />
         </el-tab-pane>
+        <el-tab-pane :label="carInsurance" name="carInsurance">
+          <CarInsurance v-if="CarInsurance" />
+        </el-tab-pane>
         <el-tab-pane label="司法裁决" name="sifa">
           <SiFaInfo v-if="Sifa" />
         </el-tab-pane>
@@ -36,7 +39,7 @@ import SiFaInfo from '@/components/AdvancedSearch/components/SiFa/SiFaInfo'
 import ProductInfo from '@/components/AdvancedSearch/components/Product/ProductInfo'
 import RychInfo from '@/components/AdvancedSearch/components/Rych/RychInfo'
 import BusinessIfo from '@/components/AdvancedSearch/components/Business/BusinessIfo'
-
+import CarInsurance from '@/components/AdvancedSearch/components/CarInsurance/CarInsurance'
 export default {
   name: 'BiaoQianInfo',
   components: {
@@ -44,7 +47,8 @@ export default {
     SiFaInfo,
     ProductInfo,
     RychInfo,
-    BusinessIfo
+    BusinessIfo,
+    CarInsurance
   },
   data() {
     return {
@@ -64,11 +68,13 @@ export default {
       Rych: false,
       Product: false,
       Business: false,
+      CarInsurance: false,
       numData: '',
       gongShangNum: '工商信息(0)',
       businessNum: '业务/商品(0)',
       rychNum: '荣誉资质(0)',
-      AppNum: 'App(0)'
+      AppNum: 'App(0)',
+      carInsurance: '车辆保险'
     }
   },
   mounted() {
@@ -132,6 +138,8 @@ export default {
         this.Product = true
       } else if (tab.name === 'business' && this.Business === false) {
         this.Business = true
+      } else if (tab.name === 'carInsurance' && this.CarInsurance === false) {
+        this.CarInsurance = true
       }
       localStorage.setItem('activeName', tab.name)
     }
