@@ -1057,44 +1057,44 @@ export const constantRoutes = [
       // }
     ]
   },
-  {
-    path: '/NewsInformation',
-    component: Layout,
-    redirect: '/NewsInformation/NewsInformation',
-    name: 'NewsInformation',
-    meta: {
-      title: '新闻资讯',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'publicOpinion',
-        component: () => import('@/views/NewsInformation/publicOpinion/publicOpinion'),
-        name: 'publicOpinion',
-        // meta: { title: '新闻舆情' }
-        meta: { title: '新闻资讯' }
-      },
-      {
-        path: 'xwyqDetail/:id',
-        component: () => import('@/views/NewsInformation/publicOpinion/xwyqDetail.vue'),
-        name: '详情',
-        meta: { title: '详情', noCache: true },
-        hidden: true
-      }
-      // {
-      //   path: 'WebsiteInformation',
-      //   component: () => import('@/views/NewsInformation/WebsiteInformation/WebsiteInformation'),
-      //   name: 'WebsiteInformation',
-      //   meta: { title: '网站信息' }
-      // },
-      // {
-      //   path: 'weibo',
-      //   component: () => import('@/views/NewsInformation/weibo/weibo'),
-      //   name: 'weibo',
-      //   meta: { title: '微博' }
-      // }
-    ]
-  },
+  // {
+  //   path: '/NewsInformation',
+  //   component: Layout,
+  //   redirect: '/NewsInformation/NewsInformation',
+  //   name: 'NewsInformation',
+  //   meta: {
+  //     title: '新闻资讯',
+  //     icon: 'excel'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'publicOpinion',
+  //       component: () => import('@/views/NewsInformation/publicOpinion/publicOpinion'),
+  //       name: 'publicOpinion',
+  //       // meta: { title: '新闻舆情' }
+  //       meta: { title: '新闻资讯' }
+  //     },
+  //     {
+  //       path: 'xwyqDetail/:id',
+  //       component: () => import('@/views/NewsInformation/publicOpinion/xwyqDetail.vue'),
+  //       name: '详情',
+  //       meta: { title: '详情', noCache: true },
+  //       hidden: true
+  //     }
+  //     // {
+  //     //   path: 'WebsiteInformation',
+  //     //   component: () => import('@/views/NewsInformation/WebsiteInformation/WebsiteInformation'),
+  //     //   name: 'WebsiteInformation',
+  //     //   meta: { title: '网站信息' }
+  //     // },
+  //     // {
+  //     //   path: 'weibo',
+  //     //   component: () => import('@/views/NewsInformation/weibo/weibo'),
+  //     //   name: 'weibo',
+  //     //   meta: { title: '微博' }
+  //     // }
+  //   ]
+  // },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
