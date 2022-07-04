@@ -95,7 +95,10 @@ export default {
               message: '修改成功!'
             })
           } else {
-            // console.log(res.data)
+            this.$message({
+              type: 'info',
+              message: res.data.msg
+            })
           }
         })
       } else {
