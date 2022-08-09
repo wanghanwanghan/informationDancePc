@@ -259,66 +259,66 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/FinancialPerformance',
-  //   component: Layout,
-  //   redirect: '/FinancialPerformance/FinancialPerformance',
-  //   name: 'FinancialPerformance',
-  //   meta: {
-  //     title: '财务表现'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'FinancialPerformance',
-  //       component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
-  //       name: 'FinancialPerformance',
-  //       meta: {
-  //         title: '财务表现',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/FinancialThreeTable',
-  //   component: Layout,
-  //   redirect: '/FinancialThreeTable/FinancialThreeTable',
-  //   name: 'FinancialThreeTable',
-  //   meta: {
-  //     title: '财税能力'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'FinancialPerformance',
-  //       component: () => import('@/views/FinancialThreeTable/index'),
-  //       name: 'FinancialThreeTableFinancialPerformance',
-  //       meta: {
-  //         title: '财税能力',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     },
-  //     {
-  //       path: 'TwoTable',
-  //       component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
-  //       name: 'TwoTable',
-  //       meta: {
-  //         title: '财',
-  //         icon: 'el-icon-star-off'
-  //       },
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'Fapiao',
-  //       component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
-  //       name: 'Fapiao',
-  //       meta: {
-  //         title: '税',
-  //         icon: 'el-icon-star-off'
-  //       },
-  //       hidden: true
-  //     }
-  //   ]
-  // },
+  {
+    path: '/FinancialPerformance',
+    component: Layout,
+    redirect: '/FinancialPerformance/FinancialPerformance',
+    name: 'FinancialPerformance',
+    meta: {
+      title: '财务表现'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
+        name: 'FinancialPerformance',
+        meta: {
+          title: '财务表现',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
+    path: '/FinancialThreeTable',
+    component: Layout,
+    redirect: '/FinancialThreeTable/FinancialThreeTable',
+    name: 'FinancialThreeTable',
+    meta: {
+      title: '财税能力'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialThreeTable/index'),
+        name: 'FinancialThreeTableFinancialPerformance',
+        meta: {
+          title: '财税能力',
+          icon: 'el-icon-star-off'
+        }
+      },
+      {
+        path: 'TwoTable',
+        component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
+        name: 'TwoTable',
+        meta: {
+          title: '财',
+          icon: 'el-icon-star-off'
+        },
+        hidden: true
+      },
+      {
+        path: 'Fapiao',
+        component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
+        name: 'Fapiao',
+        meta: {
+          title: '税',
+          icon: 'el-icon-star-off'
+        },
+        hidden: true
+      }
+    ]
+  },
   // {
   //   path: '/FinancialPerformanceMergeData',
   //   component: Layout,

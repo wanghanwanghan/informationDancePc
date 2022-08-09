@@ -150,6 +150,34 @@ export default {
     this.getData_lr_month()
     this.getData_zc_year()
     this.getData_zc_month()
+
+    // req.post('api/v1/zw/getVatReturn', {
+    //   'phone': this.phone,
+    //   'code': this.CreditCode,
+    //   'pay': 1
+    // }, this.token).then(res => {
+    //   console.log(res)
+    // })
+
+    // req.post('api/v1/zw/getEssential', {
+    //   'phone': this.phone,
+    //   'code': this.CreditCode,
+    //   'pay': 1
+    // }, this.token).then(res => {
+    //   console.log(res)
+    // })
+
+    req.post('api/v1/zw/getInvoiceMain', {
+      'phone': this.phone,
+      'code': this.CreditCode,
+      'dataType': 2,
+      'startDate': '20210101',
+      'endDate': '202201031',
+      'page': 1
+    }, this.token).then(res => {
+      console.log(res)
+    })
+
   },
   methods: {
     show_lr_table(type, index) {
