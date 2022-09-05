@@ -4,7 +4,7 @@
       <h3 style="margin-left:20px;">纳税信用等级（{{ totalSatpartyXin }}）</h3>
       <div class="box2">
         <!-- 纳税信用等级 -->
-        <div class="cont" style="overflow: scroll;height: 550px; ">
+        <div class="cont" >
           <el-table
             :data="SatpartyXin"
             border

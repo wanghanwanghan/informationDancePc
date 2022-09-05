@@ -77,7 +77,7 @@ export default {
       carInsurance: '车辆保险'
     }
   },
-  mounted() {
+  created() {
     if (this.$route.query.activeName === undefined) {
       this.activeName = 'base'
     } else {

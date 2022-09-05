@@ -1,52 +1,52 @@
 <template style="overflow: scroll ">
-  <div style="overflow: scroll;height: 600px; ">
+  <div style="overflow: scroll; ">
     <div class="box1">
       <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>
       <div v-else-if=" list !== '' || list !== null" class="cont">
         <table>
           <tr>
             <td class="type1">法人代表:</td>
-            <td class="type2">{{ list.legal_person_name }}</td>
+            <td class="type2">{{ list.NAME }}</td>
             <td class="type1">企业名称:</td>
-            <td class="type2">{{ list.name }}</td>
+            <td class="type2">{{ list.ENTNAME }}</td>
           </tr>
           <tr>
             <td>营业状态:</td>
-            <td>{{ list.reg_status }}</td>
+            <td>{{ list.ENTSTATUS_CNAME.name }}</td>
             <td>统一社会信用代码:</td>
-            <td>{{ list.property1 }}</td>
+            <td>{{ list.UNISCID }}</td>
           </tr>
           <tr>
             <td>公司类型:</td>
-            <td>{{ list.company_org_type }}</td>
+            <td>{{ list.ENTTYPE_CNAME.name }}</td>
             <td>注册资本（万元）:</td>
-            <td>{{ list.reg_capital }}</td>
+            <td>{{ list.REGCAP }}</td>
           </tr>
           <tr>
             <td>成立日期:</td>
-            <td>{{ list.from_time }}</td>
+            <td>{{ list.ESDATE }}</td>
             <td>营业期限:</td>
-            <td>{{ list.from_time }}至{{ list.to_time === '0000-00-00 00:00:00' ? '无固定期限' : list.to_time }}</td>
+            <td>{{ list.OPFROM }}至{{ list.OPTO === '0000-00-00 00:00:00' ? '无固定期限' : list.OPTO }}</td>
           </tr>
           <tr>
             <td>核准日期:</td>
-            <td>{{ list.approved_time }}</td>
+            <td>{{ list.APPRDATE }}</td>
             <td>登记机关:</td>
-            <td>{{ list.reg_institute }}</td>
+            <td>{{ list.REGORG }}</td>
           </tr>
           <tr>
             <td>注册地址:</td>
-            <td >{{ list.reg_location }}</td>
+            <td >{{ list.DOM }}</td>
             <td>经营地址:</td>
-            <td >{{ list.last_postal_address }}</td>
+            <td >{{ list.LAST_DOM }}</td>
           </tr>
           <tr>
             <td>邮箱:</td>
-            <td colspan="3" >{{ list.last_email }}</td>
+            <td colspan="3" >{{ list.LAST_EMAIL }}</td>
           </tr>
           <tr>
             <td>经营范围:</td>
-            <td colspan="3" v-html="list.business_scope">{{ list.business_scope }}</td>
+            <td colspan="3" v-html="list.OPSCOPE">{{ list.OPSCOPE }}</td>
           </tr>
         </table>
       </div>
@@ -54,7 +54,7 @@
     <h3 style="margin-left:20px;">股东信息（{{ totalGd }}）</h3>
     <div class="box2">
       <!-- 变更信息 -->
-      <div class="cont" style="overflow: scroll;height: 200px; ">
+      <div class="cont" >
         <el-table
           :data="gudonglList"
           border
@@ -62,22 +62,22 @@
         >
           <el-table-column
             label="姓名"
-            prop="name"
+            prop="INV"
           />
           <el-table-column
-            prop="certNo"
+            prop="BLICNO"
             label="证照/证件号码"
           />
           <el-table-column
-            prop="capitalStr"
+            prop="SUBCONAM"
             label="认缴资金"
           />
           <el-table-column
-            prop="capitalActlStr"
+            prop="ACCONAM"
             label="实缴资金"
           />
           <el-table-column
-            prop="amount"
+            prop="AMOUNT"
             label="投资金额"
           />
         </el-table>
@@ -94,7 +94,7 @@
     <h3 style="margin-left:20px;">主要成员（{{ StaffInfoTotal }}）</h3>
     <div class="box2">
       <!-- 变更信息 -->
-      <div class="cont" style="overflow: scroll;height: 200px; ">
+      <div class="cont" >
         <el-table
           :data="StaffInfoList"
           border
@@ -102,10 +102,10 @@
         >
           <el-table-column
             label="职位"
-            prop="staff_type_name"
+            prop="POSITION"
           />
           <el-table-column
-            prop="name"
+            prop="NAME"
             label="姓名"
           />
         </el-table>
@@ -192,28 +192,7 @@ export default {
       this.queryGd.phone = localStorage.getItem('phone')
       getInvestorInfo(this.queryGd).then(res => {
         if (res.data.code === 200) {
-          var gudonglList = res.data.result
-          gudonglList.forEach((val, key) => {
-            var capitalActl = ''
-            var capital = ''
-            val.capitalActlData.forEach((v) => {
-              if (capitalActl.length < 1) {
-                capitalActl = v.amomon
-              } else {
-                capitalActl = capitalActl + ',' + v.amomon
-              }
-            })
-            val.capitalData.forEach((v, k) => {
-              if (capital.length < 1) {
-                capital = v.amomon
-              } else {
-                capital = capital + ',' + v.amomon
-              }
-            })
-            gudonglList[key].capitalActlStr = capitalActl
-            gudonglList[key].capitalStr = capital
-          })
-          this.gudonglList = gudonglList
+          this.gudonglList = res.data.result
           this.totalGd = res.data.paging.total
         }
       })

@@ -2,7 +2,7 @@
   <div class="table-wrapper"  style="overflow: scroll;height: 100%; ">
     <h3 style="margin-left:20px;">高新技术({{total}})</h3>
     <div class="box2">
-      <div class="cont" style="overflow: scroll;height: 200px; ">
+      <div class="cont" >
         <el-table :data="list" border style="width: 100%">
           <el-table-column
             label="认证机构"
@@ -35,39 +35,9 @@
         />
       </div>
     </div>
-<!--    <h3 style="margin-left:20px;">瞪羚</h3>-->
-<!--    <div class="box2">-->
-<!--      <div class="cont" style="overflow: scroll;height: 200px; ">-->
-<!--        <el-table :data="listDL" border style="width: 100%">-->
-<!--          <el-table-column-->
-<!--            label="企业名称"-->
-<!--            prop="ENTNAME"-->
-<!--            width="400"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            label="统一社会信用代码"-->
-<!--            prop="UNISCID"-->
-<!--            width="400"-->
-<!--          />-->
-<!--          <el-table-column-->
-<!--            label="更新时间"-->
-<!--            prop="updated"-->
-<!--            width="400"-->
-<!--          />-->
-<!--        </el-table>-->
-<!--      </div>-->
-<!--      <div class="pagination">-->
-<!--        <el-pagination-->
-<!--          background-->
-<!--          layout="prev, pager, next"-->
-<!--          :total="totalDL"-->
-<!--          @current-change="getListDL"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </div>-->
     <h3 style="margin-left:20px;">ISO({{totalISO}})</h3>
     <div class="box2">
-      <div class="cont" style="overflow: scroll;height: 200px; ">
+      <div class="cont" >
         <el-table :data="listISO" border style="width: 100%">
           <el-table-column
             label="颁证日期"

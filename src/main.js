@@ -16,13 +16,16 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import http from '@/utils/myRequest'
 
-import echarts from 'echarts'
-
 import jquery from 'jquery'
 Vue.prototype.$ = jquery
 
+import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
-
+// d3js
+// import * as d3 from 'd3/d3'
+//
+// Vue.prototype.$d3 = d3
+// window.d3 = d3 // 暂时设置为全局变量
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -44,7 +47,16 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 Vue.prototype.$http = http
-
+import AmapVue from '@amap/amap-vue'
+// import AmapMap from '@amap/amap-vue';
+AmapVue.config.version = '2.0' // 默认2.0，这里可以不修改
+AmapVue.config.key = '4d746ec320a322b5f7f141c0e6179a00'
+AmapVue.config.plugins = [
+  'AMap.ToolBar',
+  'AMap.MoveAnimation',
+  'AMap.Autocomplete'
+]
+Vue.use(AmapVue)
 new Vue({
   el: '#app',
   router,

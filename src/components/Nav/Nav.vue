@@ -49,7 +49,7 @@
         <el-dialog :visible.sync="dialogFormVisibl">
           <div class="title">注册
             <div style="color:#ccc">
-              （如已在 信动智调 小程序注册可直接登录）
+              （如已在 信动客动 小程序注册可直接登录）
             </div>
           </div>
           <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px"
@@ -121,9 +121,12 @@
           <el-tab-pane label="呼叫中心" name="cs">
             <CsIndex/>
           </el-tab-pane>
-          <el-tab-pane label="高级搜索" name="as">
-            <ASIndex/>
-          </el-tab-pane>
+<!--          <el-tab-pane label="高级搜索" name="as">-->
+<!--            <ASIndex/>-->
+<!--          </el-tab-pane>-->
+<!--          <el-tab-pane label="地图搜索" name="map">-->
+<!--            <MapIndex/>-->
+<!--          </el-tab-pane>-->
         </el-tabs>
       </div>
     </div>
@@ -141,6 +144,7 @@ import CsIndex from '@/components/Cs/CsIndex'
 import { getCodes, Login, Zreg } from '@/api/article'
 import { getBeneficiary } from '@/api/EnterpriseBackground'
 import ASIndex from '@/components/AdvancedSearch/ASIndex'
+import MapIndex from "@/components/AdvancedSearch/MapIndex";
 
 export default {
   name: 'Nav',
@@ -153,7 +157,8 @@ export default {
     My,
     Recharge,
     CrmIndex,
-    CsIndex
+    CsIndex,
+    MapIndex,
   },
   data() {
     var checkname = (rule, value, callback) => {

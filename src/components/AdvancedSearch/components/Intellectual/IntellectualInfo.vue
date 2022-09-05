@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="et-main" style="overflow: scroll;height: 600px; ">
+    <main class="et-main" >
       <section id="tab-sb" class="et-slide" style="min-height:100px;margin-top:50px;">
         <h3 style="margin-left:20px;">商标</h3>
         <div class="box2" style="overflow: scroll;height: 200px; ">

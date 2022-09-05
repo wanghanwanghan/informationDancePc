@@ -1,9 +1,9 @@
 <template>
   <div>
-    <main class="et-main" style="overflow: scroll;height: 630px; ">
+    <main class="et-main" style="overflow: scroll; ">
       <section id="tab-zpzzq" class="et-slide" style="min-height:100px;">
         <h3 style="margin-left:20px;">Android({{ totalAndoriod }})</h3>
-        <div class="box2" style="overflow: scroll;height: 230px; ">
+        <div class="box2" >
           <div class="cont">
             <el-table
               :data="listAndoriod"
@@ -69,7 +69,7 @@
       </section>
       <section class="et-slide" style="min-height:100px;">
         <h3 style="margin-left:20px;">IOS({{ totalIOS }})</h3>
-        <div class="box2" style="overflow: scroll;height: 240px; ">
+        <div class="box2" >
           <div class="cont">
             <el-table
               :data="listIOS"
@@ -191,7 +191,7 @@ export default {
           this.listAndoriod.forEach((v, k) => {
             var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
             if (v.pic !== null && v.pic.length > 0) {
-              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
+              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '!ttttt" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
             }
             this.listAndoriod[k].pic = img
           })
@@ -210,7 +210,7 @@ export default {
           this.listIOS.forEach((v, k) => {
             var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
             if (v.pic !== null && v.pic.length > 0) {
-              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
+              img = '<img src="' + 'https://img.qiyedata.net/' + v.pic + '!ttttt" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
             }
             this.listIOS[k].pic = img
           })

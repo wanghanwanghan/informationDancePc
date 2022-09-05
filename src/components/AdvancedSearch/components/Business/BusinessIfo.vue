@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 600px; ">
+  <div style=" ">
     <div class="box1">
       <!--    <div v-if="list === '' || list === null" class="cont">暂无相关信息</div>-->
       <div class="cont" style="overflow: scroll; min-height: 100px;max-height:430px;">

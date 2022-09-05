@@ -4,7 +4,7 @@
       <h3 style="margin-left:20px;">开庭公告（{{ totalKtgg }}）</h3>
       <div class="box2">
         <!-- 变更信息 -->
-        <div class="cont" style="overflow: scroll;height: 200px; ">
+        <div class="cont" >
           <el-table :data="Ktgg" border style="width: 100%">
             <el-table-column
               label="案号"
@@ -48,7 +48,7 @@
       <h3 style="margin-left:20px;">判决文书（{{ totalCpws }}）</h3>
       <div class="box2">
         <!-- 变更信息 -->
-        <div class="cont" style="overflow: scroll;height: 200px; ">
+        <div class="cont" >
           <el-table
             :data="Cpws"
             border

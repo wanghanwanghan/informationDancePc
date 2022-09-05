@@ -1,7 +1,7 @@
 <template>
   <div class="table-wrapper">
     <div class="box2">
-      <div class="cont" style="overflow: scroll;height: 500px; ">
+      <div class="cont" >
         <el-table :data="list" border style="width: 100%">
           <el-table-column
             label="颁证日期"

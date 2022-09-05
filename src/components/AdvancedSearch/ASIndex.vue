@@ -1,15 +1,18 @@
 <template>
-  <div class="bg">
-    <div class="search-wrapper">
-      <el-input id="search_input" v-model="search_val" placeholder="请根据企业名称，经营范围，业务商品等关键词内容搜索" class="input-with-select">
-        <el-select slot="prepend" v-model="search_type" placeholder="请选择">
+  <div class="bg" style="background: #F5F8FA;padding-bottom: 20px">
+    <img src="../../assets/souke.png" style="width: 100%;height: 476px;position: absolute;z-index: 1">
+    <div style="line-height: 200px;width: 1200px;margin: auto;position: relative;height: 200px;z-index: 10;color: white;text-align: center;font-size: 40px;font-family: PingFang;font-weight: bold;">智能行业获客 技术提供方</div>
+    <div style="width: 1200px;margin: auto;position: relative;z-index: 10;">
+    <div class="search-wrapper" >
+      <el-input id="search_input"  v-model="search_val" placeholder="请根据企业名称，经营范围，业务商品等关键词内容搜索" class="input-with-select">
+        <el-select slot="prepend" v-model="search_type">
           <el-option label="智能搜索" value="1" />
         </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="submit" />
+        <el-button slot="append" icon="el-icon-search" @click="submit" style="color: #FFFFFF;">立即搜索</el-button>
       </el-input>
-      <el-button style="width:10%;background-color: #409EFF;  margin-top: 10px;  border-color: #409EFF;color: #FFF;" @click="saveParamDialog">保存筛选条件</el-button>
+      <el-button style="width:13%;background-color: #10C334; margin-left: 1%; margin-top: 10px;  border-color: #409EFF;color: #FFF;height: 60px;font-size: 18px" @click="saveParamDialog">保存筛选条件</el-button>
     </div>
-    <div class="cond-wrapper">
+    <div class="cond-wrapper" style="background-color: white;margin-top: 10px;border-radius: 5px;border: 1px solid #DFDFDF;">
       <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
         <Cond
           v-for="(item,index) of list"
@@ -84,6 +87,21 @@
                 @close="closeAddressCheckedNodes"
               />
             </td>
+            <td class="search-table-td bg-color">企业类型</td>
+            <td class="search-table-td">
+              <el-cascader
+                ref="qylx_ref"
+                class="search-table-input"
+                :options="qylx"
+                :props="{multiple: true}"
+                :show-all-levels="false"
+                :filterable="true"
+                collapse-tags
+                clearable
+                @change="getCheckedNodesQylxid"
+                @close="closeQylxCheckedNodes"
+              />
+            </td>
             <td class="search-table-td bg-color">经营范围</td>
             <td class="search-table-td">
               <el-input
@@ -96,7 +114,7 @@
           </tr>
         </table>
       </div>
-      <el-button id="gengduo" type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
+      <el-button style="background-color: #006EFF;margin: 0px 25px" id="gengduo" type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
       <div class="cond-choice-wrapper">
         <div class="cond-word">已选({{ tags.length }})</div>
         <div class="cond-cond">
@@ -114,135 +132,99 @@
         </div>
       </div>
     </div>
-    <div class="search-res-wrapper">
+    <div style="width: 100%;text-align: center;margin: 30px 0px;">
       <div class="search-res-count">为您找到 {{ paginate.total }}+ 企业</div>
       <div class="pagination-wrapper">
         <el-pagination
           background
           layout=" prev, pager, next"
+          :current-page="tablePage.pageNum"
           :total="paginate.total"
           :page-size="20"
           @current-change="BasePageChange"
         />
       </div>
-      <el-divider content-position="center">查询结果</el-divider>
-      <div v-for="(item,index) in data" :key="index" class="slide-div">
+    </div>
+    <div class="search-res-wrapper" style="border: 1px solid #EEEEEE;border-radius: 5px;background-color: #FFFFFF;">
+
+      <el-divider content-position="center" >查询结果</el-divider>
+      <div v-for="(item,index) in data" :key="index" class="slide-div" style="padding: 30px 15px;border-bottom: 1px solid #efeeee">
         <div class="search-res-info">
           <div class="logo-wrapper" v-html="item._source.logo" />
 
           <div class="content-wrapper">
             <div class="ent-info-wrapper">
               <div class="info-wrapper">
-                <div class="ent-name" @click="getDrawer(item._source.name,item._source.xd_id)" v-html="item._source.showName">{{ item._source.showName }}</div>
-                <div class="ent-label">
-                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini">{{ v }}</el-tag>
+                <div>
+                  <div class="ent-name" @click="getDrawer(item._source.ENTNAME,item._source.companyid)" v-html="item._source.showName">{{ item._source.showName }}</div>
+                  <div class="action-wrapper" style="float: right">
+                    <el-badge class="item">
+                      <el-button size="small" type="primary" style="color: #006EFF;border: 1px solid  #006EFF;background-color: #FFFFFF" @click="doSaveOpportunity(item._source.companyid,item._source.ENTNAME)">客户触达</el-button>
+                      <el-button v-show="item._source.wu_liu_xin_xi==1" size="small" type="primary" style="color: #10C334 ;border: 1px solid  #10C334 ;background-color: #FFFFFF"  @click="uploadVin(item._source.companyid,item._source.ENTNAME)">上传VIN</el-button>
+                      <el-button size="small"  type="primary"  @click="zp(item._source.companyid,item._source.ENTNAME)" style="color: #f3881c ;border: 1px solid  #f3881c ;background-color: #FFFFFF" >企业族谱</el-button>
+                    </el-badge>
+                  </div>
+                </div>
+                <div class="ent-label" v-show="item._source.tags.length>0">
+                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini" v-show="v!='~'">{{ v }}</el-tag>
                 </div>
                 <div class="ent-other-wrapper">
                   <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">企业法人 :</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{ item._source.legal_person_name }}</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">成立日期 :</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{ item._source.from_time }}</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">企业网址 :</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{ item._source.web }}</div>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">企业规模 :</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{ item._source.tuan_dui_ren_shu }}人</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">注册资本 :</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h under">{{ item._source.reg_capital }}</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">email :</div>
-                    </el-col>
                     <el-col :span="5">
-                      <div class="row-h under">{{ item._source.last_email }}</div>
+                      <div class="row-h">企业法人:<span style="color: #128BED">{{ item._source.NAME }}</span></div>
                     </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
                     <el-col :span="4">
-                      <div class="row-h">统一社会信用代码 :</div>
+                      <div class="row-h">成立日期:{{ item._source.ESDATE }}</div>
+                    </el-col>
+                    <el-col :span="4">
+                      <div class="row-h">经营状态:{{ item._source.ENTSTATUS_CNAME.name }}</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="row-h">注册资本:{{ item._source.REGCAP }}万</div>
+                    </el-col>
+                    <el-col :span="3" v-show="item._source.tuan_dui_ren_shu != '--'">
+                      <div class="row-h">企业规模:{{ item._source.tuan_dui_ren_shu }}人</div>
+                    </el-col>
+                    <el-col :span="7"  v-show="item._source.web != '--'">
+                      <div class="row-h">企业网址:{{ item._source.web }}</div>
+                    </el-col>
+                    <el-col :span="7"  v-show="item._source.LAST_EMAIL != '--'">
+                      <div class="row-h">email:<span style="color: #128BED">{{ item._source.LAST_EMAIL }}</span></div>
                     </el-col>
                     <el-col :span="8">
-                      <div class="row-h under">{{ item._source.property1 }}</div>
+                      <div class="row-h">统一社会信用代码:{{ item._source.UNISCID }}</div>
                     </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">经营状态 :</div>
+                    <el-col :span="24">
+                      <div class="row-h">注册地址:{{ item._source.DOM }}</div>
                     </el-col>
-                    <el-col :span="10">
-                      <div class="row-h under">{{ item._source.reg_status }}</div>
+                    <el-col :span="24" v-show="item._source.LAST_DOM != '--'">
+                      <div class="row-h">经营地址:{{ item._source.LAST_DOM }}</div>
                     </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">注册地址 :</div>
-                    </el-col>
-                    <el-col :span="10">
-                      <div class="row-h under">{{ item._source.tong_xun_di_zhi }}</div>
-                    </el-col>
-                    <el-col :span="2">
-                      <div class="row-h">经营地址 :</div>
-                    </el-col>
-                    <el-col :span="10">
-                      <div class="row-h under">{{ item._source.last_postal_address }}</div>
+                    <el-col :span="24"  v-show="item._source.nic_full_name != '--'">
+                      <div class="row-h">国标行业:{{ item._source.nic_full_name }}</div>
                     </el-col>
                   </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="2">
-                      <div class="row-h">国标行业 :</div>
-                    </el-col>
-                    <el-col :span="100">
-                      <div class="row-h under">{{ item._source.si_ji_fen_lei_full_name }}</div>
-                    </el-col>
-                  </el-row>
-
-                  <!--                  <el-row :gutter="10">-->
-                  <!--                    <el-col :span="3">-->
-                  <!--                      <div class="row-h" style="cursor: pointer;" @click="getDrawer(item._source.name,item._source.xd_id)">工商信息</div>-->
-                  <!--                    </el-col>-->
-                  <!--                    <el-col :span="3">-->
-                  <!--                      <div class="row-h" style="cursor: pointer;">业务/商品</div>-->
-                  <!--                    </el-col>-->
-                  <!--                    <el-col :span="3">-->
-                  <!--                      <div class="row-h" style="cursor: pointer;">招聘信息 (99)</div>-->
-                  <!--                    </el-col>-->
-                  <!--                  </el-row>-->
                 </div>
               </div>
-              <div class="action-wrapper">
-                <el-badge class="item">
-                  <el-button size="small" type="primary" @click="doSaveOpportunity(item._source.xd_id,item._source.name)">客户触达</el-button>
-                  <el-button size="small" type="primary" @click="uploadVin(item._source.xd_id,item._source.name)">上传VIN</el-button>
-                </el-badge>
-              </div>
             </div>
-            <div class="ent-desc-wrapper">
-              <div v-html="item._source.gong_si_jian_jie.slice(0,65)">公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,65):'' }}...</div>
+            <div class="ent-desc-wrapper" style="margin-bottom: 10px" v-show="item._source.gong_si_jian_jie!='--'">
+              <div>公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,65):'' }}...</div>
             </div>
-            <el-divider content-position="right" />
           </div>
         </div>
       </div>
     </div>
+      <div class="pagination-wrapper" style="width: 100%;text-align: center;margin: 30px 0px;">
+        <el-pagination
+          background
+          layout=" prev, pager, next"
+          :current-page="tablePage.pageNum"
+          :total="paginate.total"
+          :page-size="20"
+          @current-change="BasePageChange"
+        />
+      </div>
+  </div>
     <Drawer
       :entname="drawer_data.entname"
       :xd_id="drawer_data.xd_id"
@@ -299,7 +281,7 @@
       :visible.sync="vinQouQuanType"
       append-to-body
     >
-      <div class="reportBox">
+      <div class="reportBox" style="padding: 0px 100px;text-decoration:underline" >
 
         <el-upload
           class="upload-demo upload-ext"
@@ -315,7 +297,7 @@
           <i class="el-icon-upload" />
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div slot="tip" class="el-upload__tip" style="font-size: 20px">
-            <a href="https://api.meirixindong.com/Static/vin_template.xlsx" download="模版文件.xlsx">模版下载</a>
+            <a href="https://api.meirixindong.com/Static/vin_template.xlsx" style="color: #0b09f3;" download="模版文件.xlsx">模版下载</a>
           </div>
         </el-upload>
       </div>
@@ -323,6 +305,23 @@
         <el-button @click="vinQouQuanType = false">取 消</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="企业族谱"
+      :visible.sync="zupu.drawer"
+      width="80%"
+      height="60%"
+      :before-close="handleClose"
+    >
+      <div id="graph" style="width: 100%;height: 100%;" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="zupu.drawer = false">取 消</el-button>
+        <el-button type="primary" @click="zupu.drawer = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog :append-to-body="true" title="" :visible="zupuVisible" width="90%" :before-close="handleClose">
+      <div id="myChart" ref="myChart" :style="{width: '100%', height: '800px'}" />
+    </el-dialog>
+
   </div>
 </template>
 
@@ -334,20 +333,28 @@ import { sonum } from '@/data/sonum'
 import { nicid } from '@/data/nicid'
 import { jlxxcy } from '@/data/jlxxcy'
 import { szjj } from '@/data/szjj'
+import { qylx } from '@/data/qylx'
 import {
   advancedSearch,
-  getEntLianXi,
+  getEntLianXi, getInvestor,
   getSearchOption,
   saveOpportunity,
   saveSearchHistroy
 } from '@/api/EnterpriseBackground'
-
+// import d3 from "d3";
+// import d3 from 'd3'
+import * as d3 from 'd3/d3'
 export default {
   name: 'ASIndex',
   components: { Drawer, Cond },
   props: {},
   data() {
     return {
+      zupu: {
+        drawer: false,
+        company_id: 0,
+        obj: ''
+      },
       dialogVisible: false,
       dialogEntLianXi: false,
       vinQouQuanType: false,
@@ -394,6 +401,12 @@ export default {
       sonum: sonum,
       nicid: nicid,
       jlxxcy: jlxxcy,
+      qylx: qylx,
+      tablePage: {
+        pageNum: 1, // 第几页
+        pageSize: 10, // 每页多少条
+        total: 0 // 总记录数
+      },
       search_cond: {
         page: 1,
         phone: localStorage.getItem('phone'),
@@ -411,7 +424,8 @@ export default {
         basic_szjjid: '',
         jingying_vc_round: '',
         basic_opscope: '',
-        basic_status: ''
+        basic_status: '',
+        basic_qylxid: ''
       },
       query: {
         phone: ''
@@ -425,14 +439,25 @@ export default {
         basic_opscope: '',
         basic_regionid: '',
         basic_szjjid: '',
-        basic_jlxxcyid: ''
+        basic_jlxxcyid: '',
+        OPSCOPE: ''
       },
       paginate: {
         total: 0
-      }
+      },
+      color: [],
+      legendData: [],
+      categories: [],
+      zupuData: [],
+      zupuLinks: [],
+      zupuDataList: [],
+      zupuVisible: false
     }
   },
   computed: {},
+  watch: {
+    zupuData: 'updatezupu'
+  },
   created() {
     this.phone = localStorage.getItem('phone')
     this.token = localStorage.getItem('token')
@@ -468,12 +493,473 @@ export default {
       }
     })
     var searchDiv = document.getElementById('search_input').nextElementSibling
-    searchDiv.style.backgroundColor = '#409EFF'
+    searchDiv.style.background = "linear-gradient(90deg, #006EFF, #4BACFF)"
     searchDiv.style.paddingLeft = '40px'
     searchDiv.style.paddingRight = '40px'
+    searchDiv.style.border = '0px'
     searchDiv.getElementsByClassName('el-icon-search')[0].style.color = 'white'
   },
   methods: {
+    updatezupu() {
+      this.drawLine()
+    },
+    zp(company_id, entName) {
+      this.zupuVisible = true
+      this.categories = []
+      this.zupuData = []
+      this.zupuLinks = []
+      this.zupuDataList = []
+      this.getData(company_id, entName)
+    },
+
+    getData(company_id, entName) {
+      getInvestor({ phone: localStorage.getItem('phone'), company_id: company_id }).then(res => {
+        this.categories.push({ name: entName })
+        this.zupuData.push({ name: entName, category: entName, investor_id: 0, symbolSize: 120 })
+        this.zupuDataList[entName] = entName
+        res.data.result.forEach((item) => {
+          this.zupuDataList[item.INV] = item.INV
+          this.zupuData.push({
+            name: item.INV,
+            category: entName,
+            investor_id: item.companyid_inv
+          })
+          this.zupuLinks.push({
+            source: entName,
+            target: item.INV
+          })
+        })
+        this.drawLine()
+      })
+    },
+
+    drawLine() {
+      // 基于刚刚准备好的 DOM 容器，初始化 EChart 实例
+      const myChart = this.$echarts.init(document.getElementById('myChart'))
+      // 绘制图表
+      myChart.setOption({
+        backgroundColor: '#f6f5f3',
+        color: [
+          '#02c9c9',
+          '#bccf3d',
+          '#ffc300',
+          '#9d9def',
+          '#d99090',
+          '#8be590',
+          '#a69768'],
+        title: {
+          text: '族谱',
+          textStyle: {
+            color: '#368cbf',
+            fontWeight: 700,
+            fontSize: 30,
+            left: 'center'
+          }
+        }, // 标题及标题颜色、尺寸、位置
+        legend: [ // 增加图示标签，我们可以点击图示隐藏相关节点
+          {
+            x: 'right',
+            show: true,
+            data: []
+          }],
+        series: [
+          {
+            type: 'graph', // 类型设置为关系图
+            legendHoverLink: true, // 可以点击图例来隐藏一个组
+            layout: 'force',
+            categories: this.categories,
+            force: {
+              repulsion: [1000, 1900], // 每个节点之间的斥力因子，越大离的越远
+              layoutAnimation: true,
+              friction: 0.3, // 刷新时节点的移动速度，越大越快，0 - 1 之间
+              edgeLength: [100, 330] // 两节点之间的距离
+            },
+
+            label: {
+              show: true, // 节点圆盘上的文字
+              fontStyle: 'normal', // 文字风格，normal，italic，oblique 三种可选
+              fontSize: 12,
+              color: '#000000',
+              width: 80,
+              overflow: 'break'
+            },
+
+            symbolSize: 100, // 全局节点尺寸
+            itemStyle: { // 给节点加上阴影，显着立体
+              shadowColor: '#C0C0C0',
+              shadowOffsetX: 2,
+              shadowOffsetY: 2
+            },
+            // 让节点可以通过鼠标拖拽和移动的设置
+            roam: false, // 开启鼠标平移及缩放
+            draggable: true, // 节点是否支持鼠标拖拽。
+            edgeSymbol: ['circle', 'arrow'], // 两节点连线的样式
+            edgeSymbolSize: [5, 10],
+            cursor: 'pointer', // 鼠标悬浮时在图形元素上时鼠标的样式
+
+            labelLayout: {
+              moveOverlap: 'shiftX', // 标签重叠时，挪动标签防止重叠
+              draggable: true // 节点标签是否允许鼠标拖拽定位
+            },
+            emphasis: {
+              scale: true, // 节点放大效果
+              focus: 'adjacency'
+            },
+            lineStyle: {
+              color: '#3d3d3f',
+              width: 2,
+              curveness: 0 // 节点连线的曲率，0-1 越大越弯。
+            },
+            data: this.zupuData,
+            links: this.zupuLinks
+          }
+        ]
+      })
+      myChart.off('click')
+
+      myChart.on('click', function(param) {
+        console.log(param)
+        if (param.data.investor_id > 0) {
+          this.addData(param.data.investor_id, param)
+        }
+      }.bind(this))
+    },
+    addData(company_id, param) {
+      getInvestor({ phone: localStorage.getItem('phone'), company_id: company_id }).then(res => {
+        if (res.data.result.length > 0) {
+          this.categories.push({ name: param.name })
+          res.data.result.forEach((item) => {
+            if (!this.zupuDataList[item.INV]) {
+              this.zupuData.push({
+                name: item.INV,
+                category: param.name,
+                investor_id: item.companyid_inv
+              })
+              this.zupuDataList[item.INV] = item.INV
+            }
+            this.zupuLinks.push({
+              source: param.name,
+              target: item.INV
+            })
+          })
+          this.drawLine()
+        }
+      })
+    },
+
+    drawer_open(company_id, company_name) {
+      this.zupu.company_id = company_id
+      this.zupu.company_name = company_name
+      this.zupu.drawer = !this.zupu.drawer
+
+      getInvestor({ phone: localStorage.getItem('phone'), company_id: company_id }).then(res => {
+        const links = []
+        res.data.result.forEach((item) => {
+          const obj = {
+            source: this.zupu.company_name,
+            target: item.INV,
+            type: item.INVTYPE,
+            investor_id: item.companyid_inv
+          }
+          links.push(obj)
+        })
+        this.zupuList = links
+        this.zupuInit(links)
+      })
+    },
+    zupuInit(links) {
+      const _this = this
+      var nodes = {}
+
+      links.forEach(function(link) {
+        link.source = nodes[link.source] || (nodes[link.source] = { name: link.source })
+        link.target = nodes[link.target] || (nodes[link.target] = { name: link.target })
+      })
+      var width = 1000; var height = 600
+      var corpname = this.zupu.company_name
+      var force = d3.layout.force()// layout将json格式转化为力学图可用的格式
+        .nodes(d3.values(nodes))// 设定节点数组
+        .links(links)// 设定连线数组
+        .size([width, height])// 作用域的大小
+        .linkDistance(125)// 连接线长度
+        .charge(-2000)// 顶点的电荷数。该参数决定是排斥还是吸引，数值越小越互相排斥
+        .on('tick', tick)// 指时间间隔，隔一段时间刷新一次画面
+        .start()// 开始转换
+
+      d3.select('svg').remove()
+      var svg = d3.select('#graph').append('svg')
+        .attr('width', width)
+        .attr('height', height)
+      // .call(zoom);
+
+      // 设置连接线
+      var edges_line = svg.selectAll('.edgepath')
+        .data(force.links())
+        .enter()
+        .append('path')
+        .attr({
+          'd': function(d) {
+            return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+          },
+          'class': 'edgepath',
+          'id': function(d, i) {
+            return 'edgepath' + i
+          }
+        })
+        .style('stroke', '#595D68')
+        .style('pointer-events', 'none')
+        .style('stroke-width', 1)// 线条粗细
+
+      // 圆圈
+      var circle = svg.append('g').selectAll('circle')
+        .data(force.nodes())// 表示使用force.nodes数据
+        .enter().append('circle')
+        .style('fill', function(node) {
+          var color// 圆圈背景色
+          var link = links[node.index]
+          // console.log(node.index)
+          if (link) {
+            if (link.type == 0) {
+              return color = '#1943AC'
+            } else {
+              return color = '#5095FF'
+            }
+          }
+          return color = '#5095FF'
+        })
+        .style('stroke', function(node) {
+          var color// 圆圈线条的颜色
+          var link = links[node.index]
+          if (link) {
+            if (link.type == '0') {
+              return color = '#1943AC'
+            } else {
+              return color = '#5095FF'
+            }
+            return color = '#5095FF'
+          }
+        })
+        .attr('r', 40)// 设置圆圈半径
+        .call(force.drag)// 将当前选中的元素传到drag函数中，使顶点可以被拖动
+        .on('click', function(node) { // 选择所有的点添加点击事件
+          var link = links[node.index - 1]
+          links.forEach((i, k) => {
+            if (i.target.index == node.index) {
+              link = links[k]
+            }
+          })
+          if (link) {
+            console.log(link.type)
+            if (link.investor_id == 0) {
+              getInvestor({ phone: localStorage.getItem('phone'), company_id: link.investor_id }).then(res => {
+                if (res.data.result.length > 0) {
+                  const links = []
+                  res.data.result.forEach((item) => {
+                    const obj = {
+                      source: link.target.name,
+                      target: item.INV,
+                      type: item.INVTYPE,
+                      investor_id: item.companyid_inv
+                    }
+                    links.push(obj)
+                  })
+                  _this.zupuList.forEach(item => {
+                    const obj = {
+                      source: item.source.name,
+                      target: item.target.name,
+                      type: item.type,
+                      investor_id: item.investor_id
+                    }
+                    links.push(obj)
+                  })
+                  _this.zupuList = links
+                  _this.zupuInit(links)
+                }
+              })
+            }
+          }
+        })
+      var text = svg.append('g').selectAll('text')
+        .data(force.nodes())
+        // 返回缺失元素的占位对象（placeholder），指向绑定的数据中比选定元素集多出的一部分元素。
+        .enter()
+        .append('text')
+        .attr('dy', '.15em')
+        .attr('text-anchor', 'middle')// 在圆圈中加上数据
+        .style('fill', function(node) {
+          var color// 文字颜色
+          var link = links[node.index]
+          return color = '#ffffff'
+        }).attr('x', function(d) {
+          console.log(d.name + '---')
+          var re_en = /[a-zA-Z]+/g
+          // 如果是全英文，不换行
+          if (d.name.match(re_en)) {
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 2)
+              .text(function() {
+                return d.name
+              })
+          }
+          // 如果小于四个字符，不换行
+          else if (d.name.length <= 4) {
+            d3.select(this).append('tspan')
+              .attr('x', -2)
+              .attr('y', 2)
+              .text(function() {
+                return d.name
+              })
+          } else if (d.name.length > 4 && d.name.length <= 8) { // 大于4  这两行
+            var top = d.name.substring(0, 4)
+            var bot = d.name.substring(4, d.name.length)
+
+            d3.select(this).text(function() {
+              return ''
+            })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -7)
+              .text(function() {
+                return top
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 10)
+              .text(function() {
+                return bot
+              })
+          } else if (d.name.length > 8 && d.name.length <= 12) { // 文字长度大于8 折三行
+            var top = d.name.substring(0, 4)
+            var bot = d.name.substring(4, 8)
+            var bot1 = d.name.substring(8, d.name.length)
+
+            d3.select(this).text(function() {
+              return ''
+            })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -15)
+              .text(function() {
+                return top
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 2)
+              .text(function() {
+                return bot
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 16)
+              .text(function() {
+                return bot1
+              })
+          } else if (d.name.length > 12 && d.name.length <= 16) { // 文字长度大于12 折四行'
+            var top = d.name.substring(0, 4)
+            var bot = d.name.substring(4, 8)
+            var bot1 = d.name.substring(8, 12)
+            var bot2 = d.name.substring(12, d.name.length)
+
+            d3.select(this).text(function() {
+              return ''
+            })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -20)
+              .text(function() {
+                return top
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -3)
+              .text(function() {
+                return bot
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 10)
+              .text(function() {
+                return bot1
+              })
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 23)
+              .text(function() {
+                return bot2
+              })
+          } else if (d.name.length > 16) { // 文字长度大于16  方案
+            var top = d.name.substring(0, 4)
+            var bot = d.name.substring(4, 8)
+            var bot1 = d.name.substring(8, 12)
+            var bot2 = d.name.substring(12, 14)
+
+            bot2 += '...'
+            d3.select(this).text(function() {
+              return ''
+            })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -22)
+              .text(function() {
+                return top
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', -7)
+              .text(function() {
+                return bot
+              })
+
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 10)
+              .text(function() {
+                return bot1
+              })
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('y', 25)
+              .text(function() {
+                return bot2
+              })
+          }
+        })
+
+      function tick() {
+        circle.attr('transform', transform1)// 圆圈
+        text.attr('transform', transform2)// 顶点文字
+
+        edges_line.attr('d', function(d) {
+          var path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+          return path
+        })
+      }
+
+      // 设置连接线的坐标,使用椭圆弧路径段双向编码
+      function linkArc(d) {
+        return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+      }
+
+      // 设置圆圈和文字的坐标
+      function transform1(d) {
+        return 'translate(' + d.x + ',' + d.y + ')'
+      }
+
+      function transform2(d) {
+        return 'translate(' + (d.x) + ',' + d.y + ')'
+      }
+    },
     mt_rand_int(length) {
       // 生成随机数
       return Math.round(Math.random() * length)
@@ -560,6 +1046,9 @@ export default {
         })
       })
     },
+    closeQylxCheckedNodes() {
+      this.search_cond.basic_qylxid = ''
+    },
     closeAddressCheckedNodes() {
       this.search_cond.basic_regionid = ''
     },
@@ -584,6 +1073,25 @@ export default {
           nicid = ''
         }
         this.search_cond.basic_nicid = nicid
+      }
+    },
+    getCheckedNodesQylxid(val) {
+      this.search_cond.basic_qylxid = ''
+      if (val.length > 0) {
+        // console.log(val)
+        let szjj = this.$refs.qylx_ref.getCheckedNodes(true)
+        if (szjj[0]) {
+          let szjj_str = ''
+          szjj.forEach(item => {
+            if (item.checked) {
+              szjj_str += item.value + ','
+            }
+          })
+          szjj = szjj_str.trim()
+        } else {
+          szjj = ''
+        }
+        this.search_cond.basic_qylxid = szjj
       }
     },
     getCheckedNodesRegionid(val) {
@@ -641,6 +1149,7 @@ export default {
       }
     },
     BasePageChange(index) {
+      this.tablePage.pageNum = index
       this.submitForm(index)
     },
     submit() {
@@ -664,6 +1173,7 @@ export default {
       this.searchQuery.basic_szjjid = this.search_cond.basic_szjjid
       this.searchQuery.basic_nicid = this.search_cond.basic_nicid
       this.searchQuery.basic_opscope = this.search_cond.basic_opscope
+      this.searchQuery.ENTTYPE = this.search_cond.basic_qylxid
       this.searchQuery.page = page
       // console.log(12)
       advancedSearch(this.searchQuery).then(res => {
@@ -674,16 +1184,36 @@ export default {
           var dataV = res.data.result
           dataV.forEach((val, key) => {
             if (searchText.length > 0) {
-              dataV[key]._source.showName = val._source.name.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
+              dataV[key]._source.showName = val._source.ENTNAME.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
               dataV[key]._source.gong_si_jian_jie = val._source.gong_si_jian_jie.replaceAll(searchText, "<span style='color: red'>" + searchText + '</span>')
             } else {
-              dataV[key]._source.showName = val._source.name
+              dataV[key]._source.showName = val._source.ENTNAME
             }
-            var img = '<img  src="https://fakeimg.pl/80x80/?text=LOGO" />'
-            if (val._source.logo !== null && val._source.logo.length > 0) {
-              img = '<img style="width:140px;height:140px" src="' + 'https://img-mrxd.oss-cn-beijing.aliyuncs.com/ent-logo' + val._source.logo + '" onerror="this.src=\'https://fakeimg.pl/80x80/?text=LOGO\'" />'
+            var img = "<div class='zishu4' >" + val._source.short_name + '</div>'
+            if (val._source.short_name.length == 2) {
+              img = "<div class='zishu2'>" + val._source.short_name + '</div>'
             }
-            dataV[key]._source.logo = img
+            if (val._source.short_name.length == 4) {
+              img = "<div class='zishu4'>" + val._source.short_name + '</div>'
+            }
+            if (val._source.short_name.length == 3 ) {
+              img = "<div class='zishu3'>" + val._source.short_name + '</div>'
+            }
+            if (val._source.short_name.length == 5) {
+              img = "<div class='zishu5'>" + val._source.short_name + '</div>'
+            }
+            if (val._source.short_name.length == 6) {
+              img = "<div class='zishu6'>" + val._source.short_name + '</div>'
+            }
+            const IMG = new Image()
+            IMG.src = 'https://img-mrxd.oss-cn-beijing.aliyuncs.com/ent-log-hd-saic-202208' + val._source.logo
+            IMG.onload = function() {
+              dataV[key]._source.logo = '<img style="width:140px;height:140px;margin-top: 30px;" src="' + 'https://img-mrxd.oss-cn-beijing.aliyuncs.com/ent-log-hd-saic-202208' + val._source.logo + '"/>'
+            }
+
+            IMG.onerror = function() {
+              dataV[key]._source.logo = img
+            }
           //   console.log(val._source.name)
           //   var biaoQianQuery = {}
           //   biaoQianQuery.entname = val._source.name
@@ -754,12 +1284,14 @@ export default {
       this.dialogVisible = false
       this.dialogEntLianXi = false
       this.EntLianXiList = []
+      this.zupu.drawer = false
+      this.zupuVisible = false
     },
     uploadSuccess(res) {
       if (res.code === 200) {
         this.$message.success('vin数据上传成功')
       } else {
-        this.$message.success('vin数据上传失败，'+res.msg)
+        this.$message.success('vin数据上传失败，' + res.msg)
       }
     },
     submitUpload() {
@@ -788,8 +1320,12 @@ export default {
     }
   }
   .input-with-select{
-    width:90%;
+    width:86%;
+    height: 60px;
+    font-size: 18px;
+    border-radius: 10px;
   }
+
   .cond-wrapper {
     display: flex;
     flex-direction: column;
@@ -838,9 +1374,9 @@ export default {
         display: flex;
 
         .logo-wrapper {
-          width: 8%;
-          height: 300px;
-
+          width: 150px;
+          position: inherit;
+          margin: auto;
           .logo {
             width: 100%;
           }
@@ -848,14 +1384,14 @@ export default {
 
         .content-wrapper {
           flex: 1;
-          margin-left: 50px;
+          margin-left: 25px;
 
           .ent-info-wrapper {
             width: 100%;
             display: flex;
 
             .info-wrapper {
-              width: 80%;
+              width: 100%;
 
               .ent-name {
                 font-size: 25px;
@@ -901,7 +1437,7 @@ export default {
             }
 
             font-size: 13px;
-            width: 80%;
+            width: 100%;
             height: 30px;
             line-height: 30px;
             display: flex;
@@ -924,8 +1460,94 @@ export default {
   font-size: 15px
 }
   .el-input-group__append{
-    background-color: blue;
-
+    background: linear-gradient(90deg, #006EFF, #4BACFF);;
+    border: 0px;
   }
 
+</style>
+<style>
+
+.zishu1,.zishu2{
+  width: 140px;
+  height: 135px;
+  line-height: 56px;
+  text-align: center;
+  padding: 35px 0px;
+  background-color: #faab72;
+  border-radius: 10px;
+  font-size: 55px;
+  letter-spacing: 7px;
+}
+.zishu4{
+  width: 140px;
+  height: 130px;
+  font-size: 53px;
+  letter-spacing: 7px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #8fc1e4;
+  border-radius: 10px;
+}
+.zishu3{
+  width: 140px;
+  height: 130px;
+  font-size: 53px;
+  letter-spacing: 7px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #9d9def;
+  border-radius: 10px;
+}
+.zishu5{
+  width: 140px;
+  height: 130px;
+  font-size: 39px;
+  letter-spacing: 3px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #13af08;
+  border-radius: 10px;
+}
+.zishu6{
+  width: 140px;
+  height: 120px;
+  font-size: 30px;
+  letter-spacing: 7px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #40eecd;
+  border-radius: 10px;
+}
+.zishu7,.zishu8{
+  width: 140px;
+  height: 130px;
+  font-size: 28px;
+  letter-spacing: 7px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #8fc1e4;
+  border-radius: 10px;
+}
+.zishu9,.zishu10{
+  width: 140px;
+  height: 130px;
+  font-size: 21px;
+  letter-spacing: 7px;
+  line-height: 56px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #8fc1e4;
+  border-radius: 10px;
+}
+.el-divider--horizontal{
+  margin: 0px;
+}
+#search_input{
+  height: 60px;
+}
 </style>

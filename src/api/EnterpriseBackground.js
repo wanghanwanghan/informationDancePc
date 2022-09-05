@@ -162,6 +162,22 @@ export function getSearchOption(data) {
     data
   })
 }
+// 地图搜客搜索条件接口
+export function advancedSearchOption(data) {
+  return request({
+    url: '/api/v1/xd/advancedSearchOption',
+    method: 'post',
+    data
+  })
+}
+// 企业族谱
+export function getInvestor(data) {
+  return request({
+    url: '/api/v1/xd/getCompanyInvestor',
+    method: 'post',
+    data
+  })
+}
 
 // 高级搜索条件接口
 export function advancedSearch(data) {
