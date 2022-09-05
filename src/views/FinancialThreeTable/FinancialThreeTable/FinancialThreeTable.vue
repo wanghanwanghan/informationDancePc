@@ -42,12 +42,38 @@
           <el-table-column property="initialBalance" label="上年年末余额"></el-table-column>
         </el-table>
       </el-dialog>
+      <el-dialog :title="sds_table_title" :visible.sync="sds_month_table_show" width="75%">
+        <el-table :data="sds_el_table_data" border>
+          <el-table-column property="projectName" label="项目名称"></el-table-column>
+          <el-table-column property="projectType" label="项目类别" width="250"></el-table-column>
+          <el-table-column property="columnSequence" label="栏次" width="50"></el-table-column>
+          <el-table-column property="currentAmount" label="本期金额" width="120"></el-table-column>
+          <el-table-column property="accumulativeAmount" label="累计金额" width="120"></el-table-column>
+        </el-table>
+      </el-dialog>
+      <el-dialog :title="zzs_table_title" :visible.sync="zzs_month_table_show" width="75%">
+        <el-table :data="zzs_el_table_data" border>
+          <el-table-column property="projectName" label="项目名称"></el-table-column>
+          <el-table-column property="projectType" label="项目类别"></el-table-column>
+          <el-table-column property="columnSequence" label="栏次"></el-table-column>
+          <el-table-column property="currentGoods" label="本期数-货物及劳务"></el-table-column>
+          <el-table-column property="currentYearAccumulativeService" label="本年累计-服务、不动产和无形资产"></el-table-column>
+          <el-table-column property="immediateRetreatYearAccumulativeAmount" label="即征即退项目-本年累计"></el-table-column>
+          <el-table-column property="currentYearAccumulativeGoods" label="本年累计-货物及劳务"></el-table-column>
+          <el-table-column property="generalMonthAmount" label="一般项目-本月数"></el-table-column>
+          <el-table-column property="currentService" label="本期数-服务、不动产和无形资产"></el-table-column>
+          <el-table-column property="generalYearAccumulativeAmount" label="一般项目-本年累计"></el-table-column>
+          <el-table-column property="immediateRetreatMonthAmount" label="即征即退项目-本月数"></el-table-column>
+        </el-table>
+      </el-dialog>
       <section class="et-hero-tabs">
         <div :class="isFixed?'et-hero-tabs-containerf':'et-hero-tabs-container'">
           <a class="et-hero-tab" href="#tab-lr-year">利润表 - 年报</a>
           <a class="et-hero-tab" href="#tab-lr-month">利润表 - 季度</a>
           <a class="et-hero-tab" href="#tab-zc-year">资产负债表 - 年报</a>
           <a class="et-hero-tab" href="#tab-zc-month">资产负债表 - 季度</a>
+          <a class="et-hero-tab" href="#tab-sds-month">所得税 - 季度</a>
+          <a class="et-hero-tab" href="#tab-zzs-month">增值税 - 月</a>
           <span class="et-hero-tab-slider"/>
         </div>
       </section>
@@ -92,6 +118,26 @@
             </div>
           </div>
         </section>
+        <section id="tab-sds-month" class="et-slide" style="min-height:100px;margin-top:50px;">
+          <h3 style="margin-left:20px;">所得税 - 季度</h3>
+          <div class="box2">
+            <div class="cont">
+              <div class="data-index-div" v-for="(item,index) in sds_month_table_index" :key="index">
+                <el-button type="primary" @click.prevent="show_sds_table('month',item)">{{ item }}</el-button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="tab-zzs-month" class="et-slide" style="min-height:100px;margin-top:50px;">
+          <h3 style="margin-left:20px;">增值税 - 月</h3>
+          <div class="box2">
+            <div class="cont">
+              <div class="data-index-div" v-for="(item,index) in zzs_month_table_index" :key="index">
+                <el-button type="primary" @click.prevent="show_zzs_table('month',item)">{{ item }}</el-button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   </div>
@@ -123,12 +169,24 @@ export default {
       ly_month_table_show: false,
       zc_year_table_index: [],
       zc_year_table_data: [],
+      sds_year_table_data: [],
+      zzs_year_table_data: [],
       zc_month_table_index: [],
+      sds_month_table_index: [],
+      zzs_month_table_index: [],
       zc_month_table_data: [],
+      sds_month_table_data: [],
+      zzs_month_table_data: [],
       zc_el_table_data: [],
+      sds_el_table_data: [],
+      zzs_el_table_data: [],
       zc_table_title: '',
+      sds_table_title: '',
+      zzs_table_title: '',
       zc_year_table_show: false,
       zc_month_table_show: false,
+      sds_month_table_show: false,
+      zzs_month_table_show: false,
       phone: '',
       token: '',
       entName: '',
@@ -150,6 +208,8 @@ export default {
     this.getData_lr_month()
     this.getData_zc_year()
     this.getData_zc_month()
+    this.getData_sds_month()
+    this.getData_zzs_month()
   },
   methods: {
     show_lr_table(type, index) {
@@ -202,6 +262,32 @@ export default {
         this.zc_month_table_show = true
       }
     },
+    show_sds_table(type, index) {
+      this.sds_year_table_show = false
+      this.sds_month_table_show = false
+      if (type === 'year') {
+        this.sds_el_table_data = this.sds_year_table_data[index]
+        this.sds_table_title = '所得税 - 年度 - ' + index
+        this.sds_year_table_show = true
+      } else {
+        this.sds_el_table_data = this.sds_month_table_data[index]
+        this.sds_table_title = '所得税 - 季度 - ' + index
+        this.sds_month_table_show = true
+      }
+    },
+    show_zzs_table(type, index) {
+      this.zzs_year_table_show = false
+      this.zzs_month_table_show = false
+      if (type === 'year') {
+        this.zzs_el_table_data = this.zzs_year_table_data[index]
+        this.zzs_table_title = '增值税 - 年度 - ' + index
+        this.zzs_year_table_show = true
+      } else {
+        this.zzs_el_table_data = this.zzs_month_table_data[index]
+        this.zzs_table_title = '增值税 - 月 - ' + index
+        this.zzs_month_table_show = true
+      }
+    },
     getData_zc_year() {
       req.post('api/v1/zw/getFinanceBalanceSheetAnnual', {
         'phone': this.phone,
@@ -224,6 +310,30 @@ export default {
           this.zc_month_table_index.push(key)
         }
         this.zc_month_table_data = res.data.result
+      })
+    },
+    getData_sds_month() {
+      req.post('api/v1/zw/getIncometaxMonthlyDeclaration', {
+        'phone': this.phone,
+        'code': this.CreditCode,
+        'pay': 1
+      }, this.token).then(res => {
+        for (let key in res.data.result) {
+          this.sds_month_table_index.push(key)
+        }
+        this.sds_month_table_data = res.data.result
+      })
+    },
+    getData_zzs_month() {
+      req.post('api/v1/zw/getVatReturn', {
+        'phone': this.phone,
+        'code': this.CreditCode,
+        'pay': 1
+      }, this.token).then(res => {
+        for (let key in res.data.result) {
+          this.zzs_month_table_index.push(key)
+        }
+        this.zzs_month_table_data = res.data.result
       })
     },
     initHeight() {

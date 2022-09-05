@@ -219,106 +219,106 @@ export const constantRoutes = [
       // }
     ]
   },
-  {
-    path: '/CompetitivePower',
-    component: Layout,
-    redirect: '/CompetitivePower/CompetitivePower',
-    name: 'CompetitivePower',
-    meta: {
-      title: '竞争力'
-    },
-    children: [
-      {
-        path: 'CompetitivePower',
-        component: () => import('@/views/CompetitivePower/CompetitivePower'),
-        name: 'CompetitivePower',
-        meta: {
-          title: '竞争力',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
-  {
-    path: '/Features',
-    component: Layout,
-    redirect: '/Features/Features',
-    name: 'Features',
-    meta: {
-      title: '业务特征'
-    },
-    children: [
-      {
-        path: 'Features',
-        component: () => import('@/views/Features/Features/Features'),
-        name: 'Features',
-        meta: {
-          title: '业务特征',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
-  {
-    path: '/FinancialPerformance',
-    component: Layout,
-    redirect: '/FinancialPerformance/FinancialPerformance',
-    name: 'FinancialPerformance',
-    meta: {
-      title: '财务表现'
-    },
-    children: [
-      {
-        path: 'FinancialPerformance',
-        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
-        name: 'FinancialPerformance',
-        meta: {
-          title: '财务表现',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
-  {
-    path: '/FinancialThreeTable',
-    component: Layout,
-    redirect: '/FinancialThreeTable/FinancialThreeTable',
-    name: 'FinancialThreeTable',
-    meta: {
-      title: '财税能力'
-    },
-    children: [
-      {
-        path: 'FinancialPerformance',
-        component: () => import('@/views/FinancialThreeTable/index'),
-        name: 'FinancialThreeTableFinancialPerformance',
-        meta: {
-          title: '财税能力',
-          icon: 'el-icon-star-off'
-        }
-      },
-      {
-        path: 'TwoTable',
-        component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
-        name: 'TwoTable',
-        meta: {
-          title: '财',
-          icon: 'el-icon-star-off'
-        },
-        hidden: true
-      },
-      {
-        path: 'Fapiao',
-        component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
-        name: 'Fapiao',
-        meta: {
-          title: '税',
-          icon: 'el-icon-star-off'
-        },
-        hidden: true
-      }
-    ]
-  },
+  // {
+  //   path: '/CompetitivePower',
+  //   component: Layout,
+  //   redirect: '/CompetitivePower/CompetitivePower',
+  //   name: 'CompetitivePower',
+  //   meta: {
+  //     title: '竞争力'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'CompetitivePower',
+  //       component: () => import('@/views/CompetitivePower/CompetitivePower'),
+  //       name: 'CompetitivePower',
+  //       meta: {
+  //         title: '竞争力',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/Features',
+  //   component: Layout,
+  //   redirect: '/Features/Features',
+  //   name: 'Features',
+  //   meta: {
+  //     title: '业务特征'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'Features',
+  //       component: () => import('@/views/Features/Features/Features'),
+  //       name: 'Features',
+  //       meta: {
+  //         title: '业务特征',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/FinancialPerformance',
+  //   component: Layout,
+  //   redirect: '/FinancialPerformance/FinancialPerformance',
+  //   name: 'FinancialPerformance',
+  //   meta: {
+  //     title: '财务表现'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'FinancialPerformance',
+  //       component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
+  //       name: 'FinancialPerformance',
+  //       meta: {
+  //         title: '财务表现',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/FinancialThreeTable',
+  //   component: Layout,
+  //   redirect: '/FinancialThreeTable/FinancialThreeTable',
+  //   name: 'FinancialThreeTable',
+  //   meta: {
+  //     title: '财税能力'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'FinancialPerformance',
+  //       component: () => import('@/views/FinancialThreeTable/index'),
+  //       name: 'FinancialThreeTableFinancialPerformance',
+  //       meta: {
+  //         title: '财税能力',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     },
+  //     {
+  //       path: 'TwoTable',
+  //       component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
+  //       name: 'TwoTable',
+  //       meta: {
+  //         title: '财',
+  //         icon: 'el-icon-star-off'
+  //       },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'Fapiao',
+  //       component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
+  //       name: 'Fapiao',
+  //       meta: {
+  //         title: '税',
+  //         icon: 'el-icon-star-off'
+  //       },
+  //       hidden: true
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/FinancialPerformanceMergeData',
   //   component: Layout,
@@ -339,26 +339,26 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  {
-    path: '/IndustryTop',
-    component: Layout,
-    redirect: '/IndustryTop/IndustryTop',
-    name: 'IndustryTop',
-    meta: {
-      title: '行业Top'
-    },
-    children: [
-      {
-        path: 'IndustryTop',
-        component: () => import('@/views/IndustryTop/IndustryTop'),
-        name: 'IndustryTop',
-        meta: {
-          title: '行业Top',
-          icon: 'el-icon-star-off'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/IndustryTop',
+  //   component: Layout,
+  //   redirect: '/IndustryTop/IndustryTop',
+  //   name: 'IndustryTop',
+  //   meta: {
+  //     title: '行业Top'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'IndustryTop',
+  //       component: () => import('@/views/IndustryTop/IndustryTop'),
+  //       name: 'IndustryTop',
+  //       meta: {
+  //         title: '行业Top',
+  //         icon: 'el-icon-star-off'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/AssetClues',
     component: Layout,
@@ -550,31 +550,31 @@ export const constantRoutes = [
       // }
     ]
   },
-  {
-    path: '/FinancialAssets',
-    component: Layout,
-    redirect: '/FinancialAssets/financialData',
-    name: 'FinancialAssets',
-    meta: {
-      title: '财务资产',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'financialData',
-        component: () => import('@/views/FinancialAssets/financialData/financialData'),
-        name: 'financialData',
-        // meta: { title: '财务数据' }
-        meta: { title: '财务资产' }
-      }
-      // {
-      //   path: 'financialDataV',
-      //   component: () => import('@/views/FinancialAssets/financialDataV/financialDataV'),
-      //   name: 'financialDataV',
-      //   meta: { title: '财务数据（需授权）' }
-      // }
-    ]
-  },
+  // {
+  //   path: '/FinancialAssets',
+  //   component: Layout,
+  //   redirect: '/FinancialAssets/financialData',
+  //   name: 'FinancialAssets',
+  //   meta: {
+  //     title: '财务资产',
+  //     icon: 'excel'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'financialData',
+  //       component: () => import('@/views/FinancialAssets/financialData/financialData'),
+  //       name: 'financialData',
+  //       // meta: { title: '财务数据' }
+  //       meta: { title: '财务资产' }
+  //     }
+  //     // {
+  //     //   path: 'financialDataV',
+  //     //   component: () => import('@/views/FinancialAssets/financialDataV/financialDataV'),
+  //     //   name: 'financialDataV',
+  //     //   meta: { title: '财务数据（需授权）' }
+  //     // }
+  //   ]
+  // },
   {
     path: '/guaranteedMortgage',
     component: Layout,
@@ -1057,44 +1057,44 @@ export const constantRoutes = [
       // }
     ]
   },
-  {
-    path: '/NewsInformation',
-    component: Layout,
-    redirect: '/NewsInformation/NewsInformation',
-    name: 'NewsInformation',
-    meta: {
-      title: '新闻资讯',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'publicOpinion',
-        component: () => import('@/views/NewsInformation/publicOpinion/publicOpinion'),
-        name: 'publicOpinion',
-        // meta: { title: '新闻舆情' }
-        meta: { title: '新闻资讯' }
-      },
-      {
-        path: 'xwyqDetail/:id',
-        component: () => import('@/views/NewsInformation/publicOpinion/xwyqDetail.vue'),
-        name: '详情',
-        meta: { title: '详情', noCache: true },
-        hidden: true
-      }
-      // {
-      //   path: 'WebsiteInformation',
-      //   component: () => import('@/views/NewsInformation/WebsiteInformation/WebsiteInformation'),
-      //   name: 'WebsiteInformation',
-      //   meta: { title: '网站信息' }
-      // },
-      // {
-      //   path: 'weibo',
-      //   component: () => import('@/views/NewsInformation/weibo/weibo'),
-      //   name: 'weibo',
-      //   meta: { title: '微博' }
-      // }
-    ]
-  },
+  // {
+  //   path: '/NewsInformation',
+  //   component: Layout,
+  //   redirect: '/NewsInformation/NewsInformation',
+  //   name: 'NewsInformation',
+  //   meta: {
+  //     title: '新闻资讯',
+  //     icon: 'excel'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'publicOpinion',
+  //       component: () => import('@/views/NewsInformation/publicOpinion/publicOpinion'),
+  //       name: 'publicOpinion',
+  //       // meta: { title: '新闻舆情' }
+  //       meta: { title: '新闻资讯' }
+  //     },
+  //     {
+  //       path: 'xwyqDetail/:id',
+  //       component: () => import('@/views/NewsInformation/publicOpinion/xwyqDetail.vue'),
+  //       name: '详情',
+  //       meta: { title: '详情', noCache: true },
+  //       hidden: true
+  //     }
+  //     // {
+  //     //   path: 'WebsiteInformation',
+  //     //   component: () => import('@/views/NewsInformation/WebsiteInformation/WebsiteInformation'),
+  //     //   name: 'WebsiteInformation',
+  //     //   meta: { title: '网站信息' }
+  //     // },
+  //     // {
+  //     //   path: 'weibo',
+  //     //   component: () => import('@/views/NewsInformation/weibo/weibo'),
+  //     //   name: 'weibo',
+  //     //   meta: { title: '微博' }
+  //     // }
+  //   ]
+  // },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

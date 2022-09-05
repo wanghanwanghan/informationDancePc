@@ -115,6 +115,7 @@
           <el-tab-pane label="我的" name="fifth">
             <My/>
           </el-tab-pane>
+<<<<<<< HEAD
           <el-tab-pane label="SCRM" name="crm">
             <CrmIndex/>
           </el-tab-pane>
@@ -127,6 +128,17 @@
 <!--          <el-tab-pane label="地图搜索" name="map">-->
 <!--            <MapIndex/>-->
 <!--          </el-tab-pane>-->
+=======
+<!--          <el-tab-pane label="SCRM" name="crm">-->
+          <!--            <CrmIndex/>-->
+          <!--          </el-tab-pane>-->
+          <!--          <el-tab-pane label="呼叫中心" name="cs">-->
+          <!--            <CsIndex/>-->
+          <!--          </el-tab-pane>-->
+          <!--          <el-tab-pane label="高级搜索" name="as">-->
+          <!--            <ASIndex/>-->
+          <!--          </el-tab-pane>-->
+>>>>>>> 918d752ef0cb6b87f1964a2db53b7d236c68b12c
         </el-tabs>
       </div>
     </div>
@@ -453,7 +465,7 @@ export default {
               } else {
                 this.$notify.error({
                   title: '错误',
-                  message: '登录失败'
+                  message: res.data.msg
                 })
                 this.dialogFormVisible = false
               }
@@ -480,7 +492,7 @@ export default {
               } else {
                 this.$notify.error({
                   title: '错误',
-                  message: '登录失败'
+                  message: res.data.msg
                 })
                 this.dialogFormVisible = false
               }
