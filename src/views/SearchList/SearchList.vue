@@ -18,7 +18,7 @@
       <el-col :span="4">
         <div class="logo" @click="toIndex">
           <!--          <div class="logo-text">智能评价服务系统</div>-->
-          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdzd_logo_big.jpeg" alt="">
+          <img class="img" src="https://api.meirixindong.com/Static/Image/Image/xdkd.png" alt="">
           <!--                    <img class="img" src="https://api.meirixindong.com/Static/Image/Image/zhlc_logo.jpg" alt="">-->
           <!--          <img class="img" src="https://api.meirixindong.com/Static/Image/ReportImage/wh_logo.png" alt="">-->
         </div>

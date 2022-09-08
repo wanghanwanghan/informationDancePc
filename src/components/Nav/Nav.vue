@@ -116,12 +116,12 @@
             <My/>
           </el-tab-pane>
 
-<!--          <el-tab-pane label="高级搜索" name="as">-->
-<!--            <ASIndex/>-->
-<!--          </el-tab-pane>-->
-<!--          <el-tab-pane label="地图搜索" name="map">-->
-<!--            <MapIndex/>-->
-<!--          </el-tab-pane>-->
+          <el-tab-pane label="高级搜索" name="as">
+            <ASIndex/>
+          </el-tab-pane>
+          <el-tab-pane label="地图搜索" name="map">
+            <MapIndex/>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
