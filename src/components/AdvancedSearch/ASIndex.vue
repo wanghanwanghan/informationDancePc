@@ -1,219 +1,241 @@
 <template>
   <div class="bg" style="background: #F5F8FA;padding-bottom: 20px">
-    <img src="../../assets/souke.png" style="width: 100%;height: 476px;position: absolute;z-index: 1">
+    <img src="../../assets/souke.png" style="width: 100%;height: 430px;position: absolute;z-index: 1">
     <div style="line-height: 200px;width: 1200px;margin: auto;position: relative;height: 200px;z-index: 10;color: white;text-align: center;font-size: 40px;font-family: PingFang;font-weight: bold;">智能行业获客 技术提供方</div>
     <div style="width: 1200px;margin: auto;position: relative;z-index: 10;">
-    <div class="search-wrapper" >
-      <el-input id="search_input"  v-model="search_val" placeholder="请根据企业名称，经营范围，业务商品等关键词内容搜索" class="input-with-select">
-        <el-select slot="prepend" v-model="search_type">
-          <el-option label="智能搜索" value="1" />
-        </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="submit" style="color: #FFFFFF;">立即搜索</el-button>
-      </el-input>
-      <el-button style="width:13%;background-color: #10C334; margin-left: 1%; margin-top: 10px;  border-color: #409EFF;color: #FFF;height: 60px;font-size: 18px" @click="saveParamDialog">保存筛选条件</el-button>
-    </div>
-    <div class="cond-wrapper" style="background-color: white;margin-top: 10px;border-radius: 5px;border: 1px solid #DFDFDF;">
-      <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
-        <Cond
-          v-for="(item,index) of list"
-          :id="item.id"
-          :key="index"
-          :type="item.type"
-          :title="item.title"
-          :desc="item.desc"
-          :list="item.list"
-          @set-value="setValue"
-        />
+      <div class="search-wrapper">
+        <el-input id="search_input" v-model="search_val" placeholder="请根据企业名称，经营范围，业务商品等关键词内容搜索" class="input-with-select">
+          <el-select slot="prepend" v-model="search_type">
+            <el-option label="智能搜索" value="1" />
+          </el-select>
+          <el-button slot="append" icon="el-icon-search" style="color: #FFFFFF;" @click="submit">立即搜索</el-button>
+        </el-input>
+        <el-button style="width:13%;background-color: #10C334; margin-left: 1%; margin-top: 10px;  border-color: #409EFF;color: #FFF;height: 60px;font-size: 18px" @click="saveParamDialog">保存筛选条件</el-button>
       </div>
-      <div v-show="show.cond_down" class="cond-down">
-        <table class="search-table" cellspacing="15" style="width: 100%;padding-left: 20px;">
-          <tr class="search-table-tr">
-            <td class="search-table-td bg-color">国标行业</td>
-            <td class="search-table-td">
-              <el-cascader
-                ref="nicid_ref"
-                class="search-table-input"
-                :options="nicid"
-                :props="{multiple: true}"
-                :show-all-levels="false"
-                :filterable="true"
-                collapse-tags
-                clearable
-                @change="getCheckedNodesNicid"
-              />
-            </td>
-            <td class="search-table-td bg-color">战略新兴产业</td>
-            <td class="search-table-td">
-              <el-cascader
-                ref="jlxxcy_ref"
-                class="search-table-input"
-                :options="jlxxcy"
-                :props="{multiple: true}"
-                :show-all-levels="false"
-                :filterable="true"
-                collapse-tags
-                clearable
-                @change="getCheckedNodesJlxxcyid"
-              />
-            </td>
-            <td class="search-table-td bg-color">数字经济及其核心产业</td>
-            <td class="search-table-td">
-              <el-cascader
-                ref="szjj_ref"
-                class="search-table-input"
-                :options="szjj"
-                :props="{multiple: true}"
-                :show-all-levels="false"
-                :filterable="true"
-                collapse-tags
-                clearable
-                @change="getCheckedNodesSzjjid"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td class="search-table-td bg-color">企业所属地区</td>
-            <td class="search-table-td">
-              <el-cascader
-                ref="address_ref"
-                class="search-table-input"
-                :options="address"
-                :props="{multiple: true}"
-                :show-all-levels="false"
-                :filterable="true"
-                collapse-tags
-                clearable
-                @change="getCheckedNodesRegionid"
-                @close="closeAddressCheckedNodes"
-              />
-            </td>
-            <td class="search-table-td bg-color">企业类型</td>
-            <td class="search-table-td">
-              <el-cascader
-                ref="qylx_ref"
-                class="search-table-input"
-                :options="qylx"
-                :props="{multiple: true}"
-                :show-all-levels="false"
-                :filterable="true"
-                collapse-tags
-                clearable
-                @change="getCheckedNodesQylxid"
-                @close="closeQylxCheckedNodes"
-              />
-            </td>
-            <td class="search-table-td bg-color">经营范围</td>
-            <td class="search-table-td">
-              <el-input
-                v-model="search_cond.basic_opscope"
-                class="search-table-input"
-                placeholder="支持模糊搜索"
-                clearable
-              />
-            </td>
-          </tr>
-        </table>
-      </div>
-      <el-button style="background-color: #006EFF;margin: 0px 25px" id="gengduo" type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
-      <div class="cond-choice-wrapper">
-        <div class="cond-word">已选({{ tags.length }})</div>
-        <div class="cond-cond">
-          <el-tag
-            v-for="tag in tags"
-            :key="tag.name"
-            v-model="tagItem"
-            :type="tag.type"
-            closable
-            @close="closeOption(tag.type)"
-          >
-            {{ tag.name }}
+<!--      <div style="margin-top: 20px;width: 100%;height: 200px;background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 5px;">-->
+<!--        <div-->
+<!--          style="width: 1140px;margin: 15px 30px;height: 41px;font-size: 24px;border-bottom: 1px solid #dcdfe6;display: inline-flex;"-->
+<!--        >-->
+<!--          热门应用-->
+<!--        </div>-->
+<!--        <div style="width: 100%;height: 76px;    margin-top: 20px;">-->
+<!--          <div style="width: 33%;float: left">-->
+<!--            <img-->
+<!--              src="../../assets/1.jpg"-->
+<!--              style="width: 170px;height: 75px;margin: 0px 110px;"-->
+<!--              @click="searchQiyeVisible=true"-->
+<!--            >-->
+<!--          </div>-->
+<!--          <div style="width: 33%;float: left">-->
+<!--            <img src="../../assets/2.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
+<!--          </div>-->
+<!--          <div style="width: 33%;float: right">-->
+<!--            <img src="../../assets/3.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="cond-wrapper" style="background-color: white;margin-top: 10px;border-radius: 5px;border: 1px solid #DFDFDF;">
+        <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
+          <Cond
+            v-for="(item,index) of list"
+            :id="item.id"
+            :key="index"
+            :type="item.type"
+            :title="item.title"
+            :desc="item.desc"
+            :list="item.list"
+            @set-value="setValue"
+          />
+        </div>
+        <div v-show="show.cond_down" class="cond-down">
+          <table class="search-table" cellspacing="15" style="width: 100%;padding-left: 20px;">
+            <tr class="search-table-tr">
+              <td class="search-table-td bg-color">国标行业</td>
+              <td class="search-table-td">
+                <el-cascader
+                  ref="nicid_ref"
+                  class="search-table-input"
+                  :options="nicid"
+                  :props="{multiple: true}"
+                  :show-all-levels="false"
+                  :filterable="true"
+                  collapse-tags
+                  clearable
+                  @change="getCheckedNodesNicid"
+                />
+              </td>
+              <td class="search-table-td bg-color">战略新兴产业</td>
+              <td class="search-table-td">
+                <el-cascader
+                  ref="jlxxcy_ref"
+                  class="search-table-input"
+                  :options="jlxxcy"
+                  :props="{multiple: true}"
+                  :show-all-levels="false"
+                  :filterable="true"
+                  collapse-tags
+                  clearable
+                  @change="getCheckedNodesJlxxcyid"
+                />
+              </td>
+              <td class="search-table-td bg-color">数字经济及其核心产业</td>
+              <td class="search-table-td">
+                <el-cascader
+                  ref="szjj_ref"
+                  class="search-table-input"
+                  :options="szjj"
+                  :props="{multiple: true}"
+                  :show-all-levels="false"
+                  :filterable="true"
+                  collapse-tags
+                  clearable
+                  @change="getCheckedNodesSzjjid"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="search-table-td bg-color">企业所属地区</td>
+              <td class="search-table-td">
+                <el-cascader
+                  ref="address_ref"
+                  class="search-table-input"
+                  :options="address"
+                  :props="{multiple: true}"
+                  :show-all-levels="false"
+                  :filterable="true"
+                  collapse-tags
+                  clearable
+                  @change="getCheckedNodesRegionid"
+                  @close="closeAddressCheckedNodes"
+                />
+              </td>
+              <td class="search-table-td bg-color">企业类型</td>
+              <td class="search-table-td">
+                <el-cascader
+                  ref="qylx_ref"
+                  class="search-table-input"
+                  :options="qylx"
+                  :props="{multiple: true}"
+                  :show-all-levels="false"
+                  :filterable="true"
+                  collapse-tags
+                  clearable
+                  @change="getCheckedNodesQylxid"
+                  @close="closeQylxCheckedNodes"
+                />
+              </td>
+              <td class="search-table-td bg-color">经营范围</td>
+              <td class="search-table-td">
+                <el-input
+                  v-model="search_cond.basic_opscope"
+                  class="search-table-input"
+                  placeholder="支持模糊搜索"
+                  clearable
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
+        <el-button id="gengduo" style="background-color: #006EFF;margin: 0px 25px" type="primary" @click="contrl_cond_down_show">更多筛选项目</el-button>
+        <div class="cond-choice-wrapper">
+          <div class="cond-word">已选({{ tags.length }})</div>
+          <div class="cond-cond">
+            <el-tag
+              v-for="tag in tags"
+              :key="tag.name"
+              v-model="tagItem"
+              :type="tag.type"
+              closable
+              @close="closeOption(tag.type)"
+            >
+              {{ tag.name }}
 
-          </el-tag>
+            </el-tag>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="width: 100%;text-align: center;margin: 30px 0px;">
-      <div class="search-res-count">为您找到 {{ paginate.total }}+ 企业</div>
-      <div class="pagination-wrapper">
-        <el-pagination
-          background
-          layout=" prev, pager, next"
-          :current-page="tablePage.pageNum"
-          :total="paginate.total"
-          :page-size="20"
-          @current-change="BasePageChange"
-        />
+      <div style="width: 100%;text-align: center;margin: 30px 0px;">
+        <div class="search-res-count">为您找到 {{ paginate.total }}+ 企业</div>
+        <div class="pagination-wrapper">
+          <el-pagination
+            background
+            layout=" prev, pager, next"
+            :current-page="tablePage.pageNum"
+            :total="paginate.total"
+            :page-size="20"
+            @current-change="BasePageChange"
+          />
+        </div>
       </div>
-    </div>
-    <div class="search-res-wrapper" style="border: 1px solid #EEEEEE;border-radius: 5px;background-color: #FFFFFF;">
+      <div class="search-res-wrapper" style="border: 1px solid #EEEEEE;border-radius: 5px;background-color: #FFFFFF;">
 
-      <el-divider content-position="center" >查询结果</el-divider>
-      <div v-for="(item,index) in data" :key="index" class="slide-div" style="padding: 30px 15px;border-bottom: 1px solid #efeeee">
-        <div class="search-res-info">
-          <div class="logo-wrapper" v-html="item._source.logo" />
+        <el-divider content-position="center">查询结果</el-divider>
+        <div v-for="(item,index) in data" :key="index" class="slide-div" style="padding: 30px 15px;border-bottom: 1px solid #efeeee">
+          <div class="search-res-info">
+            <div class="logo-wrapper" v-html="item._source.logo" />
 
-          <div class="content-wrapper">
-            <div class="ent-info-wrapper">
-              <div class="info-wrapper">
-                <div>
-                  <div class="ent-name" @click="getDrawer(item._source.ENTNAME,item._source.companyid)" v-html="item._source.showName">{{ item._source.showName }}</div>
-                  <div class="action-wrapper" style="float: right">
-                    <el-badge class="item">
-                      <el-button size="small" type="primary" style="color: #006EFF;border: 1px solid  #006EFF;background-color: #FFFFFF" @click="doSaveOpportunity(item._source.companyid,item._source.ENTNAME)">客户触达</el-button>
-                      <el-button v-show="item._source.wu_liu_xin_xi==1" size="small" type="primary" style="color: #10C334 ;border: 1px solid  #10C334 ;background-color: #FFFFFF"  @click="uploadVin(item._source.companyid,item._source.ENTNAME)">上传VIN</el-button>
-                      <el-button size="small"  type="primary"  @click="zp(item._source.companyid,item._source.ENTNAME)" style="color: #f3881c ;border: 1px solid  #f3881c ;background-color: #FFFFFF" >企业族谱</el-button>
-                    </el-badge>
+            <div class="content-wrapper">
+              <div class="ent-info-wrapper">
+                <div class="info-wrapper">
+                  <div>
+                    <div class="ent-name" @click="getDrawer(item._source.ENTNAME,item._source.companyid)" v-html="item._source.showName">{{ item._source.showName }}</div>
+                    <div class="action-wrapper" style="float: right">
+                      <el-badge class="item">
+                        <el-button size="small" type="primary" style="color: #006EFF;border: 1px solid  #006EFF;background-color: #FFFFFF" @click="doSaveOpportunity(item._source.companyid,item._source.ENTNAME)">客户触达</el-button>
+                        <el-button v-show="item._source.wu_liu_xin_xi==1" size="small" type="primary" style="color: #10C334 ;border: 1px solid  #10C334 ;background-color: #FFFFFF" @click="uploadVin(item._source.companyid,item._source.ENTNAME)">上传VIN</el-button>
+                        <el-button size="small" type="primary" style="color: #f3881c ;border: 1px solid  #f3881c ;background-color: #FFFFFF" @click="zp(item._source.companyid,item._source.ENTNAME)">企业族谱</el-button>
+                      </el-badge>
+                    </div>
+                  </div>
+                  <div v-show="item._source.tags.length>0" class="ent-label">
+                    <el-tag v-for="(v,k) of item._source.tags" v-show="v!='~'" :type="tagStyleMap[k]" size="mini">{{ v }}</el-tag>
+                  </div>
+                  <div class="ent-other-wrapper">
+                    <el-row :gutter="10">
+                      <el-col :span="5">
+                        <div class="row-h">企业法人:<span style="color: #128BED">{{ item._source.NAME }}</span></div>
+                      </el-col>
+                      <el-col :span="4">
+                        <div class="row-h">成立日期:{{ item._source.ESDATE }}</div>
+                      </el-col>
+                      <el-col :span="4">
+                        <div class="row-h">经营状态:{{ item._source.ENTSTATUS_CNAME.name }}</div>
+                      </el-col>
+                      <el-col :span="3">
+                        <div class="row-h">注册资本:{{ item._source.REGCAP }}万</div>
+                      </el-col>
+                      <el-col v-show="item._source.tuan_dui_ren_shu != '--'" :span="3">
+                        <div class="row-h">企业规模:{{ item._source.tuan_dui_ren_shu }}人</div>
+                      </el-col>
+                      <el-col v-show="item._source.web != '--'" :span="7">
+                        <div class="row-h">企业网址:{{ item._source.web }}</div>
+                      </el-col>
+                      <el-col v-show="item._source.LAST_EMAIL != '--'" :span="7">
+                        <div class="row-h">email:<span style="color: #128BED">{{ item._source.LAST_EMAIL }}</span></div>
+                      </el-col>
+                      <el-col :span="8">
+                        <div class="row-h">统一社会信用代码:{{ item._source.UNISCID }}</div>
+                      </el-col>
+                      <el-col :span="24">
+                        <div class="row-h">注册地址:{{ item._source.DOM }}</div>
+                      </el-col>
+                      <el-col v-show="item._source.LAST_DOM != '--'" :span="24">
+                        <div class="row-h">经营地址:{{ item._source.LAST_DOM }}</div>
+                      </el-col>
+                      <el-col v-show="item._source.nic_full_name != '--'" :span="24">
+                        <div class="row-h">国标行业:{{ item._source.nic_full_name }}</div>
+                      </el-col>
+                    </el-row>
                   </div>
                 </div>
-                <div class="ent-label" v-show="item._source.tags.length>0">
-                  <el-tag v-for="(v,k) of item._source.tags" :type="tagStyleMap[k]" size="mini" v-show="v!='~'">{{ v }}</el-tag>
-                </div>
-                <div class="ent-other-wrapper">
-                  <el-row :gutter="10">
-                    <el-col :span="5">
-                      <div class="row-h">企业法人:<span style="color: #128BED">{{ item._source.NAME }}</span></div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h">成立日期:{{ item._source.ESDATE }}</div>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="row-h">经营状态:{{ item._source.ENTSTATUS_CNAME.name }}</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="row-h">注册资本:{{ item._source.REGCAP }}万</div>
-                    </el-col>
-                    <el-col :span="3" v-show="item._source.tuan_dui_ren_shu != '--'">
-                      <div class="row-h">企业规模:{{ item._source.tuan_dui_ren_shu }}人</div>
-                    </el-col>
-                    <el-col :span="7"  v-show="item._source.web != '--'">
-                      <div class="row-h">企业网址:{{ item._source.web }}</div>
-                    </el-col>
-                    <el-col :span="7"  v-show="item._source.LAST_EMAIL != '--'">
-                      <div class="row-h">email:<span style="color: #128BED">{{ item._source.LAST_EMAIL }}</span></div>
-                    </el-col>
-                    <el-col :span="8">
-                      <div class="row-h">统一社会信用代码:{{ item._source.UNISCID }}</div>
-                    </el-col>
-                    <el-col :span="24">
-                      <div class="row-h">注册地址:{{ item._source.DOM }}</div>
-                    </el-col>
-                    <el-col :span="24" v-show="item._source.LAST_DOM != '--'">
-                      <div class="row-h">经营地址:{{ item._source.LAST_DOM }}</div>
-                    </el-col>
-                    <el-col :span="24"  v-show="item._source.nic_full_name != '--'">
-                      <div class="row-h">国标行业:{{ item._source.nic_full_name }}</div>
-                    </el-col>
-                  </el-row>
-                </div>
               </div>
-            </div>
-            <div class="ent-desc-wrapper" style="margin-bottom: 10px" v-show="item._source.gong_si_jian_jie!='--'">
-              <div>公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,65):'' }}...</div>
+              <div v-show="item._source.gong_si_jian_jie!='--'" class="ent-desc-wrapper" style="margin-bottom: 10px">
+                <div>公司简介：{{ item._source.gong_si_jian_jie.length>3?item._source.gong_si_jian_jie.slice(0,65):'' }}...</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
       <div class="pagination-wrapper" style="width: 100%;text-align: center;margin: 30px 0px;">
         <el-pagination
           background
@@ -224,7 +246,7 @@
           @current-change="BasePageChange"
         />
       </div>
-  </div>
+    </div>
     <Drawer
       :entname="drawer_data.entname"
       :xd_id="drawer_data.xd_id"
@@ -281,7 +303,7 @@
       :visible.sync="vinQouQuanType"
       append-to-body
     >
-      <div class="reportBox" style="padding: 0px 100px;text-decoration:underline" >
+      <div class="reportBox" style="padding: 0px 100px;text-decoration:underline">
 
         <el-upload
           class="upload-demo upload-ext"
@@ -321,7 +343,89 @@
     <el-dialog :append-to-body="true" title="" :visible="zupuVisible" width="90%" :before-close="handleClose">
       <div id="myChart" ref="myChart" :style="{width: '100%', height: '800px'}" />
     </el-dialog>
+    <el-dialog title="" :visible="searchQiyeVisible" width="800px" height="auto" :before-close="handleClose">
+      <div style="margin: auto;width: 700px">
+        <div style="color: black;font-weight: bold;font-size: 26px">添加探寻合作的企业名称</div>
+        <div style="color: darkred;margin-bottom: 20px">提示：为提高企业特征分析的准确性，可尽量多添加</div>
+        <div>
+          <div>
+            <span style="color: black;font-size: 18px;font-weight: bold;">企业名称：</span>
+            <el-select
+              id="selectInput"
+              v-model="qiye"
+              style="width: 360px"
+              filterable
+              allow-create
+              remote
+              reserve-keyword
+              placeholder="请输入企业名称或关键词，如每日信动"
+              multiple
+              size="100px"
+              :remote-method="getQiyeData"
+            >
+              <el-option v-for="v in qiyeData" :key="v" :value="v" :label="v" />
 
+            </el-select>
+            <el-button style="background-color: #0579ea;color: #FFFFFF" @click="fenXi">分析优企特征</el-button>
+            <el-button style="background-color: #f59b40;color: #FFFFFF" @click="uploadFlag=true">批量上传</el-button>
+          </div>
+        </div>
+        <div>
+          <div style="padding:0px 20px;margin: 20px 0px">
+            <el-checkbox v-model="checkAll" @change="handleCheckAllChange" />
+            <span style="color: #0b09f3;font-size: 14px" @click="deleteAll">批量删除已添加的企业</span>
+          </div>
+          <div style="min-height: 20px;max-height: 500px;overflow-y: auto">
+            <el-checkbox-group v-model="checkedCities">
+              <div v-for="(v,k) in qiye" style="width: 300px;float: left;margin: 10px 20px">
+                <el-checkbox :key="v" :label="v" style="margin: 0px 5px 4px 0px">{{ v }}</el-checkbox>
+                <img
+                  src="../../assets/close.png"
+                  style="width: 15px;height: 15px;float: right"
+                  @click="deleteOne(v,k)"
+                >
+              </div>
+            </el-checkbox-group>
+          </div>
+          <div style="padding:0px 20px;color: #0b09f3;margin: 20px 0px;font-size: 16px">
+            注：最少添加5家企业，企业比较多时可选用【批量上传】
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="uploadFlag" width="520px" center @click="uploadFlag=false">
+      <el-form style="padding: 0px 50px;">
+        <el-form-item style="margin-bottom: 0px">
+          <el-upload
+            ref="upload"
+            style="padding:10px"
+            class="upload-demo"
+            drag
+            action="https://api.meirixindong.com/admin/v2/souke/addCompanyToAnalyzeListsByFile"
+            :data="{phone}"
+            :headers="myHeaders"
+            :on-success="uploadSuccess"
+            :show-file-list="true"
+            :multiple="false"
+            :auto-upload="false"
+            :limit="1"
+          >
+            <i class="el-icon-upload" />
+            <div class="el-upload__text">
+              <div>将文件拖到此处，或<em>点击上传</em></div>
+              <div style="color: #8c939d;font-size: 12px">支持格式：.rar .zip .doc .docx .pdf,单个文件不能超过20MB</div>
+            </div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item style="padding:0px 40px;margin-top: 25px;">
+          <el-button style="padding: 15px 35px " type="primary" @click="isSubmit">确定</el-button>
+          <el-button style="margin-right: 75px;padding:15px 35px " @click="uploadFlag=false">取消</el-button>
+        </el-form-item>
+        <el-form-item>
+          <span style="color: #0b09f3">备注：上传的内容仅包括企业名称上下排列的表格即可</span>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -355,6 +459,14 @@ export default {
         company_id: 0,
         obj: ''
       },
+      uploadFlag: false,
+      qiyeData: [],
+      qiye: [],
+      checkedCities: [],
+      checkAll: false,
+      isIndeterminate: false,
+      search_Qiye: '',
+      searchQiyeVisible: false,
       dialogVisible: false,
       dialogEntLianXi: false,
       vinQouQuanType: false,
@@ -493,13 +605,59 @@ export default {
       }
     })
     var searchDiv = document.getElementById('search_input').nextElementSibling
-    searchDiv.style.background = "linear-gradient(90deg, #006EFF, #4BACFF)"
+    searchDiv.style.background = 'linear-gradient(90deg, #006EFF, #4BACFF)'
     searchDiv.style.paddingLeft = '40px'
     searchDiv.style.paddingRight = '40px'
     searchDiv.style.border = '0px'
     searchDiv.getElementsByClassName('el-icon-search')[0].style.color = 'white'
   },
   methods: {
+    deleteOne(v, k) {
+      this.$delete(this.qiye, k)
+    },
+    isSubmit() {
+      this.$refs.upload.submit()
+    },
+    getQiyeData(val) {
+      // serachCompanyByName({phone:localStorage.getItem('phone'),searchText:val}).then(res=>{
+      //   if(res.data.code == 200 ){
+      //     this.qiyeData = res.data.result
+      //   }
+      // })
+      document.getElementById('selectInput').value = val
+    },
+    handleCheckAllChange(val) {
+      this.checkedCities = []
+      if (val) {
+        this.checkedCities = this.qiye
+      }
+    },
+    fenXi(){
+      // addCompanyToAnalyzeLists({phone:localStorage.getItem('phone'),ent_name:this.qiye['0']}).then(res=>{
+      //   if(res.data.code == 200){
+      //     console.log(res.data.result)
+      //   }
+      // })
+    },
+    deleteAll() {
+      this.checkedCities.forEach((vv, kk) => {
+        this.qiye.forEach((v1, k1) => {
+          if (v1 == vv) {
+            // console.log(v1)
+            delete this.qiye[k1]
+            delete this.checkedCities[kk]
+          }
+        })
+      })
+      this.qiye = Array.from(new Set(this.qiye))
+      this.qiye.forEach((v, k) => {
+        if (v == undefined) {
+          this.$delete(this.qiye, k)
+        }
+      })
+      this.checkedCities = []
+      this.checkAll = false
+    },
     updatezupu() {
       this.drawLine()
     },
@@ -1196,7 +1354,7 @@ export default {
             if (val._source.short_name.length == 4) {
               img = "<div class='zishu4'>" + val._source.short_name + '</div>'
             }
-            if (val._source.short_name.length == 3 ) {
+            if (val._source.short_name.length == 3) {
               img = "<div class='zishu3'>" + val._source.short_name + '</div>'
             }
             if (val._source.short_name.length == 5) {
@@ -1286,6 +1444,7 @@ export default {
       this.EntLianXiList = []
       this.zupu.drawer = false
       this.zupuVisible = false
+      this.searchQiyeVisible = false
     },
     uploadSuccess(res) {
       if (res.code === 200) {
@@ -1549,5 +1708,8 @@ export default {
 }
 #search_input{
   height: 60px;
+}
+.el-select > .el-select__tags > span {
+  display: none
 }
 </style>

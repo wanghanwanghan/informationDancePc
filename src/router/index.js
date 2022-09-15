@@ -219,146 +219,146 @@ export const constantRoutes = [
       // }
     ]
   },
-  // {
-  //   path: '/CompetitivePower',
-  //   component: Layout,
-  //   redirect: '/CompetitivePower/CompetitivePower',
-  //   name: 'CompetitivePower',
-  //   meta: {
-  //     title: '竞争力'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'CompetitivePower',
-  //       component: () => import('@/views/CompetitivePower/CompetitivePower'),
-  //       name: 'CompetitivePower',
-  //       meta: {
-  //         title: '竞争力',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/Features',
-  //   component: Layout,
-  //   redirect: '/Features/Features',
-  //   name: 'Features',
-  //   meta: {
-  //     title: '业务特征'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'Features',
-  //       component: () => import('@/views/Features/Features/Features'),
-  //       name: 'Features',
-  //       meta: {
-  //         title: '业务特征',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/FinancialPerformance',
-  //   component: Layout,
-  //   redirect: '/FinancialPerformance/FinancialPerformance',
-  //   name: 'FinancialPerformance',
-  //   meta: {
-  //     title: '财务表现'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'FinancialPerformance',
-  //       component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
-  //       name: 'FinancialPerformance',
-  //       meta: {
-  //         title: '财务表现',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/FinancialThreeTable',
-  //   component: Layout,
-  //   redirect: '/FinancialThreeTable/FinancialThreeTable',
-  //   name: 'FinancialThreeTable',
-  //   meta: {
-  //     title: '财税能力'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'FinancialPerformance',
-  //       component: () => import('@/views/FinancialThreeTable/index'),
-  //       name: 'FinancialThreeTableFinancialPerformance',
-  //       meta: {
-  //         title: '财税能力',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     },
-  //     {
-  //       path: 'TwoTable',
-  //       component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
-  //       name: 'TwoTable',
-  //       meta: {
-  //         title: '财',
-  //         icon: 'el-icon-star-off'
-  //       },
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'Fapiao',
-  //       component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
-  //       name: 'Fapiao',
-  //       meta: {
-  //         title: '税',
-  //         icon: 'el-icon-star-off'
-  //       },
-  //       hidden: true
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/FinancialPerformanceMergeData',
-  //   component: Layout,
-  //   redirect: '/FinancialPerformance/FinancialPerformanceMergeData',
-  //   name: 'FinancialPerformance',
-  //   meta: {
-  //     title: '财务表现（含并表）'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'FinancialPerformance',
-  //       component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformanceMergeData'),
-  //       name: 'FinancialPerformanceMergeData',
-  //       meta: {
-  //         title: '财务表现（含并表）',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/IndustryTop',
-  //   component: Layout,
-  //   redirect: '/IndustryTop/IndustryTop',
-  //   name: 'IndustryTop',
-  //   meta: {
-  //     title: '行业Top'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'IndustryTop',
-  //       component: () => import('@/views/IndustryTop/IndustryTop'),
-  //       name: 'IndustryTop',
-  //       meta: {
-  //         title: '行业Top',
-  //         icon: 'el-icon-star-off'
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/CompetitivePower',
+    component: Layout,
+    redirect: '/CompetitivePower/CompetitivePower',
+    name: 'CompetitivePower',
+    meta: {
+      title: '竞争力'
+    },
+    children: [
+      {
+        path: 'CompetitivePower',
+        component: () => import('@/views/CompetitivePower/CompetitivePower'),
+        name: 'CompetitivePower',
+        meta: {
+          title: '竞争力',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
+    path: '/Features',
+    component: Layout,
+    redirect: '/Features/Features',
+    name: 'Features',
+    meta: {
+      title: '业务特征'
+    },
+    children: [
+      {
+        path: 'Features',
+        component: () => import('@/views/Features/Features/Features'),
+        name: 'Features',
+        meta: {
+          title: '业务特征',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
+    path: '/FinancialPerformance',
+    component: Layout,
+    redirect: '/FinancialPerformance/FinancialPerformance',
+    name: 'FinancialPerformance',
+    meta: {
+      title: '财务表现'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformance'),
+        name: 'FinancialPerformance',
+        meta: {
+          title: '财务表现',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
+    path: '/FinancialThreeTable',
+    component: Layout,
+    redirect: '/FinancialThreeTable/FinancialThreeTable',
+    name: 'FinancialThreeTable',
+    meta: {
+      title: '财税能力'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialThreeTable/index'),
+        name: 'FinancialThreeTableFinancialPerformance',
+        meta: {
+          title: '财税能力',
+          icon: 'el-icon-star-off'
+        }
+      },
+      {
+        path: 'TwoTable',
+        component: () => import('@/views/FinancialThreeTable/FinancialThreeTable/FinancialThreeTable'),
+        name: 'TwoTable',
+        meta: {
+          title: '财',
+          icon: 'el-icon-star-off'
+        },
+        hidden: true
+      },
+      {
+        path: 'Fapiao',
+        component: () => import('@/views/FinancialThreeTable/Fapiao/index'),
+        name: 'Fapiao',
+        meta: {
+          title: '税',
+          icon: 'el-icon-star-off'
+        },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/FinancialPerformanceMergeData',
+    component: Layout,
+    redirect: '/FinancialPerformance/FinancialPerformanceMergeData',
+    name: 'FinancialPerformance',
+    meta: {
+      title: '财务表现（含并表）'
+    },
+    children: [
+      {
+        path: 'FinancialPerformance',
+        component: () => import('@/views/FinancialPerformance/FinancialPerformance/FinancialPerformanceMergeData'),
+        name: 'FinancialPerformanceMergeData',
+        meta: {
+          title: '财务表现（含并表）',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
+  {
+    path: '/IndustryTop',
+    component: Layout,
+    redirect: '/IndustryTop/IndustryTop',
+    name: 'IndustryTop',
+    meta: {
+      title: '行业Top'
+    },
+    children: [
+      {
+        path: 'IndustryTop',
+        component: () => import('@/views/IndustryTop/IndustryTop'),
+        name: 'IndustryTop',
+        meta: {
+          title: '行业Top',
+          icon: 'el-icon-star-off'
+        }
+      }
+    ]
+  },
   {
     path: '/AssetClues',
     component: Layout,

@@ -9,22 +9,28 @@
         <!-- 登录 -->
         <el-dialog :visible.sync="dialogFormVisible">
           <div class="title">登录</div>
-          <el-form ref="ruleForm" :model="ruleForm" label-position="left" :rules="rules" label-width="100px"
-                   style="width: 400px; margin-left:50px;">
+          <el-form
+            ref="ruleForm"
+            :model="ruleForm"
+            label-position="left"
+            :rules="rules"
+            label-width="100px"
+            style="width: 400px; margin-left:50px;"
+          >
             <el-form-item label="账号" prop="name">
-              <el-input v-model="ruleForm.name"/>
+              <el-input v-model="ruleForm.name" />
             </el-form-item>
             <el-tabs v-model="loginActive">
               <el-tab-pane label="密码登录" name="first">
                 <el-form-item label="密码" prop="user_password">
-                  <el-input v-model="ruleForm.user_password" show-password/>
+                  <el-input v-model="ruleForm.user_password" show-password />
                 </el-form-item>
               </el-tab-pane>
               <el-tab-pane label="手机验证码登录" name="second">
                 <el-form-item label="验证码" prop="password">
                   <div class="pas">
                     <div>
-                      <el-input v-model="ruleForm.password"/>
+                      <el-input v-model="ruleForm.password" />
                     </div>
                     <div class="pas-r">
                       <el-button v-show="show" type="primary" @click="getCode">获取验证码</el-button>
@@ -52,24 +58,30 @@
               （如已在 信动客动 小程序注册可直接登录）
             </div>
           </div>
-          <el-form ref="ruleFormR" :model="ruleFormR" :rules="rulesR" label-position="left" label-width="100px"
-                   style="width: 400px; margin-left:50px;">
+          <el-form
+            ref="ruleFormR"
+            :model="ruleFormR"
+            :rules="rulesR"
+            label-position="left"
+            label-width="100px"
+            style="width: 400px; margin-left:50px;"
+          >
             <el-form-item label="手机号" prop="zphone">
-              <el-input v-model="ruleFormR.zphone"/>
+              <el-input v-model="ruleFormR.zphone" />
             </el-form-item>
             <el-form-item label="姓名" prop="namez">
-              <el-input v-model="ruleFormR.namez"/>
+              <el-input v-model="ruleFormR.namez" />
             </el-form-item>
             <el-form-item label="单位名称" prop="danz">
-              <el-input v-model="ruleFormR.danz"/>
+              <el-input v-model="ruleFormR.danz" />
             </el-form-item>
             <el-form-item label="密码" prop="user_password">
-              <el-input v-model="ruleFormR.user_password"/>
+              <el-input v-model="ruleFormR.user_password" />
             </el-form-item>
             <el-form-item label="验证码" prop="zpassword">
               <div class="pas">
                 <div>
-                  <el-input v-model="ruleFormR.zpassword"/>
+                  <el-input v-model="ruleFormR.zpassword" />
                 </div>
                 <div class="pas-r">
                   <el-button v-show="showz" type="primary" @click="getCodez">获取验证码</el-button>
@@ -94,34 +106,39 @@
           </div>
         </el-dialog>
       </div>
-      <HomeCont/>
+      <HomeCont />
     </div>
     <div v-if="showNav2">
       <div class="navL">
         <!-- {{ activeName }} -->
         <el-tabs v-model="activeName" style="width:95%;margin:0 auto" @tab-click="handleClick">
           <el-tab-pane label="首页" name="first">
-            <HomeCont/>
+            <HomeCont />
           </el-tab-pane>
           <el-tab-pane label="我的下载" name="second">
-            <DownLoad/>
+            <DownLoad />
           </el-tab-pane>
           <el-tab-pane label="充值" name="third">
-            <Recharge/>
+            <Recharge />
           </el-tab-pane>
           <el-tab-pane label="风险监控" name="fourth">
-            <RiskMonitoringList></RiskMonitoringList>
+            <RiskMonitoringList />
           </el-tab-pane>
           <el-tab-pane label="我的" name="fifth">
-            <My/>
+            <My />
           </el-tab-pane>
-
-<!--          <el-tab-pane label="高级搜索" name="as">-->
-<!--            <ASIndex/>-->
-<!--          </el-tab-pane>-->
-<!--          <el-tab-pane label="地图搜索" name="map">-->
-<!--            <MapIndex/>-->
-<!--          </el-tab-pane>-->
+          <!--          <el-tab-pane label="SCRM" name="crm">-->
+          <!--            <CrmIndex/>-->
+          <!--          </el-tab-pane>-->
+          <!--          <el-tab-pane label="呼叫中心" name="cs">-->
+          <!--            <CsIndex/>-->
+          <!--          </el-tab-pane>-->
+          <el-tab-pane label="高级搜索" name="as">
+            <ASIndex />
+          </el-tab-pane>
+          <el-tab-pane label="地图搜索" name="map">
+            <MapIndex />
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -130,16 +147,15 @@
 <script>
 import HomeCont from '@/components/HomeCont/HomeCont'
 import DownLoad from '@/components/download/DownLoad'
-import RiskMonitoring from '@/components/RiskMonitoring/RiskMonitoring'
+// import RiskMonitoring from '@/components/RiskMonitoring/RiskMonitoring'
 import RiskMonitoringList from '@/components/RiskMonitoring/RiskMonitoringList'
 import My from '@/components/My/My'
 import Recharge from '@/components/Recharge/Recharge'
-import CrmIndex from '@/components/Crm/CrmIndex'
-import CsIndex from '@/components/Cs/CsIndex'
+// import CrmIndex from '@/components/Crm/CrmIndex'
+// import CsIndex from '@/components/Cs/CsIndex'
 import { getCodes, Login, Zreg } from '@/api/article'
-import { getBeneficiary } from '@/api/EnterpriseBackground'
 import ASIndex from '@/components/AdvancedSearch/ASIndex'
-import MapIndex from "@/components/AdvancedSearch/MapIndex";
+import MapIndex from '@/components/AdvancedSearch/MapIndex'
 
 export default {
   name: 'Nav',
@@ -147,13 +163,13 @@ export default {
     ASIndex,
     HomeCont,
     DownLoad,
-    RiskMonitoring,
+    // RiskMonitoring,
     RiskMonitoringList,
     My,
     Recharge,
-    CrmIndex,
-    CsIndex,
-    MapIndex,
+    // CrmIndex,
+    // CsIndex,
+    MapIndex
   },
   data() {
     var checkname = (rule, value, callback) => {
