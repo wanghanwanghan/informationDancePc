@@ -32,23 +32,30 @@
                 align="center"
                 prop="RegistNo"
                 label="登记编号"
-                width="210"
               />
               <el-table-column
                 align="center"
                 prop="PledgorInfo.Name"
                 label="出质人"
                 width="180"
-              />
+              >
+                <template slot-scope="scope">
+                  <div v-for="v in scope.row.PledgorList">{{v.Name}}</div>
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 prop="PledgeeInfo.Name"
                 label="质权人"
                 width="260"
-              />
+              >
+                <template slot-scope="scope">
+                  <div v-for="v in scope.row.PledgeeList">{{v.Name}}</div>
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
-                prop="RelatedCompanyInfo.Name"
+                prop="RelatedCompanyName"
                 label="出质股权标的企业"
                 width="250"
               />
@@ -96,50 +103,49 @@
                 align="center"
                 prop="Status"
                 label="状态"
-                width="210"
+                width="110"
               />
               <el-table-column
                 align="center"
-                prop="entName"
-                label="抵押人"
-                width="260"
+                prop="RegisterDate"
+                label="登记时间"
+                width="100"
               />
               <el-table-column
                 align="center"
                 prop="RegisterOffice"
+                label="登记机关"
+                width="100"
+              />
+
+              <el-table-column
+                align="center"
                 label="抵押权人"
-                width="260"
+                >
+              <template slot-scope="scope">
+                  <div v-for="v in scope.row.Detail.PledgeeList">{{ v.Name }}</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
+                prop="Detail.SecuredClaim"
+                label="被担保债权概况"
               />
               <el-table-column
                 align="center"
-                prop="GuaranteeList.Ownership"
-                label="所有权或使用权归属"
-                width="250"
-              />
-              <el-table-column
-                align="center"
-                prop="Detail.SecuredClaim.FulfillObligation"
-                label="债务人履行债务的期限"
-                width="100"
-              />
-              <el-table-column
-                align="center"
-                prop="Detail.SecuredClaim.Kind"
-                label="被担保主债权种类"
-                width="100"
-              />
+                label="抵押物信息"
+              >
+                <template slot-scope="scope">
+                  <div v-for="v in scope.row.Detail.GuaranteeList">{{ v.Name }}</div>
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 prop="Detail.SecuredClaim.Amount"
                 label="被担保主债权数额"
                 width="100"
               />
-              <el-table-column
-                align="center"
-                prop="RegisterDate"
-                label="登记日期"
-                width="110"
-              />
+
             </el-table>
           </div>
           <div class="pagination">
@@ -170,8 +176,8 @@
               />
               <el-table-column
                 align="center"
-                prop="entName"
-                label="抵押权人"
+                prop="Address"
+                label="地址"
                 width="200"
               />
               <el-table-column
@@ -182,7 +188,7 @@
               />
               <el-table-column
                 align="center"
-                prop="MortgagePurpose"
+                prop="MortgageAcreage"
                 label="抵押土地用途"
                 width="200"
               />
@@ -196,6 +202,11 @@
                 align="center"
                 prop="EndDate"
                 label="截止日期"
+              />
+              <el-table-column
+                align="center"
+                prop="MortgagePrice"
+                label="抵押金额（万元）"
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -334,20 +345,28 @@ export default {
     // 股权出质
     getStockPledgeList(this.query).then(res => {
       // console.log(res)
-      this.StockPledgeList = res.data.result
-      this.totalStockPledgeList = res.data.paging.total
+      if(res.data.result.Data != '--'){
+        this.StockPledgeList = res.data.result.Data
+        this.totalStockPledgeList = res.data.paging.total
+      }
     })
     // 动产抵押
     getChattelMortgage(this.query).then(res => {
       // console.log(res)
-      this.ChattelMortgage = res.data.result
-      this.totalChattelMortgage = res.data.paging.total
+        if(res.data.result.Data != '--'){
+          this.ChattelMortgage = res.data.result.Data
+          this.totalChattelMortgage = res.data.paging.total
+        }
+
     })
     // 土地抵押
     getLandMortgageList(this.query).then(res => {
       // console.log(res)
-      this.getLandMortgageList = res.data.result
-      this.totalgetLandMortgageList = res.data.paging.total
+        if(res.data.result.Data != '--'){
+          this.getLandMortgageList = res.data.result.Data
+          this.totalgetLandMortgageList = res.data.paging.total
+        }
+
     })
     // 对外担保
     getAnnualReport(this.query).then(res => {
@@ -371,7 +390,7 @@ export default {
       this.query.entName = this.entName
       this.query.phone = this.phone
       getStockPledgeList(this.query).then(res => {
-        this.StockPledgeList = res.data.result
+        this.StockPledgeList = res.data.result.Data
       })
     },
     // 动产抵押分页
@@ -381,7 +400,7 @@ export default {
       this.query.entName = this.entName
       this.query.phone = this.phone
       getChattelMortgage(this.query).then(res => {
-        this.ChattelMortgage = res.data.result
+        this.ChattelMortgage = res.data.result.Data
       })
     },
     // 土地抵押分页
@@ -391,7 +410,7 @@ export default {
       this.query.entName = this.entName
       this.query.phone = this.phone
       getLandMortgageList(this.query).then(res => {
-        this.getLandMortgageList = res.data.result
+        this.getLandMortgageList = res.data.result.Data
       })
     },
     // 对外担保分页

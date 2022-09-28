@@ -36,26 +36,37 @@
               />
               <el-table-column
                 align="center"
-                prop="CaseNo"
-                label="决定文书号"
-                width="300"
+                prop="LicenseNo"
+                label="许可文件编号"
+                width="100"
               />
               <el-table-column
                 align="center"
-                prop="Ownername"
-                label="公司名称"
-                width="300"
-              />
-              <el-table-column
-                align="center"
-                prop="LianDate"
-                label="决定日期"
+                prop="LicenseName"
+                label="许可文件名称"
                 width="150"
               />
               <el-table-column
                 align="center"
-                prop="Province"
-                label="地域"
+                prop="ValidityFrom"
+                label="有效期自"
+                width="100"
+              />
+              <el-table-column
+                align="center"
+                prop="ValidityTo"
+                label="有效期至"
+                width="100"
+              />
+              <el-table-column
+                align="center"
+                prop="LicensOffice"
+                label="许可机关"
+              />
+              <el-table-column
+                align="center"
+                prop="LicensContent"
+                label="许可内容"
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -97,25 +108,25 @@
               />
               <el-table-column
                 align="center"
-                prop="CaseNo"
+                prop="DocNo"
                 label="决定文书号"
                 width="280"
               />
               <el-table-column
                 align="center"
-                prop="OwnerName"
+                prop="PunishOffice"
                 label="处罚公司"
                 width="250"
               />
               <el-table-column
                 align="center"
-                prop="CaseReason"
+                prop="PunishReason"
                 label="处罚是由"
                 width="250"
               />
               <el-table-column
                 align="center"
-                prop="LianDate"
+                prop="PunishDate"
                 label="处罚日期"
               />
               <el-table-column label="操作">
@@ -534,14 +545,18 @@ export default {
     // 行政许可
     getAdministrativeLicenseList(this.query).then(res => {
       // console.log(res)
-      this.AdministrativeLicenseList = res.data.result
-      this.totalAdministrativeLicenseList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.AdministrativeLicenseList = res.data.result.Data
+        this.totalAdministrativeLicenseList = res.data.paging.total
+      }
     })
     // 行政处罚
     getAdministrativePenaltyList(this.query).then(res => {
       // console.log(res)
-      this.AdministrativePenaltyList = res.data.result
-      this.totalAdministrativePenaltyList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.AdministrativePenaltyList = res.data.result.Data
+        this.totalAdministrativePenaltyList = res.data.paging.total
+      }
     })
     // 环保处罚
     getEpbparty(this.query).then(res => {

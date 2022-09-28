@@ -667,8 +667,10 @@ export default {
     // 司法拍卖
     getJudicialSaleList(this.query).then(res => {
       // console.log(res)
-      this.JudicialSaleList = res.data.result
-      this.totalJudicialSaleList = res.data.paging.total
+      if(res.data.result.Data != '--'){
+        this.JudicialSaleList = res.data.result.Data
+        this.totalJudicialSaleList = res.data.paging.total
+      }
     })
     // // 司法拍卖留言
     this.query7.entName = localStorage.getItem('entName')

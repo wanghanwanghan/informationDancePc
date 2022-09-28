@@ -14,7 +14,7 @@
         <a class="et-hero-tab" href="#tab-jzzgzs">建筑资格证书</a>
         <a class="et-hero-tab" href="#tab-jzgcxm">建筑工程项目</a>
         <a class="et-hero-tab" href="#tab-zq">债券</a>
-        <span class="et-hero-tab-slider"/>
+        <span class="et-hero-tab-slider" />
       </div>
     </section>
     <main class="et-main">
@@ -35,7 +35,7 @@
                 width="50"
               />
               <el-table-column
-                prop="CompanyName"
+                prop="ProductName"
                 label="公司名字"
                 align="center"
                 width="300"
@@ -232,19 +232,19 @@
                 prop="Address"
                 label="地址"
                 align="center"
-                width="240"
+                width="300"
               />
-              <el-table-column
-                prop="AdminArea"
-                label="行政区"
-                align="center"
-                width="140"
-              />
+              <!--              <el-table-column-->
+              <!--                prop="AdminArea"-->
+              <!--                label="行政区"-->
+              <!--                align="center"-->
+              <!--                width="140"-->
+              <!--              />-->
               <el-table-column
                 prop="LandUse"
                 label="土地用途"
                 align="center"
-                width="120"
+                width="300"
               />
               <el-table-column
                 prop="Area"
@@ -253,19 +253,19 @@
                 width="140"
               />
               <el-table-column
-                prop="SignTime"
+                prop="PublishDate"
                 align="center"
                 label="签订日期"
                 width="140"
               />
-              <el-table-column
-                prop="SupplyWay"
-                align="center"
-                label="供地方式"
-              />
+              <!--              <el-table-column-->
+              <!--                prop="SupplyWay"-->
+              <!--                align="center"-->
+              <!--                label="供地方式"-->
+              <!--              />-->
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <router-link :to="'/EnterpriseDevelopment/gdDetail/'+scope.row.Id">
+                  <router-link v-show="scope.row.LandPurId!='--'" :to="'/EnterpriseDevelopment/gdDetail/'+scope.row.LandPurId">
                     <el-button
                       size="mini"
                     >查看详情
@@ -327,7 +327,7 @@
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <router-link :to="'/EnterpriseDevelopment/tdgsDetail/'+scope.row.Id">
+                  <router-link v-show="scope.row.LandPubId!='--'" :to="'/EnterpriseDevelopment/tdgsDetail/'+scope.row.LandPubId">
                     <el-button
                       size="mini"
                     >查看详情
@@ -507,23 +507,22 @@
                 width="50"
               />
               <el-table-column
-                prop="Category"
+                prop="CertNameList"
                 align="center"
-                label="证书名称"
-                width="140"
-              />
+                label="资质名称"
+                width="250"
+              >
+                <template slot-scope="scope">
+                  <div v-for="(v,k) in scope.row.CertNameList">{{ v }}</div>
+                </template>
+              </el-table-column>
               <el-table-column
                 prop="CertNo"
                 align="center"
                 label="证书编号"
-                width="170"
+                width="150"
               />
-              <el-table-column
-                prop="CertName"
-                align="center"
-                label="资质名称"
-                width="200"
-              />
+
               <el-table-column
                 prop="SignDate"
                 align="center"
@@ -537,21 +536,21 @@
                 width="130"
               />
               <el-table-column
-                prop="ValidPeriod"
+                prop="CertScope"
+                align="center"
+                label="资质范围"
+                width="200"
+              />
+              <el-table-column
+                prop="SignDept"
                 align="center"
                 label="发证机关"
               />
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <router-link :to="'/EnterpriseDevelopment/jzzgDetail/'+scope.row.Id">
-                    <el-button
-                      size="mini"
-                    >查看详情
-                    </el-button>
-                  </router-link>
-                </template>
-
-              </el-table-column>
+              <el-table-column
+                prop="Category"
+                align="center"
+                label="资质类型"
+              />
             </el-table>
           </div>
           <div class="pagination">
@@ -587,25 +586,25 @@
                 width="200"
               />
               <el-table-column
-                prop="No"
+                prop="ProjectType"
                 align="center"
-                label="项目编号"
+                label="项目类别"
                 width="200"
               />
               <el-table-column
-                prop="ConsCoyList[0].Name"
+                prop="BuildUnitList[0].Name"
                 align="center"
                 label="建设单位"
                 width="240"
               />
               <el-table-column
-                prop="Region"
+                prop="ProjectArea"
                 align="center"
                 label="所在地区"
               />
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <router-link :to="'/EnterpriseDevelopment/jzgcDetail/'+scope.row.Id">
+                  <router-link :to="'/EnterpriseDevelopment/jzgcDetail/'+scope.row.ProjectId">
                     <el-button
                       size="mini"
                     >查看详情
@@ -671,17 +670,32 @@
                 align="center"
                 label="上市日期"
               />
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <router-link :to="'/EnterpriseDevelopment/zqDetail/'+scope.row.Id">
-                    <el-button
-                      size="mini"
-                    >查看详情
-                    </el-button>
-                  </router-link>
-                </template>
+              <el-table-column
+                prop="MaturityYears"
+                align="center"
+                label="债券期限(年)"
+              />
+              <el-table-column
+                prop="RemainYears"
+                align="center"
+                label="剩余期限(年)"
+              />
+              <el-table-column
+                prop="IssueScale"
+                align="center"
+                label="发行规模(亿元)"
+              />
+              <!--              <el-table-column label="操作">-->
+              <!--                <template slot-scope="scope">-->
+              <!--                  <router-link :to="'/EnterpriseDevelopment/zqDetail/'+scope.row.Id">-->
+              <!--                    <el-button-->
+              <!--                      size="mini"-->
+              <!--                    >查看详情-->
+              <!--                    </el-button>-->
+              <!--                  </router-link>-->
+              <!--                </template>-->
 
-              </el-table-column>
+              <!--              </el-table-column>-->
             </el-table>
           </div>
           <div class="pagination">
@@ -760,7 +774,7 @@ export default {
     // 融资历史
     getEntFinancing(this.query).then(res => {
       // console.log(res)
-      this.EntFinancing = res.data.result
+      this.EntFinancing = res.data.result.Data
     })
     // 对外投资
     getInvestmentAbroadInfo(this.query).then(res => {
@@ -777,20 +791,24 @@ export default {
     // 购地信息
     getlandPurchaseList(this.query1).then(res => {
       // console.log(res)
-      this.landPurchaseList = res.data.result
+      this.landPurchaseList = res.data.result.Data
       this.totallandPurchaseList = res.data.paging.total
     })
     // 土地公示
     getlandPublishList(this.query1).then(res => {
       // console.log(res)
-      this.landPublishList = res.data.result
-      this.totallandPublishList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.landPublishList = res.data.result.Data
+        this.totallandPublishList = res.data.paging.total
+      }
     })
     // 土地转让
     getlandTransferList(this.query1).then(res => {
       // console.log(res)
-      this.landTransferList = res.data.result
-      this.totallandTransferList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.landTransferList = res.data.result.Data
+        this.totallandTransferList = res.data.paging.total
+      }
     })
     // 招聘信息
     getRecruitmentList(this.query1).then(res => {
@@ -801,20 +819,28 @@ export default {
     // 建筑资格证书
     getQualificationList(this.query1).then(res => {
       // console.log(res)
-      this.QualificationList = res.data.result
-      this.totalQualificationList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.QualificationList = res.data.result.Data
+      }
+      if (res.data.paging.total) {
+        this.totalQualificationList = res.data.paging.total
+      }
     })
     // 建筑工程项目
     getBuildingProjectList(this.query1).then(res => {
       // console.log(res)
-      this.BuildingProjectList = res.data.result
+      this.BuildingProjectList = res.data.result.Data
       this.totalBuildingProjectList = res.data.paging.total
     })
     // 债券
     getBondList(this.query1).then(res => {
       // console.log(res)
-      this.BondList = res.data.result
-      this.totalBondList = res.data.paging.total
+      if (res.data.result.Data != '--') {
+        this.BondList = res.data.result.Data
+      }
+      if (res.data.paging.total) {
+        this.totalBondList = res.data.paging.total
+      }
     })
     // 竞争力
     getEntScoreList(this.query1).then(res => {
@@ -842,7 +868,7 @@ export default {
       this.query.entName = this.entName
       this.query.phone = this.phone
       getEntFinancing(this.query).then(res => {
-        this.EntFinancing = res.data.result
+        this.EntFinancing = res.data.result.Data
       })
     },
     // 对外投资分页
@@ -883,7 +909,7 @@ export default {
       this.query1.entName = this.entName
       this.query1.phone = this.phone
       getlandPublishList(this.query1).then(res => {
-        this.landPublishList = res.data.result
+        this.landPublishList = res.data.result.Data
       })
     },
     // 土地转让分页
@@ -893,7 +919,7 @@ export default {
       this.query1.entName = this.entName
       this.query1.phone = this.phone
       getRecruitmentList(this.query1).then(res => {
-        this.RecruitmentList = res.data.result
+        this.RecruitmentList = res.data.result.Data
       })
     },
     // 招聘信息分页
@@ -923,7 +949,7 @@ export default {
       this.query1.entName = this.entName
       this.query1.phone = this.phone
       getBuildingProjectList(this.query1).then(res => {
-        this.BuildingProjectList = res.data.result
+        this.BuildingProjectList = res.data.result.Data
       })
     },
     // 债券分页
@@ -933,7 +959,7 @@ export default {
       this.query1.entName = this.entName
       this.query1.phone = this.phone
       getBondList(this.query1).then(res => {
-        this.BondList = res.data.result
+        this.BondList = res.data.result.Data
       })
     }
   }

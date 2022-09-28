@@ -3,23 +3,55 @@
     <div class="box2">
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>许可文件编号：</span><span>{{ detail.CaseNo }}</span>
+          <span>行政许可决定文书号：</span><span>{{ detail.LicenseNo }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>许可机关：</span><span>{{ detail.ExecuteGov }}</span>
-        </el-col>
-      </el-row>
-      <el-row class="cont">
-        <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>有效期自：</span><span>{{ detail.LianDate }}</span>
-        </el-col>
-        <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>有效期至：</span><span>{{ detail.ExpireDate }}</span>
+          <span>行政许可决定文书名称：</span><span>{{ detail.LicenseName }}</span>
         </el-col>
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>许可内容：</span><span>{{ detail.Content }}</span>
+          <span>许可编号：</span><span>{{ detail.LicenseNumber }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可证书名称：</span><span>{{ detail.CertificateName }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>有效期自：</span><span>{{ detail.ValidityFrom }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>有效期至：</span><span>{{ detail.ValidityTo }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可决定日期：</span><span>{{ detail.DecideDate }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可类别：</span><span>{{ detail.LicenseType }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可机关：</span><span>{{ detail.LicenseOffice }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可机关统一社会信用代码：</span><span>{{ detail.OfficeNo }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>数据来源单位：</span><span>{{ detail.SourceUnit }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>数据来源单位统一社会信用代码：</span><span>{{ detail.UnitNo }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>许可内容：</span><span>{{ detail.LicensContent }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
         </el-col>

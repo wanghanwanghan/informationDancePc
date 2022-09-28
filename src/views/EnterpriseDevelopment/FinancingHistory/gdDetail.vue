@@ -11,10 +11,10 @@
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>项目位置：</span><span>{{ detail.ProjectLocation }}</span>
+          <span>面积（公顷）：</span><span>{{ detail.Area }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>面积（公顷）：</span><span>{{ detail.Area }}</span>
+          <span>项目位置：</span><span>{{ detail.Address}}</span>
         </el-col>
       </el-row>
       <el-row class="cont">
@@ -27,7 +27,7 @@
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>供地方式：</span><span>{{ detail.LandSupplyWay }}</span>
+          <span>供地方式：</span><span>{{ detail.SupplyWay }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
           <span>土地使用年限：</span><span>{{ detail.LandUseYears }}</span>
@@ -51,23 +51,23 @@
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>约定交地时间：</span><span>{{ detail.AgreeLandTime }}</span>
+          <span>约定交地时间：</span><span>{{ detail.AgreeLandDate }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>约定开工时间：</span><span>{{ detail.AgreeStartTime }}</span>
-        </el-col>
-      </el-row>
-      <el-row class="cont">
-        <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>约定竣工时间：</span><span>{{ detail.AgreeEndTime }}</span>
-        </el-col>
-        <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>实际开工时间：</span><span>{{ detail.ActualStartTime }}</span>
+          <span>约定开工时间：</span><span>{{ detail.AgreeStartDate }}</span>
         </el-col>
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>实际竣工时间：</span><span>{{ detail.ActualEndTime }}</span>
+          <span>约定竣工时间：</span><span>{{ detail.AgreeEndDate }}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>实际开工时间：</span><span>{{ detail.ActualStartDate }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>实际竣工时间：</span><span>{{ detail.ActualEndDate }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
           <span>批准单位：</span><span>{{ detail.ApprovalUnit }}</span>
@@ -75,7 +75,7 @@
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>合同签订日期：</span><span>{{ detail.SignTime }}</span>
+          <span>合同签订日期：</span><span>{{ detail.SignDate }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
           <span>支付期号：</span><span>{{ detail.PaymentRound }}</span>
@@ -91,7 +91,7 @@
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>备注：</span><span>{{ detail.Mark }}</span>
+          <span>备注：</span><span>{{ detail.Remarks }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
           <span>约定容积率下限：</span><span>{{ detail.AgreeRateMin }}</span>
@@ -102,6 +102,12 @@
           <span>约定容积率上限：</span><span>{{ detail.AgreeRateMax }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>电子监管号：</span><span>{{ detail.ElecSuNum }}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+
         </el-col>
       </el-row>
       <!-- <div>

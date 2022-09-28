@@ -3,118 +3,93 @@
     <div class="box2">
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>项目名称：</span><span>{{ detail.ProjectName }}</span>
+          <span>建设单位信息：</span>
+          <span v-for="(v,k) in detail.BuildUnitList">{{ v.Name }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>项目编号：</span><span>{{ detail.No }}</span>
+          <span>总投资（万元）：</span><span>{{ detail.InvestAmt }}</span>
         </el-col>
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>省级项目编号：</span><span>{{ detail.ProvinceNo }}</span>
+          <span>项目类别：</span><span>{{ detail.ProjectType }}</span>
         </el-col>
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>所在区划：</span><span>{{ detail.Region }}</span>
+          <span>工程用途：</span><span>{{ detail.UsePurpose }}</span>
         </el-col>
       </el-row>
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>建设单位：</span><span>{{ detail.ConsCoyList[0].Name }}</span>
+          <span>建设性质：</span><span>{{ detail.BuildNature}}</span>
         </el-col>
-      </el-row>
-      <el-row class="cont">
-        <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>合同备案</span>
-        </el-col>
-      </el-row>
-      <div v-for="item in detail.ContractRecordList" :key="item">
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>合同类型：</span><span>{{ item.Category }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>合同金额：</span><span>{{ item.Amount }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>合同签订日期：</span><span>{{ item.SignDate }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>合同备案编号：</span><span>{{ item.RecordNo }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>省级合同备案编号：</span><span>{{ item.PrRecordNo }}</span>
-          </el-col>
-        </el-row>
-      </div>
 
-      <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>施工图审查</span>
+          <span>建设规模：</span><span>{{ detail.BuildScale}}</span>
         </el-col>
       </el-row>
-      <div v-for="item in detail.DrawingCheckList" :key="item">
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>施工图审查合格书编号：</span><span>{{ item.DocNo }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>省级施工图审查合格书编号：</span><span>{{ item.PrDocNo }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>勘察单位名称：</span><span>{{ item.AuditCoy.Name }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>设计单位名称：</span><span>{{ item.DesignCoy.Name }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>施工图审查机构名称：</span><span>{{ item.InvestigateCoy.Name }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>审查完成日期：</span><span>{{ item.FinishDate }}</span>
-          </el-col>
-        </el-row>
-      </div>
-
       <el-row class="cont">
         <el-col :span="12"><div class="grid-content bg-purple" />
-          <span>竣工验收备案</span>
+          <span>总面积（平房米）:</span><span>{{ detail.TotalAcreage}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>总长度（米）:</span><span>{{ detail.TotalLength}}</span>
         </el-col>
       </el-row>
-      <div v-for="item in detail.FinishVerifyList" :key="item">
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>实际造价：</span><span>{{ item.Price }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>实际面积：</span><span>{{ item.Area }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>实际开工日期：</span><span>{{ item.StartDate }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>实际竣工验收日期：</span><span>{{ item.VerifyDate }}</span>
-          </el-col>
-        </el-row>
-        <el-row class="cont">
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>竣工备案编号：</span><span>{{ item.RecordNo }}</span>
-          </el-col>
-          <el-col :span="12"><div class="grid-content bg-purple" />
-            <span>省级竣工备案编号：</span><span>{{ item.PrRecordNo }}</span>
-          </el-col>
-        </el-row>
-      </div>
-
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>项目编号：</span><span>{{ detail.ItemNo}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>省级项目编号：</span><span>{{ detail.ProvinceItemNo}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>建设用地规划许可证编号：</span><span>{{ detail.LandPerNo}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>建设工程规划许可证编号：</span><span>{{ detail.ProPerNo}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>行政区划L：</span><span>{{ detail.Area}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>具体地点：</span><span>{{ detail.DetailLocation}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>立项文号：</span><span>{{ detail.ItemDocNo}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>立项级别：</span><span>{{ detail.ItemLevel}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>立项批复机关：</span><span>{{ detail.ApproveUnit}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>立项批复时间：</span><span>{{ detail.ApproveDate}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>计划开工时间：</span><span>{{ detail.StartDate}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>计划竣工时间：</span><span>{{ detail.EndDate}}</span>
+        </el-col>
+      </el-row>
+      <el-row class="cont">
+        <el-col :span="12"><div class="grid-content bg-purple" />
+          <span>数据等级：</span><span>{{ detail.DataLevel}}</span>
+        </el-col>
+        <el-col :span="12"><div class="grid-content bg-purple" />
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
