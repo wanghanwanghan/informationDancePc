@@ -134,11 +134,33 @@
           <!--            <CsIndex/>-->
           <!--          </el-tab-pane>-->
           <el-tab-pane label="高级搜索" name="as">
-            <ASIndex />
+            <ASIndex/>
           </el-tab-pane>
+<!--          <el-tab-pane name="gaoji" @click="gaojiSearch">-->
+<!--            <span  slot="label">-->
+<!--              <el-dropdown placement="bottom" @command="handleCommand">-->
+<!--                <span class="demonstration" id="gaoji">高级搜索<i class="el-icon-arrow-down el-icon&#45;&#45;right" /></span>-->
+<!--                <el-dropdown-menu slot="dropdown">-->
+<!--                  <el-dropdown-item-->
+<!--                    v-for="menu in dropdownMenu"-->
+<!--                    :command="menu.command"-->
+<!--                    :icon="menu.icon"-->
+<!--                  >-->
+<!--                    {{ menu.label }}-->
+<!--                  </el-dropdown-item>-->
+<!--                </el-dropdown-menu>-->
+<!--              </el-dropdown>-->
+<!--            </span>-->
+<!--            <ASIndex v-if="selected=='jsyq'" />-->
+<!--            <EnterpriseAnalysis v-if="selected=='yqfx'" />-->
+<!--            <keDong v-if="selected=='gdyq'" />-->
+<!--            <teZheng v-if="selected=='yqtzzhy'" />-->
+<!--            <ASIndex v-else />-->
+<!--          </el-tab-pane>-->
           <el-tab-pane label="地图搜索" name="map">
             <MapIndex />
           </el-tab-pane>
+
         </el-tabs>
       </div>
     </div>
@@ -156,6 +178,9 @@ import Recharge from '@/components/Recharge/Recharge'
 import { getCodes, Login, Zreg } from '@/api/article'
 import ASIndex from '@/components/AdvancedSearch/ASIndex'
 import MapIndex from '@/components/AdvancedSearch/MapIndex'
+import keDong from '@/components/AdvancedSearch/youQi/keDong'
+import teZheng from '@/components/AdvancedSearch/youQi/teZheng'
+import EnterpriseAnalysis from '@/components/AdvancedSearch/youQi/EnterpriseAnalysis'
 
 export default {
   name: 'Nav',
@@ -169,7 +194,10 @@ export default {
     Recharge,
     // CrmIndex,
     // CsIndex,
-    MapIndex
+    MapIndex,
+    keDong,
+    teZheng,
+    EnterpriseAnalysis
   },
   data() {
     var checkname = (rule, value, callback) => {
@@ -225,6 +253,30 @@ export default {
       callback()
     }
     return {
+      dropdownMenu: [
+        {
+          label: '近似优企',
+          command: 'jsyq',
+          icon: ''
+        },
+        {
+          label: '优企分析',
+          command: 'yqfx',
+          icon: ''
+        },
+        {
+          label: '更多优企',
+          command: 'gdyq',
+          icon: ''
+        },
+        {
+          label: '优企特征组合页',
+          command: 'yqtzzhy',
+          icon: ''
+        }
+      ],
+      dropdown_icon: '',
+      selected: '',
       loginActive: 'first',
       checked: false,
       ruleForm: {
@@ -298,6 +350,9 @@ export default {
       }
     }
   },
+  // mounted() {
+  //   document.getElementById('gaoji').parent
+  // },
   created() {
     // console.log(this.$route.query.activeName)
     if (this.$route.query.activeName === undefined) {
@@ -323,6 +378,18 @@ export default {
     }
   },
   methods: {
+
+    handleCommand(dropdownItem) {
+      this.selected = dropdownItem
+      this.dropdownMenu.forEach((v, k) => {
+        if (v.command == dropdownItem) {
+          this.dropdownMenu[k].icon = 'el-icon-check'
+        } else {
+          this.dropdownMenu[k].icon = ''
+        }
+      })
+      // console.log(this.selected)
+    },
     open() {
       this.dialogFormVisible = true
     },
@@ -506,6 +573,11 @@ export default {
     handleClick(tab, event) {
       // console.log(tab, event)
       // console.log(tab.name)
+      if (tab.name == 'gaoji') {
+        document.getElementById('gaoji').style.color = '#409EFF'
+      } else {
+        document.getElementById('gaoji').style.color = '#000000'
+      }
       localStorage.setItem('activeName', tab.name)
     },
     toYhxy() {
@@ -555,5 +627,11 @@ export default {
 
 .yhxy:hover {
   cursor: pointer;
+}
+.el-tabs__item  .is-active > .demonstration{
+  color: #409EFF;
+}
+.is-active #gaoji{
+  color: #409EFF;
 }
 </style>

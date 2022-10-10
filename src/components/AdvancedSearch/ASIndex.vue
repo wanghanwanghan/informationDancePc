@@ -12,28 +12,28 @@
         </el-input>
         <el-button style="width:13%;background-color: #10C334; margin-left: 1%; margin-top: 10px;  border-color: #409EFF;color: #FFF;height: 60px;font-size: 18px" @click="saveParamDialog">保存筛选条件</el-button>
       </div>
-<!--      <div style="margin-top: 20px;width: 100%;height: 200px;background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 5px;">-->
-<!--        <div-->
-<!--          style="width: 1140px;margin: 15px 30px;height: 41px;font-size: 24px;border-bottom: 1px solid #dcdfe6;display: inline-flex;"-->
-<!--        >-->
-<!--          热门应用-->
-<!--        </div>-->
-<!--        <div style="width: 100%;height: 76px;    margin-top: 20px;">-->
-<!--          <div style="width: 33%;float: left">-->
-<!--            <img-->
-<!--              src="../../assets/1.jpg"-->
-<!--              style="width: 170px;height: 75px;margin: 0px 110px;"-->
-<!--              @click="searchQiyeVisible=true"-->
-<!--            >-->
-<!--          </div>-->
-<!--          <div style="width: 33%;float: left">-->
-<!--            <img src="../../assets/2.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
-<!--          </div>-->
-<!--          <div style="width: 33%;float: right">-->
-<!--            <img src="../../assets/3.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div style="margin-top: 20px;width: 100%;height: 200px;background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 5px;">
+        <div
+          style="width: 1140px;margin: 15px 30px;height: 41px;font-size: 24px;border-bottom: 1px solid #dcdfe6;display: inline-flex;"
+        >
+          热门应用
+        </div>
+        <div style="width: 100%;height: 76px;    margin-top: 20px;">
+          <div style="width: 33%;float: left">
+            <img
+              src="../../assets/1.jpg"
+              style="width: 170px;height: 75px;margin: 0px 110px;"
+              @click="searchQiyeVisible=true"
+            >
+          </div>
+          <div style="width: 33%;float: left">
+            <img src="../../assets/2.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">
+          </div>
+          <div style="width: 33%;float: right">
+            <img src="../../assets/3.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">
+          </div>
+        </div>
+      </div>
       <div class="cond-wrapper" style="background-color: white;margin-top: 10px;border-radius: 5px;border: 1px solid #DFDFDF;">
         <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
           <Cond
@@ -348,42 +348,46 @@
         <div style="color: black;font-weight: bold;font-size: 26px">添加探寻合作的企业名称</div>
         <div style="color: darkred;margin-bottom: 20px">提示：为提高企业特征分析的准确性，可尽量多添加</div>
         <div>
-          <div>
+          <div id="youqi">
             <span style="color: black;font-size: 18px;font-weight: bold;">企业名称：</span>
+            <!--              <el-select  v-model="form.groupid" id="selects" v-defaultSelect="[form.groupid,options,'value','disabled',true]"  multiple filterable allow-create default-first-option placeholder="请选择" :disabled="edits">-->
+
             <el-select
+              style="width: 360px"
               id="selectInput"
               v-model="qiye"
-              style="width: 360px"
               filterable
-              allow-create
               remote
               reserve-keyword
               placeholder="请输入企业名称或关键词，如每日信动"
               multiple
               size="100px"
               :remote-method="getQiyeData"
+              @change = "updateData"
+
+              v-defaultSelect="[qiye]"
             >
-              <el-option v-for="v in qiyeData" :key="v" :value="v" :label="v" />
+              <el-option  v-for="v in qiyeData" :value="v" :key="v" :label="v" :disabled="qiye.includes(v)">
+
+              </el-option>
 
             </el-select>
-            <el-button style="background-color: #0579ea;color: #FFFFFF" @click="fenXi">分析优企特征</el-button>
+            <el-button style="background-color: #0579ea;color: #FFFFFF"  @click="fenXi">分析优企特征</el-button>
             <el-button style="background-color: #f59b40;color: #FFFFFF" @click="uploadFlag=true">批量上传</el-button>
           </div>
         </div>
         <div>
           <div style="padding:0px 20px;margin: 20px 0px">
-            <el-checkbox v-model="checkAll" @change="handleCheckAllChange" />
-            <span style="color: #0b09f3;font-size: 14px" @click="deleteAll">批量删除已添加的企业</span>
+            <el-checkbox v-model="checkAll" @change="handleCheckAllChange" v-show="qiye.length>0"></el-checkbox>
+            <span style="color: #0579ea"  v-show="qiye.length>0" >批量删除已添加的企业</span>
+            <el-button v-show="qiye.length>0" @click="deleteAll" style="color:black;background-color: rgba(234,234,234,0.96);padding: 5px 13px;" size="small">删除</el-button>
           </div>
           <div style="min-height: 20px;max-height: 500px;overflow-y: auto">
             <el-checkbox-group v-model="checkedCities">
               <div v-for="(v,k) in qiye" style="width: 300px;float: left;margin: 10px 20px">
-                <el-checkbox :key="v" :label="v" style="margin: 0px 5px 4px 0px">{{ v }}</el-checkbox>
-                <img
-                  src="../../assets/close.png"
-                  style="width: 15px;height: 15px;float: right"
-                  @click="deleteOne(v,k)"
-                >
+                <el-checkbox :key="v" :label="v" style="margin: 0px 5px 4px 0px" :title="v">{{ v.length>17?v.slice(0, 17)+'..':v }}</el-checkbox>
+                <img src="../../assets/close.png" style="width: 15px;height: 15px;float: right"
+                     @click="deleteOne(v,k)"/>
               </div>
             </el-checkbox-group>
           </div>

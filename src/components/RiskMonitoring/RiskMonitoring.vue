@@ -245,9 +245,13 @@ export default {
     supervisor(this.query).then(res => {
       this.list = []
       this.totalsupervisor = 0
-      this.totalsupervisor = res.data.paging.total
-      this.list = res.data.result.detail
-      this.options = res.data.result.entList
+      console.log(res)
+      if(res.data.result.length > 0){
+        this.totalsupervisor = res.data.paging.total
+        this.list = res.data.result.detail
+        this.options = res.data.result.entList
+      }
+
     })
   },
   data() {
