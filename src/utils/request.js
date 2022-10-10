@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 // import { getToken } from '@/utils/auth'
 
 const service = axios.create({
-  baseURL: 'https://api.test.meirixindong.com', // url = base url + request url
+  baseURL: 'https://api.meirixindong.com', // url = base url + request url
   timeout: 5000
 })
 
