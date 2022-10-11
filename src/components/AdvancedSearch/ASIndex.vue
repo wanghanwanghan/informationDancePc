@@ -12,28 +12,28 @@
         </el-input>
         <el-button style="width:13%;background-color: #10C334; margin-left: 1%; margin-top: 10px;  border-color: #409EFF;color: #FFF;height: 60px;font-size: 18px" @click="saveParamDialog">保存筛选条件</el-button>
       </div>
-      <div style="margin-top: 20px;width: 100%;height: 200px;background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 5px;">
-        <div
-          style="width: 1140px;margin: 15px 30px;height: 41px;font-size: 24px;border-bottom: 1px solid #dcdfe6;display: inline-flex;"
-        >
-          热门应用
-        </div>
-        <div style="width: 100%;height: 76px;    margin-top: 20px;">
-          <div style="width: 33%;float: left">
-            <img
-              src="../../assets/1.jpg"
-              style="width: 170px;height: 75px;margin: 0px 110px;"
-              @click="searchQiyeVisible=true"
-            >
-          </div>
-          <div style="width: 33%;float: left">
-            <img src="../../assets/2.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">
-          </div>
-          <div style="width: 33%;float: right">
-            <img src="../../assets/3.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">
-          </div>
-        </div>
-      </div>
+<!--      <div style="margin-top: 20px;width: 100%;height: 200px;background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 5px;">-->
+<!--        <div-->
+<!--          style="width: 1140px;margin: 15px 30px;height: 41px;font-size: 24px;border-bottom: 1px solid #dcdfe6;display: inline-flex;"-->
+<!--        >-->
+<!--          热门应用-->
+<!--        </div>-->
+<!--        <div style="width: 100%;height: 76px;    margin-top: 20px;">-->
+<!--          <div style="width: 33%;float: left">-->
+<!--            <img-->
+<!--              src="../../assets/1.jpg"-->
+<!--              style="width: 170px;height: 75px;margin: 0px 110px;"-->
+<!--              @click="searchQiyeVisible=true"-->
+<!--            >-->
+<!--          </div>-->
+<!--          <div style="width: 33%;float: left">-->
+<!--            <img src="../../assets/2.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
+<!--          </div>-->
+<!--          <div style="width: 33%;float: right">-->
+<!--            <img src="../../assets/3.jpg" style="width: 170px;height: 75px;margin: 0px 110px;">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="cond-wrapper" style="background-color: white;margin-top: 10px;border-radius: 5px;border: 1px solid #DFDFDF;">
         <div v-bind="optionCheckBox" class="cond-up" @change="handleChange_option">
           <Cond
