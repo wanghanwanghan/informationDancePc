@@ -184,6 +184,8 @@
                         <el-button size="small" type="primary" style="color: #006EFF;border: 1px solid  #006EFF;background-color: #FFFFFF" @click="doSaveOpportunity(item._source.companyid,item._source.ENTNAME)">客户触达</el-button>
                         <el-button v-show="item._source.wu_liu_xin_xi==1" size="small" type="primary" style="color: #10C334 ;border: 1px solid  #10C334 ;background-color: #FFFFFF" @click="uploadVin(item._source.companyid,item._source.ENTNAME)">上传VIN</el-button>
                         <el-button size="small" type="primary" style="color: #f3881c ;border: 1px solid  #f3881c ;background-color: #FFFFFF" @click="zp(item._source.companyid,item._source.ENTNAME)">企业族谱</el-button>
+                        <el-button size="small" type="primary" style="color: #006EFF ;border: 1px solid  #006EFF ;background-color: #FFFFFF" @click="fx(item._source.companyid,item._source.ENTNAME)">风险评估</el-button>
+
                       </el-badge>
                     </div>
                   </div>
@@ -673,7 +675,15 @@ export default {
       this.zupuDataList = []
       this.getData(company_id, entName)
     },
-
+    fx(company_id, entName){
+      const routeUrl = this.$router.resolve({
+        path: '/FengXian',
+        query: {
+          entName: entName
+        }
+      })
+      window.open(routeUrl.href, '_blank')
+    },
     getData(company_id, entName) {
       getInvestor({ phone: localStorage.getItem('phone'), company_id: company_id }).then(res => {
         this.categories.push({ name: entName })

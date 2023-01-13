@@ -14,7 +14,7 @@
         </el-form>
       </div>
     </div>
-    <div class="more-wrapper" v-if="list.length>8" @click="more">更多</div>
+    <div class="more-wrapper" v-if="list.length>7" @click="more">更多</div>
   </div>
 </template>
 
@@ -87,7 +87,7 @@ export default {
   display: flex;
 
   .title-wrapper {
-    width: 10%;
+    width: 130px;
     text-align: center;
     height: 40px;
     line-height: 40px;

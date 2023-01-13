@@ -106,6 +106,12 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/SearchHistroy/SearchHistroy.vue'),
     hidden: true
   },
+  {
+    path: '/FengXian',
+    name: 'FengXian',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/SearchList/FengXian.vue'),
+    hidden: true
+  },
   // {
   //   path: '/',
   //   component: Layout,

@@ -38,6 +38,15 @@ export function getEntList(data) {
   })
 }
 
+// 搜索获取公司列表
+export function getFengXian(data) {
+  return request({
+    url: '/api/v1/xd/getFengXian',
+    method: 'post',
+    data
+  })
+}
+
 // 报告深度word
 export function createDeepEasy(data) {
   return request({
