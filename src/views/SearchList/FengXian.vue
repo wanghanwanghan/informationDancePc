@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;background-color: #162960;padding-top: 10px;height: inherit;">
+  <div style="width:100%;background-color: #162960;padding-top: 10px;min-height: 100%;background-size : cover; background-attachment: fixed;background-repeat:no-repeat;">
     <div style="width: 1200px;margin: auto;height: 910px">
       <div style="width: 1200px;margin: auto;text-align: center;background-color: #0a153a">
         <div style="margin: auto;color: #FFFFFF;font-size: 24px;font-weight: bold;height: 44px;line-height: 44px;">
@@ -381,5 +381,7 @@ export default {
 </script>
 
 <style scoped>
-
+/*body{*/
+/*  width:100%;background-color: #162960;*/
+/*}*/
 </style>
