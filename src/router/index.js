@@ -1063,6 +1063,24 @@ export const constantRoutes = [
       // }
     ]
   },
+  {
+    path: '/shangyun',
+    component: Layout,
+    redirect: '/shangyun/shangyunIndex',
+    name: 'shangyun',
+    meta: {
+      title: '上云企业',
+      icon: 'excel'
+    },
+    children: [
+      {
+        path: 'shangyun',
+        component: () => import('@/views/shangyun/shangyunIndex'),
+        name: 'shangyunIndex',
+        // meta: { title: '央行行政处罚' }
+        meta: { title: '上云企业' }
+      }]
+  },
   // {
   //   path: '/NewsInformation',
   //   component: Layout,
