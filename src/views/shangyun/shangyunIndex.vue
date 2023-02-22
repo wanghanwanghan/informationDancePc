@@ -88,7 +88,7 @@
               />
               <el-table-column
                 prop="l_0"
-                label="溯源"
+                label="信息来源"
               />
             </el-table>
           </div>
