@@ -12,31 +12,31 @@
               <el-table-column
                 label="序号"
                 type="index"
-                width="50"
               />
               <el-table-column
                 prop="l_17"
                 label="企业名称"
-                width="200"
+                width="250"
               />
               <el-table-column
                 prop="l_16"
                 label="统一社会信用代码"
-                width="200"
+                width="170"
               />
               <el-table-column
                 prop="l_15"
                 label="云服务器名称"
-                width="240"
+                width="70"
               />
               <el-table-column
                 prop="l_14"
                 label="云合作量级"
-                width="240"
+                width="60"
               />
               <el-table-column
                 prop="l_13"
                 label="用云比例"
+                width="300"
               />
               <el-table-column
                 prop="l_12"
